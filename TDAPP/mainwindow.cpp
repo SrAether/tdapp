@@ -22,6 +22,14 @@ MainWindow::MainWindow(QWidget *parent)
     framePrincipal->setGeometry(0, 0, 1920, 1080);
     // creamos un calendario
     //calendario = new QCalendarWidget(framePrincipal);
+    // creamos un frame para iniciar sesión
+    //frameInicioSesion = new QFrame(framePrincipal);
+    // creamos un frame para el registro de emociones
+    //frameRegistroEmociones = new QFrame(framePrincipal);
+    // creamos el frame para el hiperfoco
+    //frameHiperfoco = new QFrame(framePrincipal);
+    // creamos el frame para la configuración
+    //frameConfiguracion = new QFrame(framePrincipal);
 
 
 

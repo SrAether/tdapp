@@ -1,7 +1,7 @@
 #ifndef ENCRIPTADO_H
 #define ENCRIPTADO_H
 
-#include <QByteArray>
+#include <string>
 
 // ! clase Encriptado
 // ! versión 1.0
@@ -10,11 +10,13 @@
 class Encriptado
 {
     // Contraseña de encriptado
-    QByteArray contraseña;
+    std::string contraseña;
 public:
-    Encriptado(QByteArray contrasena = "contraseña");
-    QByteArray encriptar(QByteArray texto);
-    QByteArray desencriptar(QByteArray texto);
+    Encriptado(std::string contrasena = "contraseña");
+    std::string encriptar(std::string texto);
+    std::string desencriptar(std::string texto);
+    std::string getContraseña();
+    void setContraseña(std::string contrasena);
 };
 
 #endif // ENCRIPTADO_H
