@@ -44,6 +44,8 @@ class MainWindow : public QMainWindow
     QFrame *frameJournaling; // frame para journaling
     // Frame para barra de navegación
     QFrame *frameBarraNavegacion; // frame para barra de navegación
+    // Frame para la interfaz de registro de usuario
+    QFrame *frameRegistroUsuario; // frame para la interfaz de registro de usuario
 
 
 
@@ -69,7 +71,9 @@ private slots:
     void activarInterfazCalendario(); // ! muestra la interfaz del calendario
     void desactivarInterfazCalendario(); // ! oculta la interfaz del calendario
     void activarInterfazJournaling(); // ! muestra la interfaz de journaling
-    void desactivarInterfazJournaling(); // ! oculta la interfaz de journaling
+    void desactivarInterfazJournaling(); // ! oculta la interfaz de
+    void activarInterfazRegistroUsuario(); // ! muestra la interfaz de registro de usuario
+    void desactivarInterfazRegistroUsuario(); // ! oculta la interfaz de registro de usuario
 
     // DEPENDENCIAS DE LA INTERFAZ CALENDARIO
     void mostrarRegistroEmociones(time_t fecha); // ! muestra la interfaz con la grafica de emociones
@@ -129,6 +133,45 @@ private slots:
     // ? seleccionar método de gestión de mostrarInterfazListaMetodosHiperfoco
     void seleccionarMetodoHiperfoco(); // ! selecciona el método de gestión de tiempo (hiperfoco)
 
+    // DEPENDENCIAS DE LA INTERFAZ CONFIGURACIÓN
+    // ? boton modificar tema de mostrarAreaConfiguracion
+    void modificarTema(); // ! modifica el tema de la aplicación
+    // ? boton modificar fuente de mostrarAreaConfiguracion
+    void modificarFuente(); // ! modifica la fuente de la aplicación
+    // ? boton modificar sonido de alarma de mostrarAreaConfiguracion
+    void modificarSonidoAlarma(); // ! modifica el sonido de alarma de la aplicación
+    // ? boton modificar volumen de alarma de mostrarAreaConfiguracion
+    void modificarVolumenAlarma(); // ! modifica el volumen de la alarma de la aplicación
+    // ? boton modificar sonido de notificación de mostrarAreaConfiguracion
+    void modificarSonidoNotificacion(); // ! modifica el sonido de notificación de la aplicación
+    // ? boton modificar volumen de notificación de mostrarAreaConfiguracion
+    void modificarVolumenNotificacion(); // ! modifica el volumen de la notificación de la aplicación
+    // ? boton modificar credenciales de mostrarAreaConfiguracion
+    void modificarCredencialesRespaldo(); // ! modifica las credenciales de la aplicación (usuario y contraseña de google drive)
+    // ? boton modificar información de usuario de mostrarAreaConfiguracion
+    void modificarInformacionUsuario(); // ! modifica la información del usuario de la aplicación
+
+    // DEPENDENCIAS DE LA INTERFAZ INICIO DE SESIÓN
+    // ? boton iniciar sesión de mostrarAreaInicioSesion
+    void iniciarSesion(); // ! inicia sesión en la aplicación
+    // ? boton registrar usuario de mostrarAreaInicioSesion
+    void registrarUsuarioNuevo(); // ! registra un nuevo usuario en la aplicación
+
+    // DEPENDENCIAS DE LA INTERFAZ REGISTRO DE USUARIO
+    // ? boton registrar usuario de mostrarAreaRegistroUsuario
+    void registrarUsuario(); // ! registra un nuevo usuario en la aplicación
+
+    // DEPENDENCIAS DE LA BARRA DE NAVEGACIÓN
+    // ? boton mostrar calendario de mostrarBarraNavegacion
+    void mostrarCalendario(); // ! muestra la interfaz del calendario
+    // ? boton mostrar journaling de mostrarBarraNavegacion
+    void mostrarJournaling(); // ! muestra la interfaz de journaling
+    // ? boton mostrar registro de emociones de mostrarBarraNavegacion
+    void mostrarRegistroEmociones(); // ! muestra la interfaz de registro de emociones
+    // ? boton mostrar hiperfoco de mostrarBarraNavegacion
+    void mostrarHiperfoco(); // ! muestra la interfaz de hiperfoco
+    // ? boton mostrar configuración de mostrarBarraNavegacion
+    void mostrarConfiguracion(); // ! muestra la interfaz de configuración
 
 
 public:
