@@ -32,7 +32,9 @@ public:
     bool operator!=(const ManejadorJson &otro);
     bool operator!=(const std::map<std::string, std::string> &otro);
     // operador []
-    std::string operator[](std::string clave);
+    std::string& operator[](std::string clave);
+    // operador [] para asignar valores
+    //void operator[](std::pair<std::string, std::string> par);
     // método para guardar el archivo
     bool guardar();
     // método para modificar la ruta del archivo

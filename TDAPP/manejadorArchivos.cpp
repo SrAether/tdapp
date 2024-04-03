@@ -5,6 +5,23 @@
 #include <vector>
 #include "manejadorArchivos.h"
 
+
+// Lista de códigos de error
+// Err:TDAPP01, No se pudo crear el archivo
+// Err:TDAPP02, No se encontró el archivo
+// Err:TDAPP03, No se pudo modificar el archivo
+// Err:TDAPP04, No se encontró el archivo a eliminar
+// Err:TDAPP05, No se pudo copiar el archivo
+// Err:TDAPP06, No se pudo mover el archivo
+// Err:TDAPP07, No se pudo crear la carpeta
+// Err:TDAPP08, No se pudo eliminar la carpeta
+// Err:TDAPP09, No se pudo copiar la carpeta
+// Err:TDAPP10, No se pudo mover la carpeta
+
+
+
+
+
 // *Constructor de la clase manejadorArchivos
 mArchivos::manejadorArchivos::manejadorArchivos() {}
 
@@ -19,18 +36,20 @@ void mArchivos::manejadorArchivos::crearArchivo(const std::string &nombre, const
     std::ofstream archivo(nombre);
     if (!archivo.is_open())
     {
-        throw std::runtime_error("No se pudo abrir el archivo");
+        //throw std::runtime_error("No se pudo abrir el archivo");
+        throw std::runtime_error("Err:TDAPP01, No se pudo crear el archivo");
     }
     archivo << contenido;
     archivo.close();
 }
 
-// *Método para leer un archivo
+// *Método para eliminar un archivo
 void mArchivos::manejadorArchivos::eliminarArchivo(const std::string &nombre)
 {
     if (!std::filesystem::remove(nombre))
     {
-        throw std::runtime_error("No se pudo eliminar el archivo");
+        //throw std::runtime_error("No se pudo eliminar el archivo");
+        throw std::runtime_error("Err:TDAPP04, No se encontró el archivo a eliminar");
     }
 }
 
@@ -41,7 +60,8 @@ bool mArchivos::manejadorArchivos::modificarArchivo(const std::string &nombre, c
     std::ofstream archivo(nombre);
     if (!archivo.is_open())
     {
-        throw std::runtime_error("No se pudo abrir el archivo");
+        //throw std::runtime_error("No se pudo abrir el archivo");
+        throw std::runtime_error("Err:TDAPP03, No se pudo modificar el archivo");
         return false;
     }
     archivo << contenido;
@@ -55,7 +75,7 @@ std::string mArchivos::manejadorArchivos::leerArchivo(const std::string &nombre)
     std::ifstream archivo(nombre);
     if (!archivo.is_open())
     {
-        throw std::runtime_error("No se pudo abrir el archivo");
+        throw std::runtime_error("Err:TDAPP02, No se encontró el archivo");
     }
 
     // ? método corto y eficiente
@@ -79,7 +99,8 @@ void mArchivos::manejadorArchivos::copiarArchivo(const std::string &rutaNueva, c
 {
     if (!std::filesystem::copy_file(rutaAnterior, rutaNueva))
     {
-        throw std::runtime_error("No se pudo copiar el archivo");
+        //throw std::runtime_error("No se pudo copiar el archivo");
+        throw std::runtime_error("Err:TDAPP05, No se pudo copiar el archivo");
     }
 }
 
@@ -98,7 +119,8 @@ void mArchivos::manejadorArchivos::moverArchivo(const std::string &rutaNueva, co
     }
     catch (const std::exception &e)
     {
-        throw std::runtime_error("No se pudo mover el archivo");
+        //throw std::runtime_error("No se pudo mover el archivo");
+        throw std::runtime_error("Err:TDAPP06, No se pudo mover el archivo");
     }
 }
 
@@ -113,7 +135,8 @@ void mArchivos::manejadorArchivos::crearCarpeta(const std::string &ruta)
 {
     if (!std::filesystem::create_directory(ruta))
     {
-        throw std::runtime_error("No se pudo crear la carpeta");
+        //throw std::runtime_error("No se pudo crear la carpeta");
+        throw std::runtime_error("Err:TDAPP07, No se pudo crear la carpeta");
     }
 }
 
@@ -122,7 +145,8 @@ void mArchivos::manejadorArchivos::eliminarCarpeta(const std::string &ruta)
 {
     if (!std::filesystem::remove_all(ruta))
     {
-        throw std::runtime_error("No se pudo eliminar la carpeta");
+        //throw std::runtime_error("No se pudo eliminar la carpeta");
+        throw std::runtime_error("Err:TDAPP08, No se pudo eliminar la carpeta");
     }
 }
 
@@ -141,7 +165,8 @@ void mArchivos::manejadorArchivos::copiarCarpeta(const std::string &rutaNueva, c
     }
     catch (const std::exception &e)
     {
-        throw std::runtime_error("No se pudo copiar la carpeta");
+        //throw std::runtime_error("No se pudo copiar la carpeta");
+        throw std::runtime_error("Err:TDAPP09, No se pudo copiar la carpeta");
     }
 }
 
@@ -154,7 +179,8 @@ void mArchivos::manejadorArchivos::moverCarpeta(const std::string &rutaNueva, co
     }
     catch (const std::exception &e)
     {
-        throw std::runtime_error("No se pudo mover la carpeta");
+        //throw std::runtime_error("No se pudo mover la carpeta");
+        throw std::runtime_error("Err:TDAPP10, No se pudo mover la carpeta");
     }
 }
 

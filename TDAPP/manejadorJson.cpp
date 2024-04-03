@@ -8,6 +8,9 @@
 // para depuración
 //#include <iostream>
 
+// Códigos de error de la clase ManejadorJson parten de TDAPP20
+// Err:TDAPP20, El archivo "rutaArchivo" ya existe
+
 // !Constructor de la clase ManejadorJson
 // !Versión 1.0
 // !Modificado por Aether
@@ -21,7 +24,8 @@ mJson::ManejadorJson::ManejadorJson(const std::string& rutaArchivo, bool nuevo)
         // * Verificamos si el archivo ya existe
         if (manejadorArchivos.verificarExistenciaDeArchivo(rutaArchivo))
         {
-            throw std::runtime_error("El archivo ya existe");
+            //throw std::runtime_error("El archivo ya existe");
+            throw std::runtime_error("Err:TDAPP20, El archivo \"" + rutaArchivo + "\" ya existe");
         }
         // * Creamos el archivo
         this->manejadorArchivos.crearArchivo(rutaArchivo, "{}");
@@ -324,13 +328,27 @@ bool mJson::ManejadorJson::operator!=(const std::map<std::string, std::string> &
     return false;
 }
 
-// ! operador [] para obtener un valor del mapa
-// ! versión 1.0
+// ! operador [] para obtener un valor del mapa y asignar valores
+// ! versión 1.1
 // ! modificado por Aether
-// ? no se realizaron cambios a partir de la versión 1.0
-std::string mJson::ManejadorJson::operator[](std::string clave)
+// ? En un principio solo era para obtener valores, ahora también se puede asignar valores
+std::string& mJson::ManejadorJson::operator[](std::string clave)
 {
-    // ? retornamos el valor de la clave
+    // ? Si la clave no existe en el mapa, la insertamos con un valor vacío
+    if (map.find(clave) == map.end()) {
+        map[clave] = "";
+    }
+    // ? Retornamos una referencia al valor asociado a la clave
     return map[clave];
+    // Utilizamos el método find para buscar la clave
+    // auto it = map.find(clave);
+
+    // // Si la clave no existe en el mapa, la insertamos con un valor vacío
+    // if (it == map.end()) {
+    //     it = map.insert({clave, ""}).first;
+    // }
+
+    // // Retornamos una referencia mutable al valor asociado a la clave
+    // return it->second;
 }
 // ! fin de la clase ManejadorJson
