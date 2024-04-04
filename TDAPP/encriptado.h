@@ -1,22 +1,30 @@
-#ifndef ENCRIPTADO_H
-#define ENCRIPTADO_H
+#ifndef ENCRIPTADOV2_H
+#define ENCRIPTADOV2_H
 
 #include <string>
 
-// ! clase Encriptado
-// ! versión 1.0
-// ! modificado por Aether
-// ? no se realizaron cambios a partir de la versión 1.0
+// esta clase es una mejor implementación de la clase encriptado (probablemente elimine la implementación anterior)
+
+namespace EncriptadoV2
+{
 class Encriptado
 {
     // Contraseña de encriptado
     std::string contraseña;
+    // iv para encriptado (iv significa initialization vector)
+    std::string iv; // contendrá "0123456789012345";
 public:
-    Encriptado(std::string contrasena = "contraseña");
+    Encriptado(const std::string& contraseña = "contraseña", const std::string& iv = "0123456789012345");
     std::string encriptar(std::string texto);
     std::string desencriptar(std::string texto);
     std::string getContraseña();
-    void setContraseña(std::string contrasena);
+    void setContraseña(std::string contraseña);
+    std::string getIv();
+    void setIv(std::string iv);
 };
+}
 
-#endif // ENCRIPTADO_H
+
+
+
+#endif // ENCRIPTADOV2_H
