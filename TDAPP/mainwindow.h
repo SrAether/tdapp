@@ -3,9 +3,13 @@
 
 #include <QMainWindow>
 //#include <map> // no se necesita por que lo gestiona el manejadorJson
-#include <string>
+//#include <string>
 // ! para cosas de qt
-#include <QFrame>
+
+#include <QFrame> // ? para crear frames
+#include <QComboBox> // ? para crear un selector (como en html)
+#include <QPushButton> // ? para crear botones
+#include <QLineEdit> // ? para crear campos de texto
 
 // ! experimental
 #include <QCalendarWidget> // incluimos el calendario
@@ -16,13 +20,14 @@
 #include "manejadorArchivos.h"
 
 
-class MainWindow : public QMainWindow
+
+class MainWindow : public QWidget
 {
     Q_OBJECT
     // variables
     mArchivos::manejadorArchivos manejadorArchivos; // ! objeto de la clase manejadorArchivos que permite manejar archivos
     mJson::ManejadorJson* configuraciones; // ! objeto de la clase manejadorJson que contiene las configuraciones de la aplicación
-
+    mJson::ManejadorJson* usuarios; // ! objeto de la clase manejadorJson que contiene la información de los usuarios de la aplicación
 
     QFont fuente; // fuente de la aplicación
 
@@ -48,134 +53,146 @@ class MainWindow : public QMainWindow
     QFrame *frameRegistroUsuario; // frame para la interfaz de registro de usuario
 
 
+    // COSAS DENTRO DE FRAME INICIO SESION
+    // Selector de usuario
+    QComboBox *selectorUsuario; // selector de usuario
+    // campo de texto para la contraseña
+    QLineEdit *campoContraseña; // campo de texto para la contraseña
+    // Botón para iniciar sesión
+    QPushButton *botonIniciarSesion; // boton para iniciar sesión
+    // Botón para registrar usuario
+    QPushButton *botonRegistrarse; // boton para registrar usuario
+
+
+
 
     // Métodos privados de la ventana
     void verificacionInicial(); // ! verifica la existencia de los archivos y carpetas necesarios para el funcionamiento de la aplicación y trata de crearlos si no existen
-
-private slots:
-    // Métodos que se ejecutan al hacer click en los botones
-    // void interfazInicioSesion(); // ! muestra la interfaz de inicio de sesión
-    // void interfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones
-    // void interfazHiperfoco(); // ! muestra la interfaz de hiperfoco
-    // void interfazConfiguracion(); // ! muestra la interfaz de configuración
-    // void interfazCalendario(); // ! muestra la interfaz del calendario
-
-    void activarInterfazInicioSesion(); // ! muestra la interfaz de inicio de sesión
-    void desactivarInterfazInicioSesion(); // ! oculta la interfaz de inicio de sesión
-    void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones
-    void desactivarInterfazRegistroEmociones(); // ! oculta la interfaz de registro de emociones
-    void activarInterfazHiperfoco(); // ! muestra la interfaz de hiperfoco
-    void desactivarInterfazHiperfoco(); // ! oculta la interfaz de hiperfoco
-    void activarInterfazConfiguracion(); // ! muestra la interfaz de configuración
-    void desactivarInterfazConfiguracion(); // ! oculta la interfaz de configuración
-    void activarInterfazCalendario(); // ! muestra la interfaz del calendario
-    void desactivarInterfazCalendario(); // ! oculta la interfaz del calendario
-    void activarInterfazJournaling(); // ! muestra la interfaz de journaling
-    void desactivarInterfazJournaling(); // ! oculta la interfaz de
-    void activarInterfazRegistroUsuario(); // ! muestra la interfaz de registro de usuario
-    void desactivarInterfazRegistroUsuario(); // ! oculta la interfaz de registro de usuario
-
-    // DEPENDENCIAS DE LA INTERFAZ CALENDARIO
-    void mostrarRegistroEmociones(time_t fecha); // ! muestra la interfaz con la grafica de emociones
-    void ocultarRegistroEmociones(); // ! oculta la interfaz con la grafica de emociones
-    void mostrarDiaSeleccionado(time_t fecha); // ! muestra la interfaz para agregar un evento al calendario
-    void ocultarDiaSeleccionado(); // ! oculta la interfaz para agregar un evento al calendario
-    void mostrarIntefazEditarEventoCalendario(int idEvent = 0); // ! muestra la interfaz para editar un evento del calendario, si es 0 es un evento nuevo
-    void ocultarIntefazEditarEventoCalendario(); // ! oculta la interfaz para editar un evento del calendario
-    void mostrarEventoSeleccionado(int idEvent); // ! muestra la interfaz con la información de un evento seleccionado
-    void ocultarEventoSeleccionado(); // ! oculta la interfaz con la información de un evento seleccionado
-    // ? boton eliminar evento seleccionado de interfazEventoSeleccionado
-    void eliminarEventoCalendario(int idEvent); // ! elimina un evento del calendario
-    // ? boton guardar evento usado en la interfaz de editar evento
-    void guardarEventoCalendario(int idEvent); // ! guarda un evento del calendario
-
-    // DEPENDENCIAS DE LA INTERFAZ JOURNALING (DIARIO)
-    void mostrarPantallaBienvenidaJournaling(); // ! muestra la pantalla de bienvenida de journaling
-    void ocultarPantallaBienvenidaJournaling(); // ! oculta la pantalla de bienvenida de journaling
-    void mostrarListaEntradasJournaling(); // ! muestra la lista de entradas de journaling
-    void ocultarListaEntradasJournaling(); // ! oculta la lista de entradas de journaling
-    void mostrarInterfazEditarEntradaJournaling(int idEntrada = 0); // ! muestra la interfaz para editar una entrada de journaling, si es 0 es una entrada nueva
-    void ocultarInterfazEditarEntradaJournaling(); // ! oculta la interfaz para editar una entrada de journaling
-    void mostrarEntradaSeleccionadaJournaling(int idEntrada); // ! muestra la interfaz con la información de una entrada seleccionada de journaling
-    void ocultarEntradaSeleccionadaJournaling(); // ! oculta la interfaz con la información de una entrada seleccionada de journaling
-    // ? Boton entrar a journaling de mostrarPantallaBienvenidaJournaling
-    void entrarJournaling(); // ! muestra la interfaz de journaling
-    // ? Boton nueva entrada de mostrarListaEntradasJournaling
-    void nuevaEntradaJournaling(); // ! muestra la interfaz para agregar una nueva entrada de journaling
-    // ? Boton guardar entrada de interfazEditarEntradaJournaling
-    void guardarEntradaJournaling(int idEntrada); // ! guarda una entrada de journaling
-    // ? Boton eliminar entrada de interfaz mostrarEntradaSeleccionadaJournaling
-    void eliminarEntradaJournaling(int idEntrada); // ! elimina una entrada de journaling
-
-    // DEPENDENCIAS DE LA INTERFAZ REGISTRO DE EMOCIONES
-    void mostrarAreaRegistroEmociones(); // ! muestra la interfaz de registro de emociones
-    void ocultarAreaRegistroEmociones(); // ! oculta la interfaz de registro de emociones
-    void mostrarMConfEmociones(); // ! muestra la interfaz de confirmación de emociones
-    void ocultarMConfEmociones(); // ! oculta la interfaz de confirmación de emociones
-    void mostrarEmoConfir(); // ! muestra la interfaz de emoción confirmada
-    void ocultarEmoConfir(); // ! oculta la interfaz de emoción confirmada
-
-    // DEPENDENCIAS DE LA INTERFAZ HIPERFOCO
-    void mostrarAreaHiperfoco(); // ! muestra la interfaz de hiperfoco
-    void ocultarAreaHiperfoco(); // ! oculta la interfaz de hiperfoco
-    void mostrarInterfazListaMetodosHiperfoco(); // ! muestra la interfaz de lista de métodos de hiperfoco
-    void ocultarInterfazListaMetodosHiperfoco(); // ! oculta la interfaz de lista de métodos de hiperfoco
-    void mostrarMetodoHiperfoco(); // ! muestra la interfaz de método de hiperfoco (para un método específico)
-    void ocultarMetodoHiperfoco(); // ! oculta la interfaz de método de hiperfoco (para un método específico)
-    // ? boton establecer hiperfoco de mostrarAreaHiperfoco
-    void establecerHiperfoco(); // ! establece el hiperfoco
-    // ? lista de horas de mostrarAreaHiperfoco
-    void seleccionarHoraHiperfoco(); // ! selecciona la cantidad de horas del hiperfoco (temporizador)
-    // ? lista de minutos de mostrarAreaHiperfoco
-    void seleccionarMinutosHiperfoco(); // ! selecciona la cantidad de minutos del hiperfoco (temporizador)
-    // ? boton mostrar lista de métodos de mostrarAreaHiperfoco
-    void mostrarListaMetodosHiperfoco(); // ! muestra la lista de métodos de hiperfoco
-    // ? seleccionar método de gestión de mostrarInterfazListaMetodosHiperfoco
-    void seleccionarMetodoHiperfoco(); // ! selecciona el método de gestión de tiempo (hiperfoco)
-
-    // DEPENDENCIAS DE LA INTERFAZ CONFIGURACIÓN
-    // ? boton modificar tema de mostrarAreaConfiguracion
-    void modificarTema(); // ! modifica el tema de la aplicación
-    // ? boton modificar fuente de mostrarAreaConfiguracion
-    void modificarFuente(); // ! modifica la fuente de la aplicación
-    // ? boton modificar sonido de alarma de mostrarAreaConfiguracion
-    void modificarSonidoAlarma(); // ! modifica el sonido de alarma de la aplicación
-    // ? boton modificar volumen de alarma de mostrarAreaConfiguracion
-    void modificarVolumenAlarma(); // ! modifica el volumen de la alarma de la aplicación
-    // ? boton modificar sonido de notificación de mostrarAreaConfiguracion
-    void modificarSonidoNotificacion(); // ! modifica el sonido de notificación de la aplicación
-    // ? boton modificar volumen de notificación de mostrarAreaConfiguracion
-    void modificarVolumenNotificacion(); // ! modifica el volumen de la notificación de la aplicación
-    // ? boton modificar credenciales de mostrarAreaConfiguracion
-    void modificarCredencialesRespaldo(); // ! modifica las credenciales de la aplicación (usuario y contraseña de google drive)
-    // ? boton modificar información de usuario de mostrarAreaConfiguracion
-    void modificarInformacionUsuario(); // ! modifica la información del usuario de la aplicación
-
-    // DEPENDENCIAS DE LA INTERFAZ INICIO DE SESIÓN
-    // ? boton iniciar sesión de mostrarAreaInicioSesion
-    void iniciarSesion(); // ! inicia sesión en la aplicación
-    // ? boton registrar usuario de mostrarAreaInicioSesion
-    void registrarUsuarioNuevo(); // ! registra un nuevo usuario en la aplicación
-
-    // DEPENDENCIAS DE LA INTERFAZ REGISTRO DE USUARIO
-    // ? boton registrar usuario de mostrarAreaRegistroUsuario
-    void registrarUsuario(); // ! registra un nuevo usuario en la aplicación
-
-    // DEPENDENCIAS DE LA BARRA DE NAVEGACIÓN
-    // ? boton mostrar calendario de mostrarBarraNavegacion
-    void mostrarCalendario(); // ! muestra la interfaz del calendario
-    // ? boton mostrar journaling de mostrarBarraNavegacion
-    void mostrarJournaling(); // ! muestra la interfaz de journaling
-    // ? boton mostrar registro de emociones de mostrarBarraNavegacion
-    void mostrarRegistroEmociones(); // ! muestra la interfaz de registro de emociones
-    // ? boton mostrar hiperfoco de mostrarBarraNavegacion
-    void mostrarHiperfoco(); // ! muestra la interfaz de hiperfoco
-    // ? boton mostrar configuración de mostrarBarraNavegacion
-    void mostrarConfiguracion(); // ! muestra la interfaz de configuración
-
-
+    void verificarExistenciaArchivoUsuario(); // ! verifica la existencia del archivo de usuarios y trata de crearlo si no existe
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+private slots:
+
+    void activarInterfazInicioSesion(); // ! muestra la interfaz de inicio de sesión
+    void desactivarInterfazInicioSesion(); // ! oculta la interfaz de inicio de sesión
+    void activarInterfazRegistroUsuario(); // ! muestra la interfaz de registro de usuario
+    void desactivarInterfazRegistroUsuario(); // ! oculta la interfaz de registro de usuario
+    //void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones
+    //void desactivarInterfazRegistroEmociones(); // ! oculta la interfaz de registro de emociones
+    // void activarInterfazHiperfoco(); // ! muestra la interfaz de hiperfoco
+    // void desactivarInterfazHiperfoco(); // ! oculta la interfaz de hiperfoco
+    // void activarInterfazConfiguracion(); // ! muestra la interfaz de configuración
+    // void desactivarInterfazConfiguracion(); // ! oculta la interfaz de configuración
+    // void activarInterfazCalendario(); // ! muestra la interfaz del calendario
+    // void desactivarInterfazCalendario(); // ! oculta la interfaz del calendario
+    // void activarInterfazJournaling(); // ! muestra la interfaz de journaling
+    // void desactivarInterfazJournaling(); // ! oculta la interfaz de
+
+
+    // // DEPENDENCIAS DE LA INTERFAZ CALENDARIO
+    // void mostrarRegistroEmociones(time_t fecha); // ! muestra la interfaz con la grafica de emociones
+    // void ocultarRegistroEmociones(); // ! oculta la interfaz con la grafica de emociones
+    // void mostrarDiaSeleccionado(time_t fecha); // ! muestra la interfaz para agregar un evento al calendario
+    // void ocultarDiaSeleccionado(); // ! oculta la interfaz para agregar un evento al calendario
+    // void mostrarIntefazEditarEventoCalendario(int idEvent = 0); // ! muestra la interfaz para editar un evento del calendario, si es 0 es un evento nuevo
+    // void ocultarIntefazEditarEventoCalendario(); // ! oculta la interfaz para editar un evento del calendario
+    // void mostrarEventoSeleccionado(int idEvent); // ! muestra la interfaz con la información de un evento seleccionado
+    // void ocultarEventoSeleccionado(); // ! oculta la interfaz con la información de un evento seleccionado
+    // // ? boton eliminar evento seleccionado de interfazEventoSeleccionado
+    // void eliminarEventoCalendario(int idEvent); // ! elimina un evento del calendario
+    // // ? boton guardar evento usado en la interfaz de editar evento
+    // void guardarEventoCalendario(int idEvent); // ! guarda un evento del calendario
+
+    // // DEPENDENCIAS DE LA INTERFAZ JOURNALING (DIARIO)
+    // void mostrarPantallaBienvenidaJournaling(); // ! muestra la pantalla de bienvenida de journaling
+    // void ocultarPantallaBienvenidaJournaling(); // ! oculta la pantalla de bienvenida de journaling
+    // void mostrarListaEntradasJournaling(); // ! muestra la lista de entradas de journaling
+    // void ocultarListaEntradasJournaling(); // ! oculta la lista de entradas de journaling
+    // void mostrarInterfazEditarEntradaJournaling(int idEntrada = 0); // ! muestra la interfaz para editar una entrada de journaling, si es 0 es una entrada nueva
+    // void ocultarInterfazEditarEntradaJournaling(); // ! oculta la interfaz para editar una entrada de journaling
+    // void mostrarEntradaSeleccionadaJournaling(int idEntrada); // ! muestra la interfaz con la información de una entrada seleccionada de journaling
+    // void ocultarEntradaSeleccionadaJournaling(); // ! oculta la interfaz con la información de una entrada seleccionada de journaling
+    // // ? Boton entrar a journaling de mostrarPantallaBienvenidaJournaling
+    // void entrarJournaling(); // ! muestra la interfaz de journaling
+    // // ? Boton nueva entrada de mostrarListaEntradasJournaling
+    // void nuevaEntradaJournaling(); // ! muestra la interfaz para agregar una nueva entrada de journaling
+    // // ? Boton guardar entrada de interfazEditarEntradaJournaling
+    // void guardarEntradaJournaling(int idEntrada); // ! guarda una entrada de journaling
+    // // ? Boton eliminar entrada de interfaz mostrarEntradaSeleccionadaJournaling
+    // void eliminarEntradaJournaling(int idEntrada); // ! elimina una entrada de journaling
+
+    // // DEPENDENCIAS DE LA INTERFAZ REGISTRO DE EMOCIONES
+    // void mostrarAreaRegistroEmociones(); // ! muestra la interfaz de registro de emociones
+    // void ocultarAreaRegistroEmociones(); // ! oculta la interfaz de registro de emociones
+    // void mostrarMConfEmociones(); // ! muestra la interfaz de confirmación de emociones
+    // void ocultarMConfEmociones(); // ! oculta la interfaz de confirmación de emociones
+    // void mostrarEmoConfir(); // ! muestra la interfaz de emoción confirmada
+    // void ocultarEmoConfir(); // ! oculta la interfaz de emoción confirmada
+
+    // // DEPENDENCIAS DE LA INTERFAZ HIPERFOCO
+    // void mostrarAreaHiperfoco(); // ! muestra la interfaz de hiperfoco
+    // void ocultarAreaHiperfoco(); // ! oculta la interfaz de hiperfoco
+    // void mostrarInterfazListaMetodosHiperfoco(); // ! muestra la interfaz de lista de métodos de hiperfoco
+    // void ocultarInterfazListaMetodosHiperfoco(); // ! oculta la interfaz de lista de métodos de hiperfoco
+    // void mostrarMetodoHiperfoco(); // ! muestra la interfaz de método de hiperfoco (para un método específico)
+    // void ocultarMetodoHiperfoco(); // ! oculta la interfaz de método de hiperfoco (para un método específico)
+    // // ? boton establecer hiperfoco de mostrarAreaHiperfoco
+    // void establecerHiperfoco(); // ! establece el hiperfoco
+    // // ? lista de horas de mostrarAreaHiperfoco
+    // void seleccionarHoraHiperfoco(); // ! selecciona la cantidad de horas del hiperfoco (temporizador)
+    // // ? lista de minutos de mostrarAreaHiperfoco
+    // void seleccionarMinutosHiperfoco(); // ! selecciona la cantidad de minutos del hiperfoco (temporizador)
+    // // ? boton mostrar lista de métodos de mostrarAreaHiperfoco
+    // void mostrarListaMetodosHiperfoco(); // ! muestra la lista de métodos de hiperfoco
+    // // ? seleccionar método de gestión de mostrarInterfazListaMetodosHiperfoco
+    // void seleccionarMetodoHiperfoco(); // ! selecciona el método de gestión de tiempo (hiperfoco)
+
+    // // DEPENDENCIAS DE LA INTERFAZ CONFIGURACIÓN
+    // // ? boton modificar tema de mostrarAreaConfiguracion
+    // void modificarTema(); // ! modifica el tema de la aplicación
+    // // ? boton modificar fuente de mostrarAreaConfiguracion
+    // void modificarFuente(); // ! modifica la fuente de la aplicación
+    // // ? boton modificar sonido de alarma de mostrarAreaConfiguracion
+    // void modificarSonidoAlarma(); // ! modifica el sonido de alarma de la aplicación
+    // // ? boton modificar volumen de alarma de mostrarAreaConfiguracion
+    // void modificarVolumenAlarma(); // ! modifica el volumen de la alarma de la aplicación
+    // // ? boton modificar sonido de notificación de mostrarAreaConfiguracion
+    // void modificarSonidoNotificacion(); // ! modifica el sonido de notificación de la aplicación
+    // // ? boton modificar volumen de notificación de mostrarAreaConfiguracion
+    // void modificarVolumenNotificacion(); // ! modifica el volumen de la notificación de la aplicación
+    // // ? boton modificar credenciales de mostrarAreaConfiguracion
+    // void modificarCredencialesRespaldo(); // ! modifica las credenciales de la aplicación (usuario y contraseña de google drive)
+    // // ? boton modificar información de usuario de mostrarAreaConfiguracion
+    // void modificarInformacionUsuario(); // ! modifica la información del usuario de la aplicación
+
+    // // DEPENDENCIAS DE LA INTERFAZ INICIO DE SESIÓN
+    // // ? boton iniciar sesión de mostrarAreaInicioSesion
+    // void iniciarSesion(); // ! inicia sesión en la aplicación
+    // // ? boton registrar usuario de mostrarAreaInicioSesion
+    // void registrarUsuarioNuevo(); // ! registra un nuevo usuario en la aplicación
+
+    // // DEPENDENCIAS DE LA INTERFAZ REGISTRO DE USUARIO
+    // // ? boton registrar usuario de mostrarAreaRegistroUsuario
+    // void registrarUsuario(); // ! registra un nuevo usuario en la aplicación
+
+    // // DEPENDENCIAS DE LA BARRA DE NAVEGACIÓN
+    // // ? boton mostrar calendario de mostrarBarraNavegacion
+    // void mostrarCalendario(); // ! muestra la interfaz del calendario
+    // // ? boton mostrar journaling de mostrarBarraNavegacion
+    // void mostrarJournaling(); // ! muestra la interfaz de journaling
+    // // ? boton mostrar registro de emociones de mostrarBarraNavegacion
+    // void mostrarRegistroEmociones(); // ! muestra la interfaz de registro de emociones
+    // // ? boton mostrar hiperfoco de mostrarBarraNavegacion
+    // void mostrarHiperfoco(); // ! muestra la interfaz de hiperfoco
+    // // ? boton mostrar configuración de mostrarBarraNavegacion
+    // void mostrarConfiguracion(); // ! muestra la interfaz de configuración
+
+signals:
+
+
+protected:
+
 };
 #endif // MAINWINDOW_H

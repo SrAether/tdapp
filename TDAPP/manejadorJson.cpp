@@ -1,12 +1,12 @@
 #include <string>
 #include <map>                 // * para usar mapas como estructuras de datos
-#include <algorithm>           // * para usar algoritmos como remove_if
+//#include <algorithm>           // * para usar algoritmos como remove_if
 #include "manejadorArchivos.h" // ! para manejar archivos se usa la clase manejadorArchivos de la librería mArchivos
 #include "manejadorJson.h"     // * declaración de la clase ManejadorJson
 #include <stdexcept>            // * para lanzar excepciones
 
 // para depuración
-//#include <iostream>
+#include <iostream>
 
 // Códigos de error de la clase ManejadorJson parten de TDAPP20
 // Err:TDAPP20, El archivo "rutaArchivo" ya existe
@@ -66,6 +66,8 @@ void mJson::ManejadorJson::estructurar()
     // si ambos son falsos, estamos en el inicio de un objeto
     // si clave es verdadero, estamos en la clave
     // si valor es verdadero, estamos en el valor
+
+    //std::cout << contenido << std::endl;
 
     // ? recorremos el contenido del archivo
     for (auto i : contenido)
@@ -156,6 +158,12 @@ void mJson::ManejadorJson::estructurar()
         }
         }
     }
+
+    // std::cout << "Fin del proceso" << std::endl;
+    // if (map.empty())
+    // {
+    //     throw std::runtime_error("El archivo está vacío");
+    // }
 }
 
 // ! método para guardar el archivo
@@ -166,6 +174,8 @@ bool mJson::ManejadorJson::guardar()
 {
     // ? creamos una variable para guardar el contenido del archivo
     std::string contenido = "{\n";
+    // ? siempre que el mapa no esté vacío
+    //if (!map.empty())
     // ? recorremos el mapa
     for (auto i : map)
     {
@@ -351,4 +361,15 @@ std::string& mJson::ManejadorJson::operator[](std::string clave)
     // // Retornamos una referencia mutable al valor asociado a la clave
     // return it->second;
 }
+
+// ! metodo para saber si el mapa está vacío
+// ! versión 1.0
+// ! modificado por Aether
+// ? no se realizaron cambios a partir de la versión 1.0
+bool mJson::ManejadorJson::vacio()
+{
+    return map.empty();
+    //return true;
+}
+
 // ! fin de la clase ManejadorJson
