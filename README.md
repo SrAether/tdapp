@@ -34,6 +34,8 @@ diseño de archivos
       "ruta": "rutaCarpetaArchivos",
 },
 
+
+
 diseño de archivos Notas (journaling)
 {
       "fechaDeCreacion": "valor1",

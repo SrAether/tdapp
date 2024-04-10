@@ -3,13 +3,14 @@
 
 #include <QMainWindow>
 //#include <map> // no se necesita por que lo gestiona el manejadorJson
-//#include <string>
+#include <string>
 // ! para cosas de qt
 
 #include <QFrame> // ? para crear frames
 #include <QComboBox> // ? para crear un selector (como en html)
 #include <QPushButton> // ? para crear botones
 #include <QLineEdit> // ? para crear campos de texto
+#include <QLabel> // ? para crear etiquetas
 
 // ! experimental
 #include <QCalendarWidget> // incluimos el calendario
@@ -18,6 +19,8 @@
 #include "manejadorJson.h"
 // ! para manejar archivos
 #include "manejadorArchivos.h"
+
+// ! para switch
 
 
 
@@ -30,6 +33,8 @@ class MainWindow : public QWidget
     mJson::ManejadorJson* usuarios; // ! objeto de la clase manejadorJson que contiene la información de los usuarios de la aplicación
 
     QFont fuente; // fuente de la aplicación
+
+
 
     //! FRAMES Y WIDGETS DE LA VENTANA
 
@@ -52,7 +57,7 @@ class MainWindow : public QWidget
     // Frame para la interfaz de registro de usuario
     QFrame *frameRegistroUsuario; // frame para la interfaz de registro de usuario
 
-
+    // -----------------------------------------
     // COSAS DENTRO DE FRAME INICIO SESION
     // Selector de usuario
     QComboBox *selectorUsuario; // selector de usuario
@@ -63,7 +68,43 @@ class MainWindow : public QWidget
     // Botón para registrar usuario
     QPushButton *botonRegistrarse; // boton para registrar usuario
 
-
+    // -----------------------------------------
+    // COSAS DENTRO DE FRAME REGISTRO USUARIO
+    // variables utiles para registrar usuario
+    // boleano que nos indica si el usuario quiere añadir o no su correo electronico
+    bool banderaRegistroCopiaSeg; // si es verdadero quiere añadir su correo
+    // etiqueta de registro de usuario
+    QLabel *etiquetaRegistroUsuario; // etiqueta de registro de usuario
+    // campo de texto para ingresar nombre
+    // es relevante mencionar que la etiqueta se tiene que ligar a un objeto de tipo QString el cual voy a castear a std::string
+    std::string contenidoEtiquetaRegistroUsuario; // contenido de la etiqueta de registro de usuario
+    QLineEdit *campoRegistroNombre; // area para ingresar el nombre de usuario
+    // campo de texto para ingresar nombre de usuario (username)
+    QLineEdit *campoRegistroNombreUs; // area para ingresar el apodo del usuario
+    // campo de texto para ingresar contraseña
+    QLineEdit *campoRegistroContraseña; // campo para ingresar la conraseña
+    // campo de texto para confirmar la contraseña
+    QLineEdit *campoRegistroContraseñaConf; // campo para confirmar la contraseña
+    // Boton para seleccionar si se quiere realizar copia de seguridad
+    QPushButton *botonRegistroCopiaSeguridad; // boton para seleccionar si se quiere realizar copia de seguridad
+    // Selector de frecuencia copia de seguridad
+    QComboBox *selectorRegistroFrecuenciaCopiaSeguridad; // selector de copia de seguridad
+    // campo de texto para ingresar correo de copia de seguridad (se usara para google drive)
+    QLineEdit *campoRegistroCorreoCopiaSeguridad; // campo para ingresar el correo de copia de seguridad
+    // campo de texto para ingresar contraseña de copia de seguridad (se usara para google drive)
+    QLineEdit *campoRegistroContraseñaCopiaSeguridad; // campo para ingresar la contraseña de copia de seguridad
+    // campo de texto para verificar la contraseña de copia de seguridad
+    QLineEdit *campoRegistroContraseñaCopiaSeguridadConf; // campo para verificar la contraseña de copia de seguridad
+    // Botón para añadir foto de perfil
+    QPushButton *botonRegistroFotoPerfil; // boton para añadir foto de perfil
+    // Selector de sexo (la verdad no se si poner sexo o genero
+    QComboBox *selectorRegistroGenero; // selector de genero
+    // Selector de edad
+    QComboBox *selectorRegistroEdad; // selector edad
+    // Botón para registrar usuario
+    QPushButton *botonRegistrarUsuario; // boton para registrar usuario
+    // Botón para cancelar registro de usuario
+    QPushButton *botonRegistroCancelar; // boton para cancelar registro de usuario
 
 
     // Métodos privados de la ventana
@@ -77,8 +118,16 @@ private slots:
 
     void activarInterfazInicioSesion(); // ! muestra la interfaz de inicio de sesión
     void desactivarInterfazInicioSesion(); // ! oculta la interfaz de inicio de sesión
+
+    // Relacionados con la interfaz de registro de usuario
     void activarInterfazRegistroUsuario(); // ! muestra la interfaz de registro de usuario
     void desactivarInterfazRegistroUsuario(); // ! oculta la interfaz de registro de usuario
+    void registrarUsuario(); // ! registra un nuevo usuario en la aplicación
+    void cancelarRegistroUsuario(); // ! cancela el registro de un nuevo usuario en la aplicación
+    void seleccionarCopiaSeguridad(); // ! selecciona si se quiere realizar copia de seguridad
+
+
+
     //void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones
     //void desactivarInterfazRegistroEmociones(); // ! oculta la interfaz de registro de emociones
     // void activarInterfazHiperfoco(); // ! muestra la interfaz de hiperfoco
