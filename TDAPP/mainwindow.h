@@ -19,6 +19,8 @@
 #include "manejadorJson.h"
 // ! para manejar archivos
 #include "manejadorArchivos.h"
+// ! para encriptar
+#include "encriptado.h"
 
 // ! para switch
 
@@ -30,9 +32,12 @@ class MainWindow : public QWidget
     // variables
     mArchivos::manejadorArchivos manejadorArchivos; // ! objeto de la clase manejadorArchivos que permite manejar archivos
     mJson::ManejadorJson* configuraciones; // ! objeto de la clase manejadorJson que contiene las configuraciones de la aplicación
-    mJson::ManejadorJson* usuarios; // ! objeto de la clase manejadorJson que contiene la información de los usuarios de la aplicación
-
+    //mJson::ManejadorJson* usuarios; // ! objeto de la clase manejadorJson que contiene la información de los usuarios de la aplicación
+    // ? DADO QUE USUARIOS SOLO SE UTILIZA PARA INICIAR SESIÓN, ES MEJOR USAR UN VECTOR DE STRINGS QUE CONTENGA LOS USUARIOS
+    std::vector<std::string> usuarios; // ! vector que contiene los usuarios de la aplicación (nombre de usuario que a su vez es el nombre de la carpeta del usuario)
     QFont fuente; // fuente de la aplicación
+    // ! para encriptar
+    EncriptadoV2::Encriptado *encriptado; // ! objeto de la clase encriptado que permite encriptar y desencriptar se define como variable global en el cpp
 
 
 
@@ -60,19 +65,21 @@ class MainWindow : public QWidget
     // -----------------------------------------
     // COSAS DENTRO DE FRAME INICIO SESION
     // Selector de usuario
-    QComboBox *selectorUsuario; // selector de usuario
+    QComboBox *InSeselectorUsuario; // selector de usuario
     // campo de texto para la contraseña
-    QLineEdit *campoContraseña; // campo de texto para la contraseña
+    QLineEdit *InSecampoContraseña; // campo de texto para la contraseña
     // Botón para iniciar sesión
-    QPushButton *botonIniciarSesion; // boton para iniciar sesión
+    QPushButton *InSebotonIniciarSesion; // boton para iniciar sesión
     // Botón para registrar usuario
-    QPushButton *botonRegistrarse; // boton para registrar usuario
+    QPushButton *InSebotonRegistrarse; // boton para registrar usuario
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME REGISTRO USUARIO
     // variables utiles para registrar usuario
     // boleano que nos indica si el usuario quiere añadir o no su correo electronico
     bool banderaRegistroCopiaSeg; // si es verdadero quiere añadir su correo
+    // string que guarda la ruta de la foto de perfil
+    std::string rutaRegistroFotoPerfil; // ruta de la foto de perfil
     // etiqueta de registro de usuario
     QLabel *etiquetaRegistroUsuario; // etiqueta de registro de usuario
     // campo de texto para ingresar nombre
@@ -125,8 +132,16 @@ private slots:
     void registrarUsuario(); // ! registra un nuevo usuario en la aplicación
     void cancelarRegistroUsuario(); // ! cancela el registro de un nuevo usuario en la aplicación
     void seleccionarCopiaSeguridad(); // ! selecciona si se quiere realizar copia de seguridad
+    void seleccionarArchivo(std::string& dondeSeGuarda, const std::string& extension, const std::string& titulo); // ! selecciona un archivo
+    void seleccionarFotoPerfil(); // ! selecciona la foto de perfil del usuario
+
+    // relacionados con el vector de usuarios
+    int buscarUsuario(const std::string& usuario); // ! busca un usuario en el vector de usuarios si no lo encuentra regresa -1
 
 
+    // Relacionados con la interfaz de inicio de sesión
+    //void iniciarSesion(); // ! inicia sesión en la aplicación
+    void inSeRegistrarUsuarioNuevo(); // ! registra un nuevo usuario en la aplicación
 
     //void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones
     //void desactivarInterfazRegistroEmociones(); // ! oculta la interfaz de registro de emociones
