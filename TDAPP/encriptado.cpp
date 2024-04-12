@@ -7,7 +7,7 @@
 // ! versión 2.0
 // ! modificado por Aether
 // ? se agregaron los códigos de error
-// ! ErrCif01: Error al inicializar la librería de
+// ! ErrCif01: Error al inicializar la librería de encritado
 // ! ErrCif02: Error al inicializar el contexto de encriptación
 // ! ErrCif03: Error al encriptar el texto
 // ! ErrCif04: Error al inicializar el contexto de desencriptación
@@ -41,6 +41,7 @@ std::string EncriptadoV2::Encriptado::encriptar(std::string texto)
     // ? cadena de texto encriptado
     std::string textoEncriptado;
     // ? inicialización de la librería de cifrado
+    // ? se crea un contexto de cifrado (es decir el objeto que se encargará de cifrar el texto)
     EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
     if (!ctx)
     {
@@ -51,6 +52,9 @@ std::string EncriptadoV2::Encriptado::encriptar(std::string texto)
     // ? inicialización del contexto de encriptación
     if (EVP_EncryptInit_ex(ctx, EVP_aes_256_gcm(), NULL, (const unsigned char*)contraseña.c_str(), (const unsigned char*)iv.c_str()) != 1)
     {
+        //                                               22222222
+        // un caracter se almacena en memoria con 8 bits 00000000
+        // si creamos un caracter el ultimo bit simboliza el positivo o negativo
         // ? si no se pudo inicializar el contexto de encriptación, se libera la memoria
         EVP_CIPHER_CTX_free(ctx);
         // ? genera una excepción
@@ -97,6 +101,7 @@ std::string EncriptadoV2::Encriptado::desencriptar(std::string texto)
     // ? cadena de texto desencriptado
     std::string textoDesencriptado;
     // ? inicialización de la librería de cifrado
+    // ? se crea un contexto de desencriptación (es decir el objeto que se encargará de desencriptar el texto)
     EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
     if (!ctx)
     {

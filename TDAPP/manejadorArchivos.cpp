@@ -188,20 +188,38 @@ void mArchivos::manejadorArchivos::moverCarpeta(const std::string &rutaNueva, co
 const std::vector<std::string> mArchivos::manejadorArchivos::obtenerContenidoCarpeta(const std::string &ruta, const int tipo)
 {
     std::vector<std::string> contenido;
+    // for (const auto &elemento : std::filesystem::directory_iterator(ruta))
+    // {
+    //     if (tipo == 0 && std::filesystem::is_regular_file(elemento))
+    //     {
+    //         contenido.push_back(elemento.path().string());
+    //     }
+    //     else if (tipo == 1 && std::filesystem::is_directory(elemento))
+    //     {
+    //         contenido.push_back(elemento.path().string());
+    //     }
+    //     else if (tipo == 2)
+    //     {
+    //         contenido.push_back(elemento.path().string());
+    //     }
+    // }
+    // ? Para este punto ya se tiene el contenido de la carpeta pero se agrego con todo y la ruta, si se quiere solo el nombre se puede hacer un pequeño cambio
+    // ? en el for anterior
     for (const auto &elemento : std::filesystem::directory_iterator(ruta))
     {
         if (tipo == 0 && std::filesystem::is_regular_file(elemento))
         {
-            contenido.push_back(elemento.path().string());
+            contenido.push_back(elemento.path().filename().string());
         }
         else if (tipo == 1 && std::filesystem::is_directory(elemento))
         {
-            contenido.push_back(elemento.path().string());
+            contenido.push_back(elemento.path().filename().string());
         }
         else if (tipo == 2)
         {
-            contenido.push_back(elemento.path().string());
+            contenido.push_back(elemento.path().filename().string());
         }
     }
+
     return contenido;
 }

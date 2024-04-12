@@ -32,7 +32,7 @@ class MainWindow : public QWidget
     // variables
     mArchivos::manejadorArchivos manejadorArchivos; // ! objeto de la clase manejadorArchivos que permite manejar archivos
     mJson::ManejadorJson* configuraciones; // ! objeto de la clase manejadorJson que contiene las configuraciones de la aplicación
-    //mJson::ManejadorJson* usuarios; // ! objeto de la clase manejadorJson que contiene la información de los usuarios de la aplicación
+    mJson::ManejadorJson* configuracionesUsuario; // ! objeto de la clase manejadorJson que contiene las configuraciones del usuario
     // ? DADO QUE USUARIOS SOLO SE UTILIZA PARA INICIAR SESIÓN, ES MEJOR USAR UN VECTOR DE STRINGS QUE CONTENGA LOS USUARIOS
     std::vector<std::string> usuarios; // ! vector que contiene los usuarios de la aplicación (nombre de usuario que a su vez es el nombre de la carpeta del usuario)
     QFont fuente; // fuente de la aplicación
@@ -65,13 +65,13 @@ class MainWindow : public QWidget
     // -----------------------------------------
     // COSAS DENTRO DE FRAME INICIO SESION
     // Selector de usuario
-    QComboBox *InSeselectorUsuario; // selector de usuario
+    QComboBox *inSeSelectorUsuario; // selector de usuario
     // campo de texto para la contraseña
-    QLineEdit *InSecampoContraseña; // campo de texto para la contraseña
+    QLineEdit *inSeCampoContraseña; // campo de texto para la contraseña
     // Botón para iniciar sesión
-    QPushButton *InSebotonIniciarSesion; // boton para iniciar sesión
+    QPushButton *inSeBotonIniciarSesion; // boton para iniciar sesión
     // Botón para registrar usuario
-    QPushButton *InSebotonRegistrarse; // boton para registrar usuario
+    QPushButton *inSeBotonRegistrarse; // boton para registrar usuario
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME REGISTRO USUARIO
@@ -126,6 +126,8 @@ private slots:
     void activarInterfazInicioSesion(); // ! muestra la interfaz de inicio de sesión
     void desactivarInterfazInicioSesion(); // ! oculta la interfaz de inicio de sesión
 
+    // //////////////////////////////////////////////////////////////////////////////////
+    // --------------------------- SLOTS Registro Usuario ----------------------------------
     // Relacionados con la interfaz de registro de usuario
     void activarInterfazRegistroUsuario(); // ! muestra la interfaz de registro de usuario
     void desactivarInterfazRegistroUsuario(); // ! oculta la interfaz de registro de usuario
@@ -138,10 +140,23 @@ private slots:
     // relacionados con el vector de usuarios
     int buscarUsuario(const std::string& usuario); // ! busca un usuario en el vector de usuarios si no lo encuentra regresa -1
 
-
+    // //////////////////////////////////////////////////////////////////////////////////
+    // -------------------------------- SLOTS Inicio Sesion ----------------------------------
     // Relacionados con la interfaz de inicio de sesión
-    //void iniciarSesion(); // ! inicia sesión en la aplicación
     void inSeRegistrarUsuarioNuevo(); // ! registra un nuevo usuario en la aplicación
+    void inSeCargarUsuarios(); // ! carga los usuarios en el selector de usuarios
+    void inSeIniciarSesion(); // ! inicia sesión en la aplicación
+
+
+    // //////////////////////////////////////////////////////////////////////////////////
+    // --------------------------- SLOTS Journaling ----------------------------------
+    // Relacionados con la interfaz de journaling
+    void activarInterfazJournaling(); // ! muestra la interfaz de journaling
+    void desactivarInterfazJournaling(); // ! oculta la interfaz de journaling
+    void mostrarPantallaBienvenidaJournaling(); // ! muestra la pantalla de bienvenida de journaling
+
+
+
 
     //void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones
     //void desactivarInterfazRegistroEmociones(); // ! oculta la interfaz de registro de emociones
@@ -231,15 +246,6 @@ private slots:
     // // ? boton modificar información de usuario de mostrarAreaConfiguracion
     // void modificarInformacionUsuario(); // ! modifica la información del usuario de la aplicación
 
-    // // DEPENDENCIAS DE LA INTERFAZ INICIO DE SESIÓN
-    // // ? boton iniciar sesión de mostrarAreaInicioSesion
-    // void iniciarSesion(); // ! inicia sesión en la aplicación
-    // // ? boton registrar usuario de mostrarAreaInicioSesion
-    // void registrarUsuarioNuevo(); // ! registra un nuevo usuario en la aplicación
-
-    // // DEPENDENCIAS DE LA INTERFAZ REGISTRO DE USUARIO
-    // // ? boton registrar usuario de mostrarAreaRegistroUsuario
-    // void registrarUsuario(); // ! registra un nuevo usuario en la aplicación
 
     // // DEPENDENCIAS DE LA BARRA DE NAVEGACIÓN
     // // ? boton mostrar calendario de mostrarBarraNavegacion

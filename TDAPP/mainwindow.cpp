@@ -71,42 +71,44 @@ MainWindow::MainWindow(QWidget *parent)
 
     // creamos un frame para iniciar sesión
     frameInicioSesion = new QFrame(framePrincipal);
+    // ocultamos por defecto
+    frameInicioSesion->hide();
 
     // en este punto se deberia cargar un estilo para el frame inicio de sesión
     //frameInicioSesion->setStyleSheet("background-color: #000000;"); // estilo para el frame
 
     // SELECTOR DE USUARIO
     // creamos un selector de usuario
-    InSeselectorUsuario = new QComboBox(frameInicioSesion);
+    inSeSelectorUsuario = new QComboBox(frameInicioSesion);
     // establecemos la posición del selector
-    InSeselectorUsuario->setGeometry(100, 100, 200, 50);
+    inSeSelectorUsuario->setGeometry(100, 100, 200, 50);
     // establecemos el texto del selector
-    InSeselectorUsuario->addItem("Usuario 1");
-    InSeselectorUsuario->addItem("Usuario 2");
+    //inSeSelectorUsuario->addItem("Usuario 1");
+    //inSeSelectorUsuario->addItem("Usuario 2");
 
     // CAMPO DE CONTRASEÑA
     // creamos un campo de contraseña
-    InSecampoContraseña = new QLineEdit(frameInicioSesion);
+    inSeCampoContraseña = new QLineEdit(frameInicioSesion);
     // establecemos la posición del campo de contraseña
-    InSecampoContraseña->setGeometry(100, 200, 200, 50);
+    inSeCampoContraseña->setGeometry(100, 200, 200, 50);
     // establecemos el texto del campo de contraseña
-    InSecampoContraseña->setPlaceholderText("Contraseña");
+    inSeCampoContraseña->setPlaceholderText("Contraseña");
 
     // BOTÓN DE INICIAR SESIÓN
     // creamos un botón para iniciar sesión
-    InSebotonIniciarSesion = new QPushButton(frameInicioSesion);
+    inSeBotonIniciarSesion = new QPushButton(frameInicioSesion);
     // establecemos la posición del botón de iniciar sesión
-    InSebotonIniciarSesion->setGeometry(100, 300, 200, 50);
+    inSeBotonIniciarSesion->setGeometry(100, 300, 200, 50);
     // establecemos el texto del botón de iniciar sesión
-    InSebotonIniciarSesion->setText("Iniciar Sesión");
+    inSeBotonIniciarSesion->setText("Iniciar Sesión");
 
     // BOTÓN DE REGISTRARSE
     // creamos un botón para registrarse
-    InSebotonRegistrarse = new QPushButton(frameInicioSesion);
+    inSeBotonRegistrarse = new QPushButton(frameInicioSesion);
     // establecemos la posición del botón de registrarse
-    InSebotonRegistrarse->setGeometry(100, 400, 200, 50);
+    inSeBotonRegistrarse->setGeometry(100, 400, 200, 50);
     // establecemos el texto del botón de registrarse
-    InSebotonRegistrarse->setText("Registrarse");
+    inSeBotonRegistrarse->setText("Registrarse");
 
     // -----------------------------------------------------------------------------
     // REGISTRO DE USUARIOS NO COMPLETADO
@@ -295,6 +297,19 @@ MainWindow::MainWindow(QWidget *parent)
     // establecemos el texto del botón para cancelar
     botonRegistroCancelar->setText("Cancelar");
 
+    // -----------------------------------------------------------------------------
+    // JOURNALING NO COMPLETADO
+    /* Debe contener:
+     * una pantalla de bienvenida <- contiene una imagen seleccionada por el usuario y un boton para continuar
+     * una pantalla con la lista de entrada de journaling
+     * ... (continuar)
+     */
+
+    // creamos un frame para el journaling
+    frameJournaling = new QFrame(framePrincipal);
+    // ocultamos por defecto
+    frameJournaling->hide();
+
 
 
 
@@ -324,6 +339,14 @@ MainWindow::MainWindow(QWidget *parent)
         // * abrimos la ventana de registro de usuarios
         activarInterfazRegistroUsuario(); // * abrimos la ventana de registro de usuarios
     }
+    else
+    {
+        std::cout << "Hay usuarios" << std::endl;
+        // * abrimos la ventana de inicio de sesión
+        activarInterfazInicioSesion(); // * abrimos la ventana de inicio de sesión
+        // * cerramos la ventana de registro de usuarios
+        desactivarInterfazRegistroUsuario(); // * cerramos la ventana de registro de usuarios
+    }
 
     // AREA PARA CONECTAR SEÑALES Y SLOTS
 
@@ -339,7 +362,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // SEÑALES RELACIONADAS CON EL INICIO DE SESIÓN
     // conectamos la señal para activar el frame de registro de usuarios
-    connect(InSebotonRegistrarse, SIGNAL(clicked()), this, SLOT(inSeRegistrarUsuarioNuevo()));
+    connect(inSeBotonRegistrarse, SIGNAL(clicked()), this, SLOT(inSeRegistrarUsuarioNuevo()));
+    // conectamos la señal de iniciar sesión
+    connect(inSeBotonIniciarSesion, SIGNAL(clicked()), this, SLOT(inSeIniciarSesion()));
 
 
 
@@ -473,6 +498,8 @@ void MainWindow::verificarExistenciaArchivoUsuario()
 // ? Sin cambios primera versión
 void MainWindow::activarInterfazInicioSesion()
 {
+    // ? carga los usuarios en el selector de usuarios
+    inSeCargarUsuarios();
     // ? se activa el frame de inicio de sesión
     frameInicioSesion->show();
 }
@@ -504,6 +531,78 @@ void MainWindow::inSeRegistrarUsuarioNuevo()
 
     // ? se activa el frame de registro de usuarios
     activarInterfazRegistroUsuario();
+}
+
+// ! método para cargar los usuarios en el selector de usuarios
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::inSeCargarUsuarios()
+{
+    // * los usuarios se encuentran en el vector usuarios (fueron agregados en el metodo verificarExistenciaArchivoUsuario)
+    // * se cargan los usuarios en el selector de usuarios
+
+    // ? se cargan los usuarios en el selector de usuarios
+    for (const std::string& usuario : usuarios)
+    {
+        inSeSelectorUsuario->addItem(QString::fromStdString(usuario));
+    }
+
+}
+
+// ! método para iniciar sesión
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::inSeIniciarSesion()
+{
+    // verificacamos que todos los campos estén llenos
+    if (inSeSelectorUsuario->currentText().isEmpty() || inSeCampoContraseña->text().isEmpty())
+    {
+        // ? si los campos están vacíos, se mostrará un mensaje emergente que indica que los campos no pueden estar vacios
+        QMessageBox::critical(this, "Error", "Los campos no pueden estar vacíos");
+        return;
+    }
+    // ? se obtienen los datos del formulario de inicio de sesión
+    std::string usuario = inSeSelectorUsuario->currentText().toStdString();
+    std::string contraseña = inSeCampoContraseña->text().toStdString();
+    // mostramos en terminal los datos
+    std::cout << "Usuario: " << usuario << std::endl;
+    std::cout << "Contraseña: " << contraseña << std::endl;
+    // ? verificamos que el usuario exista
+    // ? verificamos que la contraseña sea correcta
+    // ? si el usuario y la contraseña son correctos, se activará el frame Journaling
+    // ? si el usuario y la contraseña son incorrectos, se mostrará un mensaje emergente que indica que los datos son incorrectos
+
+    // ? se verifica que el usuario exista
+    if (!buscarUsuario(usuario))
+    {
+        // ? si el usuario no existe, se mostrará un mensaje emergente que indica que el usuario no existe
+        QMessageBox::critical(this, "Error", "El usuario no existe");
+        return;
+    }
+    // ? se verifica que la contraseña sea correcta
+    // ? se obtiene la contraseña del usuario (se encuentra en el archivo de configuraciones del usuario)
+    //mJson::ManejadorJson configuracionesUsuario(RUTA_USUARIOS + usuario + "/config.json");
+    configuracionesUsuario = new mJson::ManejadorJson(RUTA_USUARIOS + usuario + "/config.json");
+    //std::string contraseñaUsuarioEncriptada = configuracionesUsuario["contraseña"];
+    std::string contraseñaUsuarioEncriptada = (*configuracionesUsuario)["contraseña"];
+    // ? se desencripta la contraseña
+    std::string contraseñaUsuario = encriptado->desencriptar(contraseñaUsuarioEncriptada);
+    std::cout << "Contraseña desencriptada: " << contraseñaUsuario << std::endl;
+    // ? se verifica que la contraseña sea correcta
+    if (contraseña != contraseñaUsuario)
+    {
+        // ? si la contraseña es incorrecta, se mostrará un mensaje emergente que indica que la contraseña es incorrecta
+        QMessageBox::critical(this, "Error", "La contraseña es incorrecta");
+        return;
+    }
+    // ? si el usuario y la contraseña son correctos, se activará el frame Journaling
+    // ? se desactiva el frame de inicio de sesión
+    desactivarInterfazInicioSesion();
+    // ? se activa el frame de journaling
+    activarInterfazJournaling();
+
 }
 
 
@@ -800,3 +899,38 @@ void MainWindow::seleccionarArchivo(std::string& dondeGuardar, const std::string
 }
 
 
+// ////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------------
+// ! RELACIONADOS CON EL JOURNALING
+
+// ! método para activar el frame de journaling
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::activarInterfazJournaling()
+{
+    std::cout << "Activando interfaz de journaling" << std::endl;
+    // ? se activa el frame de journaling
+    frameJournaling->show();
+}
+
+// ! método para desactivar el frame de journaling
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::desactivarInterfazJournaling()
+{
+    // ? se desactiva el frame de journaling
+    frameJournaling->hide();
+}
+
+// ! método para mostrar la pantalla de bienvenida
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::mostrarPantallaBienvenidaJournaling()
+{
+    // ? se mostrará la pantalla de bienvenida
+    // ? se mostrará una imagen seleccionada por el usuario
+    // ? se mostrará un botón para continuar
+}
