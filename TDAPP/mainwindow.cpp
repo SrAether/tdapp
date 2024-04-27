@@ -1,4 +1,6 @@
 #include "mainwindow.h"
+#include "estilos.h" //Archivo que carga los estilos
+
 #include <string>
 
 // para debug de terminal
@@ -41,6 +43,9 @@ const std::string CONTRASEÑA_ENCRIPTADO = "GULRarfiubh12#"; // ? contraseña pa
 MainWindow::MainWindow(QWidget *parent)
     : QWidget{parent}
 {
+    //Ejemplo para cargar el estilo
+    this->setStyleSheet(StylesQSS1);
+
     // Titulo de la ventana
     setWindowTitle("TDApp");
     // Nombre de la ventana
