@@ -11,6 +11,7 @@
 // Códigos de error de la clase ManejadorJson parten de TDAPP20
 // Err:TDAPP20, El archivo "rutaArchivo" ya existe
 
+
 // !Constructor de la clase ManejadorJson
 // !Versión 1.0
 // !Modificado por Aether
@@ -37,6 +38,7 @@ mJson::ManejadorJson::ManejadorJson(const std::string& rutaArchivo, bool nuevo)
 
     // ! Es necesario desarrollar el método estructurar (completado requiere revisión)
     estructurar();
+
 }
 
 // ! método para extraer el mapa del string del archivo
@@ -51,6 +53,7 @@ void mJson::ManejadorJson::estructurar()
 {
     // ? usamos el método leerArchivo de la clase manejadorArchivos
     std::string contenido = manejadorArchivos.leerArchivo(ruta);
+    //std::cout << contenido << std::endl;
 
     // ? comenzamos el proceso de estructuración
 
@@ -66,23 +69,65 @@ void mJson::ManejadorJson::estructurar()
     // si ambos son falsos, estamos en el inicio de un objeto
     // si clave es verdadero, estamos en la clave
     // si valor es verdadero, estamos en el valor
+    // variable para distinguir las comillas reales de las comillas de los valores
 
     //std::cout << contenido << std::endl;
 
     // ? recorremos el contenido del archivo
-    for (auto i : contenido)
+    //for (auto i : contenido)
+    for (int i = 0; i < contenido.size(); i++)
     {
         // usando un switch para determinar el tipo de carácter
-        switch (i)
+        unsigned char c = contenido[i];
+        switch (c)
         {
         case '}':
         {
             // ? fin de objeto
+            if (i == contenido.size() - 1)
+            {
+
+                break;
+            }
+            // si estamos en la clave y aun no terminamos el proceso
+            if (enClave && !proceso)
+            {
+                // agregamos el carácter a la clave
+                //clave += i;
+                clave += c;
+            }
+            // si estamos en el valor
+            if (enValor)
+            {
+                // agregamos el carácter al valor
+                //valor += i;
+                valor += c;
+            }
             break;
         }
         case '{':
         {
             // inicio de objeto
+            if (contenido[i+1] == '\n')
+            {
+                //std::cout << "siguiente " << contenido[i+1] << std::endl;
+                // saltamos al siguiente ciclo
+                break;
+            }
+            // si estamos en la clave y aun no terminamos el proceso
+            if (enClave && !proceso)
+            {
+                // agregamos el carácter a la clave
+                //clave += i;
+                clave += c;
+            }
+            // si estamos en el valor
+            if (enValor)
+            {
+                // agregamos el carácter al valor
+                //valor += i;
+                valor += c;
+            }
             break;
         }
         case '"':
@@ -102,9 +147,11 @@ void mJson::ManejadorJson::estructurar()
                 enClave = false;
                 continue;
             }
+
             // si enValor es verdadero, quiere decir que ya leímos la clave y estamos en el valor por lo que estamos en la ultima comilla del valor
-            if (enValor)
+            if (enValor && (contenido[i+1] == ','))
             {
+                //td::cout << "siguiente " << contenido[i+1] << std::endl;
                 // agregamos la clave y el valor al mapa
                 map[clave] = valor;
                 //std::cout << "clave: " << clave << " valor: " << valor << std::endl;
@@ -121,6 +168,24 @@ void mJson::ManejadorJson::estructurar()
                 // saltamos al siguiente ciclo
                 continue;
             }
+            if (enValor && (contenido[i+1] != ','))
+            {
+                // si estamos en la clave y aun no terminamos el proceso
+                if (enClave && !proceso)
+                {
+                    // agregamos el carácter a la clave
+                    //clave += i;
+                    clave += c;
+                }
+                // si estamos en el valor
+                if (enValor)
+                {
+                    // agregamos el carácter al valor
+                    //valor += i;
+                    valor += c;
+                }
+                break;
+            }
             // si enClave es falso, quiere decir que aun no leemos la clave por lo que estamos en la primera comilla de la clave
             if (!enClave)
             {
@@ -129,16 +194,38 @@ void mJson::ManejadorJson::estructurar()
             }
             break;
         }
-        case ',':
-        {
-            // saltamos al siguiente ciclo el proceso de agregar la clave y el valor al mapa se hace en la comilla
-            continue;
-        }
+        // case ',':
+        // {
+
+        //     // saltamos al siguiente ciclo el proceso de agregar la clave y el valor al mapa se hace en la comilla
+        //     continue;
+        // }
         // salto de linea
         case '\n':
         {
             // saltamos al siguiente ciclo
-            continue;
+            //continue;
+            // si el salto de linea va despues de , quiere decir que el objeto terminó por lo que damos continue
+            if (contenido[i-1] == ',')
+            {
+                break;
+            }
+            // si no seguimos al default
+            // si estamos en la clave y aun no terminamos el proceso
+            if (enClave && !proceso)
+            {
+                // agregamos el carácter a la clave
+                //clave += i;
+                clave += c;
+            }
+            // si estamos en el valor
+            if (enValor)
+            {
+                // agregamos el carácter al valor
+                //valor += i;
+                valor += c;
+            }
+            break;
         }
         default:
         {
@@ -146,18 +233,26 @@ void mJson::ManejadorJson::estructurar()
             if (enClave && !proceso)
             {
                 // agregamos el carácter a la clave
-                clave += i;
+                //clave += i;
+                clave += c;
             }
             // si estamos en el valor
             if (enValor)
             {
                 // agregamos el carácter al valor
-                valor += i;
+                //valor += i;
+                valor += c;
             }
             break;
         }
         }
     }
+    // mostramos lo que quedo en la clave y el valor
+    // std::cout << "Residuos" << std::endl;
+    // std::cout << "clave: " << clave << std::endl;
+    // std::cout << " valor: " << std::endl;
+    // std::cout << valor << std::endl;
+    // std::cout << "Fin del proceso" << std::endl;
 
     // std::cout << "Fin del proceso" << std::endl;
     // if (map.empty())

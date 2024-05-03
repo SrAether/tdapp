@@ -88,11 +88,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     // CAMPO DE CONTRASEÑA
     // creamos un campo de contraseña
-    inSeCampoContraseña = new QLineEdit(frameInicioSesion);
+    inSeCampoContra = new QLineEdit(frameInicioSesion);
     // establecemos la posición del campo de contraseña
-    inSeCampoContraseña->setGeometry(100, 200, 200, 50);
+    inSeCampoContra->setGeometry(100, 200, 200, 50);
     // establecemos el texto del campo de contraseña
-    inSeCampoContraseña->setPlaceholderText("Contraseña");
+    inSeCampoContra->setPlaceholderText("Contraseña");
 
     // BOTÓN DE INICIAR SESIÓN
     // creamos un botón para iniciar sesión
@@ -109,6 +109,14 @@ MainWindow::MainWindow(QWidget *parent)
     inSeBotonRegistrarse->setGeometry(100, 400, 200, 50);
     // establecemos el texto del botón de registrarse
     inSeBotonRegistrarse->setText("Registrarse");
+
+    // BOTÓN DE RECUPERAR CONTRASEÑA
+    // creamos un botón para recuperar contraseña
+    inSeBotonRecuperarContra = new QPushButton(frameInicioSesion);
+    // establecemos la posición del botón de recuperar contraseña
+    inSeBotonRecuperarContra->setGeometry(100, 500, 200, 50);
+    // establecemos el texto del botón de recuperar contraseña
+    inSeBotonRecuperarContra->setText("Recuperar Contraseña");
 
     // -----------------------------------------------------------------------------
     // REGISTRO DE USUARIOS NO COMPLETADO
@@ -164,23 +172,23 @@ MainWindow::MainWindow(QWidget *parent)
 
     // CAMPO PARA INGRESAR CONTRASEÑA
     // creamos un campo para ingresar la contraseña
-    campoRegistroContraseña = new QLineEdit(frameRegistroUsuario);
+    campoRegistroContra = new QLineEdit(frameRegistroUsuario);
     // establecemos la posición del campo para ingresar la contraseña
-    campoRegistroContraseña->setGeometry(100, 200, 200, 50);
+    campoRegistroContra->setGeometry(100, 200, 200, 50);
     // establecemos el texto del campo para ingresar la contraseña
-    campoRegistroContraseña->setPlaceholderText("Contraseña");
+    campoRegistroContra->setPlaceholderText("Contra");
     // establecemos que el campo sea de tipo contraseña
-    campoRegistroContraseña->setEchoMode(QLineEdit::Password);
+    campoRegistroContra->setEchoMode(QLineEdit::Password);
 
     // CAMPO PARA CONFIRMAR CONTRASEÑA
     // creamos un campo para confirmar la contraseña
-    campoRegistroContraseñaConf = new QLineEdit(frameRegistroUsuario);
+    campoRegistroContraConf = new QLineEdit(frameRegistroUsuario);
     // establecemos la posición del campo para confirmar la contraseña
-    campoRegistroContraseñaConf->setGeometry(100, 250, 200, 50);
+    campoRegistroContraConf->setGeometry(100, 250, 200, 50);
     // establecemos el texto del campo para confirmar la contraseña
-    campoRegistroContraseñaConf->setPlaceholderText("Confirmar Contraseña");
+    campoRegistroContraConf->setPlaceholderText("Confirmar Contra");
     // establecemos que el campo sea de tipo contraseña y que muestre la opción de mostrar la contraseña
-    campoRegistroContraseñaConf->setEchoMode(QLineEdit::Password);
+    campoRegistroContraConf->setEchoMode(QLineEdit::Password);
 
 
 
@@ -221,27 +229,27 @@ MainWindow::MainWindow(QWidget *parent)
 
     // CAMPO PARA INGRESAR CONTRASEÑA DE CORREO ELECTRÓNICO (PARA COPIA DE SEGURIDAD)
     // creamos un campo para ingresar la contraseña del correo electrónico
-    campoRegistroContraseñaCopiaSeguridad = new QLineEdit(frameRegistroUsuario);
+    campoRegistroContraCopiaSeguridad = new QLineEdit(frameRegistroUsuario);
     // establecemos la posición del campo para ingresar la contraseña del correo electrónico
-    campoRegistroContraseñaCopiaSeguridad->setGeometry(100, 450, 200, 50);
+    campoRegistroContraCopiaSeguridad->setGeometry(100, 450, 200, 50);
     // establecemos el texto del campo para ingresar la contraseña del correo electrónico
-    campoRegistroContraseñaCopiaSeguridad->setPlaceholderText("Contraseña del Correo Electrónico");
+    campoRegistroContraCopiaSeguridad->setPlaceholderText("Contra del Correo Electrónico");
     // establecemos que el campo sea de tipo contraseña
-    campoRegistroContraseñaCopiaSeguridad->setEchoMode(QLineEdit::Password);
+    campoRegistroContraCopiaSeguridad->setEchoMode(QLineEdit::Password);
     // ocultamos por defecto
-    campoRegistroContraseñaCopiaSeguridad->hide();
+    campoRegistroContraCopiaSeguridad->hide();
 
     // CAMPO PARA CONFIRMAR CONTRASEÑA DE CORREO ELECTRÓNICO (PARA COPIA DE SEGURIDAD)
     // creamos un campo para confirmar la contraseña del correo electrónico
-    campoRegistroContraseñaCopiaSeguridadConf = new QLineEdit(frameRegistroUsuario);
+    campoRegistroContraCopiaSeguridadConf = new QLineEdit(frameRegistroUsuario);
     // establecemos la posición del campo para confirmar la contraseña del correo electrónico
-    campoRegistroContraseñaCopiaSeguridadConf->setGeometry(100, 500, 200, 50);
+    campoRegistroContraCopiaSeguridadConf->setGeometry(100, 500, 200, 50);
     // establecemos el texto del campo para confirmar la contraseña del correo electrónico
-    campoRegistroContraseñaCopiaSeguridadConf->setPlaceholderText("Confirmar Contraseña del Correo Electrónico");
+    campoRegistroContraCopiaSeguridadConf->setPlaceholderText("Confirmar Contra del Correo Electrónico");
     // establecemos que el campo sea de tipo contraseña
-    campoRegistroContraseñaCopiaSeguridadConf->setEchoMode(QLineEdit::Password);
+    campoRegistroContraCopiaSeguridadConf->setEchoMode(QLineEdit::Password);
     // ocultamos por defecto
-    campoRegistroContraseñaCopiaSeguridadConf->hide();
+    campoRegistroContraCopiaSeguridadConf->hide();
 
     // BOTÓN PARA INGRESAR FOTO DE PERFIL (avatar)
     // creamos un botón para añadir la foto de perfil
@@ -251,20 +259,6 @@ MainWindow::MainWindow(QWidget *parent)
     // establecemos el texto del botón para añadir la foto de perfil
     botonRegistroFotoPerfil->setText("Añadir Foto de Perfil");
 
-    // SELECTOR DE GÉNERO
-    // creamos un selector para el género
-    selectorRegistroGenero = new QComboBox(frameRegistroUsuario);
-    // establecemos la posición del selector para el género
-    selectorRegistroGenero->setGeometry(100, 600, 200, 50);
-    // establecemos el texto del selector para el género
-    selectorRegistroGenero->addItem("Hombre");
-    selectorRegistroGenero->addItem("Mujer");
-    selectorRegistroGenero->addItem("No binario");
-    selectorRegistroGenero->addItem("Transgénero");
-    selectorRegistroGenero->addItem("Fluido");
-    selectorRegistroGenero->addItem("Queer");
-    selectorRegistroGenero->addItem("Helicóptero Apache");
-    selectorRegistroGenero->addItem("Otro");
 
     // SELECTOR PARA LA EDAD
     // creamos un selector para la edad
@@ -281,6 +275,22 @@ MainWindow::MainWindow(QWidget *parent)
     selectorRegistroEdad->addItem("65 - 74 años");
     selectorRegistroEdad->addItem("75 años o más");
 
+    // Campo para añadir pregunta de recuperación
+    // creamos un campo para añadir la pregunta de recuperación
+    campoRegistroPreguntaRecuperacion = new QLineEdit(frameRegistroUsuario);
+    // establecemos la posición del campo para añadir la pregunta de recuperación
+    campoRegistroPreguntaRecuperacion->setGeometry(300, 700, 200, 50);
+    // establecemos el texto del campo para añadir la pregunta de recuperación
+    campoRegistroPreguntaRecuperacion->setPlaceholderText("Pregunta de Recuperación");
+
+    // Campo para añadir respuesta de recuperación
+    // creamos un campo para añadir la respuesta de recuperación
+    campoRegistroRespuestaRecuperacion = new QLineEdit(frameRegistroUsuario);
+    // establecemos la posición del campo para añadir la respuesta de recuperación
+    campoRegistroRespuestaRecuperacion->setGeometry(300, 750, 200, 50);
+    // establecemos el texto del campo para añadir la respuesta de recuperación
+    campoRegistroRespuestaRecuperacion->setPlaceholderText("Respuesta de Recuperación");
+
     // BOTÓN PARA REGISTRARSE
     // creamos un botón para registrarse
     botonRegistrarUsuario = new QPushButton(frameRegistroUsuario);
@@ -296,6 +306,67 @@ MainWindow::MainWindow(QWidget *parent)
     botonRegistroCancelar->setGeometry(100, 750, 200, 50);
     // establecemos el texto del botón para cancelar
     botonRegistroCancelar->setText("Cancelar");
+
+    // ----------------------------------------------------------------------------
+    // Recuperar Contra NO COMPLETADO
+    /* Debe contener:
+     * un QComboBox para seleccionar el usuario
+     * un QLabel para mostrar la pregunta de recuperación
+     * un QLineEdit para responder la pregunta de recuperación
+     * un botón para recuperar la contraseña
+     * un botón para cancelar
+     * mostrara un mensaje emergente con la contraseña
+     */
+    reCoPreguntaContra = "Hola"; // ? pregunta de recuperación de la contraseña
+    frameRecuperarContra = new QFrame(framePrincipal);
+    // ocultamos por defecto
+    frameRecuperarContra->hide();
+
+    // en este punto se deberia cargar un estilo para el frame recuperar contraseña
+    //frameRecuperarContra->setStyleSheet("background-color: #000000;"); // estilo para el frame
+
+    // SELECTOR DE USUARIO
+    // creamos un selector de usuario
+    reCoSelectorUsuario = new QComboBox(frameRecuperarContra);
+    // establecemos la posición del selector
+    reCoSelectorUsuario->setGeometry(100, 100, 200, 50);
+
+    // PREGUNTA DE RECUPERACIÓN
+    // creamos una etiqueta para la pregunta de recuperación
+    reCoPreguntaRecuperacion = new QLabel{QString::fromStdString(reCoPreguntaContra), frameRecuperarContra};
+    // establecemos la posición de la etiqueta de la pregunta de recuperación
+    reCoPreguntaRecuperacion->setGeometry(400, 150, 1200, 300);
+    // colocamos salto de linea automatico
+    reCoPreguntaRecuperacion->setWordWrap(true);
+
+    // CAMPO PARA RESPONDER PREGUNTA DE RECUPERACIÓN
+    // creamos un campo para responder la pregunta de recuperación
+    reCoCampoRespuesta = new QLineEdit(frameRecuperarContra);
+    // establecemos la posición del campo para responder la pregunta de recuperación
+    reCoCampoRespuesta->setGeometry(100, 200, 200, 50);
+    // establecemos el texto del campo para responder la pregunta de recuperación
+    reCoCampoRespuesta->setPlaceholderText("Respuesta de Recuperación");
+
+
+    // BOTÓN PARA RECUPERAR CONTRASEÑA
+    // creamos un botón para recuperar la contraseña
+    reCoBotonConfirmar = new QPushButton(frameRecuperarContra);
+    // establecemos la posición del botón para recuperar la contraseña
+    reCoBotonConfirmar->setGeometry(100, 250, 200, 50);
+    // establecemos el texto del botón para recuperar la contraseña
+    reCoBotonConfirmar->setText("Recuperar Contraseña");
+
+    // BOTÓN PARA CANCELAR
+    // creamos un botón para cancelar
+    reCoBotonCancelar = new QPushButton(frameRecuperarContra);
+    // establecemos la posición del botón para cancelar
+    reCoBotonCancelar->setGeometry(100, 300, 200, 50);
+    // establecemos el texto del botón para cancelar
+    reCoBotonCancelar->setText("Cancelar");
+
+
+
+
 
     // -----------------------------------------------------------------------------
     // JOURNALING NO COMPLETADO
@@ -365,6 +436,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(inSeBotonRegistrarse, SIGNAL(clicked()), this, SLOT(inSeRegistrarUsuarioNuevo()));
     // conectamos la señal de iniciar sesión
     connect(inSeBotonIniciarSesion, SIGNAL(clicked()), this, SLOT(inSeIniciarSesion()));
+    // conectamos la señal de recuperar contraseña
+    connect(inSeBotonRecuperarContra, SIGNAL(clicked()), this, SLOT(inSeRecuperarContra()));
+
+    // SEÑALES RELACIONADAS CON EL RECUPERAR CONTRASEÑA
+    // conectamos la señal de qcombobox con el metodo reCoCargarDatosUsuario
+    connect(reCoSelectorUsuario, SIGNAL(currentIndexChanged(int)), this, SLOT(reCoCargarDatosUsuario()));
+    // conectamos la señal de recuperar contraseña
+    connect(reCoBotonConfirmar, SIGNAL(clicked()), this, SLOT(reCoRecuperarContra()));
+    // conectamos la señal de cancelar
+    connect(reCoBotonCancelar, SIGNAL(clicked()), this, SLOT(reCoCancelarRecuperarContra()));
 
 
 
@@ -515,7 +596,7 @@ void MainWindow::desactivarInterfazInicioSesion()
 
     // ? se oculta el contenido del frame de inicio de sesión
     //selectorUsuario->hide();
-    //campoContraseña->hide();
+    //campoContra->hide();
     //botonIniciarSesion->hide();
     //botonRegistrarse->hide();
 }
@@ -539,9 +620,12 @@ void MainWindow::inSeRegistrarUsuarioNuevo()
 // ? Sin cambios primera versión
 void MainWindow::inSeCargarUsuarios()
 {
+    // recargamos el arreglo de usuarios
+    usuarios = manejadorArchivos.obtenerContenidoCarpeta(RUTA_USUARIOS, 1);
     // * los usuarios se encuentran en el vector usuarios (fueron agregados en el metodo verificarExistenciaArchivoUsuario)
     // * se cargan los usuarios en el selector de usuarios
-
+    // se limpia el selector de usuarios
+    inSeSelectorUsuario->clear();
     // ? se cargan los usuarios en el selector de usuarios
     for (const std::string& usuario : usuarios)
     {
@@ -557,7 +641,7 @@ void MainWindow::inSeCargarUsuarios()
 void MainWindow::inSeIniciarSesion()
 {
     // verificacamos que todos los campos estén llenos
-    if (inSeSelectorUsuario->currentText().isEmpty() || inSeCampoContraseña->text().isEmpty())
+    if (inSeSelectorUsuario->currentText().isEmpty() || inSeCampoContra->text().isEmpty())
     {
         // ? si los campos están vacíos, se mostrará un mensaje emergente que indica que los campos no pueden estar vacios
         QMessageBox::critical(this, "Error", "Los campos no pueden estar vacíos");
@@ -565,17 +649,17 @@ void MainWindow::inSeIniciarSesion()
     }
     // ? se obtienen los datos del formulario de inicio de sesión
     std::string usuario = inSeSelectorUsuario->currentText().toStdString();
-    std::string contraseña = inSeCampoContraseña->text().toStdString();
+    std::string contraseña = inSeCampoContra->text().toStdString();
     // mostramos en terminal los datos
     std::cout << "Usuario: " << usuario << std::endl;
-    std::cout << "Contraseña: " << contraseña << std::endl;
+    std::cout << "Contra: " << contraseña << std::endl;
     // ? verificamos que el usuario exista
     // ? verificamos que la contraseña sea correcta
     // ? si el usuario y la contraseña son correctos, se activará el frame Journaling
     // ? si el usuario y la contraseña son incorrectos, se mostrará un mensaje emergente que indica que los datos son incorrectos
 
     // ? se verifica que el usuario exista
-    if (!buscarUsuario(usuario))
+    if (buscarUsuario(usuario) == -1)
     {
         // ? si el usuario no existe, se mostrará un mensaje emergente que indica que el usuario no existe
         QMessageBox::critical(this, "Error", "El usuario no existe");
@@ -585,11 +669,17 @@ void MainWindow::inSeIniciarSesion()
     // ? se obtiene la contraseña del usuario (se encuentra en el archivo de configuraciones del usuario)
     //mJson::ManejadorJson configuracionesUsuario(RUTA_USUARIOS + usuario + "/config.json");
     configuracionesUsuario = new mJson::ManejadorJson(RUTA_USUARIOS + usuario + "/config.json");
-    //std::string contraseñaUsuarioEncriptada = configuracionesUsuario["contraseña"];
+    // verificamos si el manejador de configuraciones del usuario está vacío
+    if (configuracionesUsuario->vacio())
+    {
+        // si está vacío, se muestra un mensaje emergente que indica que el usuario no existe
+        QMessageBox::critical(this, "Error", "El usuario no existe");
+        return;
+    }
     std::string contraseñaUsuarioEncriptada = (*configuracionesUsuario)["contraseña"];
     // ? se desencripta la contraseña
     std::string contraseñaUsuario = encriptado->desencriptar(contraseñaUsuarioEncriptada);
-    std::cout << "Contraseña desencriptada: " << contraseñaUsuario << std::endl;
+
     // ? se verifica que la contraseña sea correcta
     if (contraseña != contraseñaUsuario)
     {
@@ -605,6 +695,18 @@ void MainWindow::inSeIniciarSesion()
 
 }
 
+// ! método para recuperar la contraseña
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::inSeRecuperarContra()
+{
+    // ? se desactiva el frame de inicio de sesión
+    desactivarInterfazInicioSesion();
+
+    // ? se activa el frame de recuperar contraseña
+    activarInterfazRecuperarContra();
+}
 
 // ////////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------------------------
@@ -658,33 +760,36 @@ void MainWindow::registrarUsuario()
     // ? se obtienen los datos del formulario de registro de usuarios
     std::string nombre = campoRegistroNombre->text().toStdString();
     std::string nombreUs = campoRegistroNombreUs->text().toStdString();
-    std::string contraseña = campoRegistroContraseña->text().toStdString();
-    std::string contraseñaConf = campoRegistroContraseñaConf->text().toStdString();
+    std::string contraseña = campoRegistroContra->text().toStdString();
+    std::string contraseñaConf = campoRegistroContraConf->text().toStdString();
     std::string correo = campoRegistroCorreoCopiaSeguridad->text().toStdString();
-    std::string contraseñaCorreo = campoRegistroContraseñaCopiaSeguridad->text().toStdString();
-    std::string contraseñaCorreoConf = campoRegistroContraseñaCopiaSeguridadConf->text().toStdString();
+    std::string contraseñaCorreo = campoRegistroContraCopiaSeguridad->text().toStdString();
+    std::string contraseñaCorreoConf = campoRegistroContraCopiaSeguridadConf->text().toStdString();
+    std::string preguntaRecuperacion = campoRegistroPreguntaRecuperacion->text().toStdString();
+    std::string respuestaRecuperacion = campoRegistroRespuestaRecuperacion->text().toStdString();
 
     // mostramos en terminal los datos
     std::cout << "Nombre: " << nombre << std::endl;
     std::cout << "Nombre de Usuario: " << nombreUs << std::endl;
-    std::cout << "Contraseña: " << contraseña << std::endl;
-    std::cout << "Confirmación de Contraseña: " << contraseñaConf << std::endl;
+    std::cout << "Contra: " << contraseña << std::endl;
+    std::cout << "Confirmación de Contra: " << contraseñaConf << std::endl;
     std::cout << "Realizar Copia de Seguridad: " << banderaRegistroCopiaSeg << std::endl;
     std::cout << "Ruta foto de perfil:" << rutaRegistroFotoPerfil << std::endl;
-    std::cout << "Genero: " << selectorRegistroGenero->currentText().toStdString() << std::endl;
     std::cout << "Edad: " << selectorRegistroEdad->currentText().toStdString() << std::endl;
+    std::cout << "Pregunta de Recuperación: " << preguntaRecuperacion << std::endl;
+    std::cout << "Respuesta de Recuperación: " << respuestaRecuperacion << std::endl;
 
     // estos datos son opcionales
     std::cout << "Correo Electrónico: " << correo << std::endl;
-    std::cout << "Contraseña de Correo Electrónico: " << contraseñaCorreo << std::endl;
-    std::cout << "Confirmación de Contraseña de Correo Electrónico: " << contraseñaCorreoConf << std::endl;
+    std::cout << "Contra de Correo Electrónico: " << contraseñaCorreo << std::endl;
+    std::cout << "Confirmación de Contra de Correo Electrónico: " << contraseñaCorreoConf << std::endl;
     std::cout << "Frecuencia de Copia de Seguridad: " << selectorRegistroFrecuenciaCopiaSeguridad->currentText().toStdString() << std::endl;
 
 
 
     // ? se verificará que los datos sean correctos
     // ? se verificará que los campos no estén vacíos
-    if (nombre.empty() || nombreUs.empty() || contraseña.empty() || contraseñaConf.empty() || rutaRegistroFotoPerfil.empty())
+    if (nombre.empty() || nombreUs.empty() || contraseña.empty() || contraseñaConf.empty() || rutaRegistroFotoPerfil.empty() || preguntaRecuperacion.empty() || respuestaRecuperacion.empty())
     {
         // ? si los campos están vacíos, se mostrará un mensaje emergente que indica que los campos no pueden estar vacios
         QMessageBox::critical(this, "Error", "Los campos no pueden estar vacíos");
@@ -749,10 +854,12 @@ void MainWindow::registrarUsuario()
     usuario["nombreUsuario"] = encriptado->encriptar(nombreUs);
     //usuario["contraseña"] = contraseña;
     usuario["contraseña"] = encriptado->encriptar(contraseña);
-    //usuario["genero"] = selectorRegistroGenero->currentText().toStdString();
-    usuario["genero"] = encriptado->encriptar(selectorRegistroGenero->currentText().toStdString());
     //usuario["edad"] = selectorRegistroEdad->currentText().toStdString();
     usuario["edad"] = encriptado->encriptar(selectorRegistroEdad->currentText().toStdString());
+    //usuario["preguntaRecuperacion"] = preguntaRecuperacion;
+    usuario["preguntaRecuperacion"] = encriptado->encriptar(preguntaRecuperacion);
+    //usuario["respuestaRecuperacion"] = respuestaRecuperacion;
+    usuario["respuestaRecuperacion"] = encriptado->encriptar(respuestaRecuperacion);
     // ? si el usuario desea realizar copia de seguridad
     if (banderaRegistroCopiaSeg)
     {
@@ -796,8 +903,8 @@ void MainWindow::seleccionarCopiaSeguridad()
     {
         selectorRegistroFrecuenciaCopiaSeguridad->show();
         campoRegistroCorreoCopiaSeguridad->show();
-        campoRegistroContraseñaCopiaSeguridad->show();
-        campoRegistroContraseñaCopiaSeguridadConf->show();
+        campoRegistroContraCopiaSeguridad->show();
+        campoRegistroContraCopiaSeguridadConf->show();
         // ? cambiamos el texto del botón
         botonRegistroCopiaSeguridad->setText("Da click para desactivar copia de seguridad");
     }
@@ -805,8 +912,8 @@ void MainWindow::seleccionarCopiaSeguridad()
     {
         selectorRegistroFrecuenciaCopiaSeguridad->hide();
         campoRegistroCorreoCopiaSeguridad->hide();
-        campoRegistroContraseñaCopiaSeguridad->hide();
-        campoRegistroContraseñaCopiaSeguridadConf->hide();
+        campoRegistroContraCopiaSeguridad->hide();
+        campoRegistroContraCopiaSeguridadConf->hide();
         // ? cambiamos el texto del botón
         botonRegistroCopiaSeguridad->setText("Da click para activar copia de seguridad");
     }
@@ -828,6 +935,133 @@ void MainWindow::seleccionarFotoPerfil()
     seleccionarArchivo(rutaRegistroFotoPerfil, "Imagen (*.png *.jpg *.jpeg)", "Seleccionar Foto de Perfil");
 
 
+}
+
+// ////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------------
+// ! RELACIONADOS CON LA RECUPERACIÓN DE CONTRASEÑA
+
+// ! método para activar el frame de recuperar contraseña
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::activarInterfazRecuperarContra()
+{
+    // ? se activa el frame de recuperar contraseña
+    frameRecuperarContra->show();
+    // ? se cargan los usuarios en el selector de usuarios
+    reCoCargarUsuarios();
+}
+
+// ! método para desactivar el frame de recuperar contraseña
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::desactivarInterfazRecuperarContra()
+{
+    // ? se desactiva el frame de recuperar contraseña
+    frameRecuperarContra->hide();
+}
+
+// ! método para cargar usuarios en el selector de usuarios de reco
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reCoCargarUsuarios()
+{
+    // primero vaciamos el qcombobox
+    reCoSelectorUsuario->clear();
+    // cargamos los usuarios en el arreglo de usuarios
+    std::cout << "Cargando usuarios" << std::endl;
+    usuarios = manejadorArchivos.obtenerContenidoCarpeta(RUTA_USUARIOS, 1);
+    std::cout << "Usuarios cargados" << std::endl;
+    // cargamos los usuarios en el selector de usuarios
+    for (const std::string& usuario : usuarios)
+    {
+        reCoSelectorUsuario->addItem(QString::fromStdString(usuario));
+    }
+}
+
+// ! método para cargar datos de usuario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reCoCargarDatosUsuario()
+{
+    // mostramos una pregunta de recuperación de prueba
+    //reCoPreguntaRecuperacion->setText("¿Cuál es tu color favorito?");
+
+    // creamos un objeto de tipo mJson::ManejadorJson para cargar las configuraciones del usuario
+    // siempre que el usuario sea diferente de ""
+    if (reCoSelectorUsuario->currentText().isEmpty())
+    {
+        return;
+    }
+    configuracionesUsuario = new mJson::ManejadorJson(RUTA_USUARIOS + reCoSelectorUsuario->currentText().toStdString() + "/config.json");
+    // cargamos la pregunta de recuperación en un string
+    std::string preguntaRecuperacion = (*configuracionesUsuario)["preguntaRecuperacion"];
+    //std::cout << "Pregunta de recuperación: " << preguntaRecuperacion << std::endl;
+    //std::cout << "Tamaño de la pregunta de recuperación: " << preguntaRecuperacion.size() << std::endl;
+    // desencriptamos la pregunta de recuperación
+    std::string preguntaRecuperacionDe = encriptado->desencriptar(preguntaRecuperacion);
+    //std::cout << "Pregunta de recuperación desencriptada: " << preguntaRecuperacionDe << std::endl;
+    // mostramos la pregunta de recuperación en el label
+    reCoPreguntaRecuperacion->setText(QString::fromStdString(preguntaRecuperacionDe));
+
+}
+
+// ! método para recuperar la contraseña
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reCoRecuperarContra()
+{
+    // extraemos los datos del formulario
+    std::string respuesta = reCoCampoRespuesta->text().toStdString();
+    // verificamos que la respuesta no esté vacía
+    if (respuesta.empty())
+    {
+        // si la respuesta está vacía, se mostrará un mensaje emergente
+        QMessageBox::critical(this, "Error", "La respuesta no puede estar vacía");
+        return;
+    }
+    // verificamos que la respuesta sea correcta
+    // se obtiene la respuesta del archivo de configuraciones del usuario
+    std::string respuestaUsuarioEncriptada = (*configuracionesUsuario)["respuestaRecuperacion"];
+    // se desencripta la respuesta
+    std::string respuestaUsuario = encriptado->desencriptar(respuestaUsuarioEncriptada);
+    // se verifica que la respuesta sea correcta
+    if (respuesta != respuestaUsuario)
+    {
+        // si la respuesta es incorrecta, se mostrará un mensaje emergente
+        QMessageBox::critical(this, "Error", "La respuesta es incorrecta");
+        return;
+    }
+    // si la respuesta es correcta, se mostrará un mensaje emergente con la contraseña
+    // se obtiene la contraseña del archivo de configuraciones del usuario
+    std::string contraseñaUsuarioEncriptada = (*configuracionesUsuario)["contraseña"];
+    // se desencripta la contraseña
+    std::string contraseñaUsuario = encriptado->desencriptar(contraseñaUsuarioEncriptada);
+    // se muestra un mensaje emergente con la contraseña
+    QMessageBox::information(this, "Recuperación de Contraseña", "La contraseña es: " + QString::fromStdString(contraseñaUsuario));
+    // se desactiva el frame de recuperar contraseña
+    desactivarInterfazRecuperarContra();
+    // se activa el frame de inicio de sesión
+    activarInterfazInicioSesion();
+
+}
+
+// ! método para cancelar la recuperación de contraseña
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reCoCancelarRecuperarContra()
+{
+    // ? se desactiva el frame de recuperar contraseña
+    desactivarInterfazRecuperarContra();
+
+    // ? se activa el frame de inicio de sesión
+    activarInterfazInicioSesion();
 }
 
 // ////////////////////////////////////////////////////////////////////////////////////////////

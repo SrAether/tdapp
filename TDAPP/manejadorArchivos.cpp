@@ -94,6 +94,7 @@ std::string mArchivos::manejadorArchivos::leerArchivo(const std::string &nombre)
     return contenido;
 }
 
+
 // *Método para copiar un archivo
 void mArchivos::manejadorArchivos::copiarArchivo(const std::string &rutaNueva, const std::string &rutaAnterior)
 {
@@ -203,6 +204,7 @@ const std::vector<std::string> mArchivos::manejadorArchivos::obtenerContenidoCar
     //         contenido.push_back(elemento.path().string());
     //     }
     // }
+    // /home/aether/cosa
     // ? Para este punto ya se tiene el contenido de la carpeta pero se agrego con todo y la ruta, si se quiere solo el nombre se puede hacer un pequeño cambio
     // ? en el for anterior
     for (const auto &elemento : std::filesystem::directory_iterator(ruta))

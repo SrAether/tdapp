@@ -61,17 +61,22 @@ class MainWindow : public QWidget
     QFrame *frameBarraNavegacion; // frame para barra de navegación
     // Frame para la interfaz de registro de usuario
     QFrame *frameRegistroUsuario; // frame para la interfaz de registro de usuario
+    // Frame para la interfaz de recuperación de contraseña de usuario
+    QFrame *frameRecuperarContra; // frame para la interfaz de recuperación de contraseña de usuario
 
     // -----------------------------------------
-    // COSAS DENTRO DE FRAME INICIO SESION
+    // COSAS DENTRO DE FRAME INICIO SESION (inSe)
     // Selector de usuario
     QComboBox *inSeSelectorUsuario; // selector de usuario
     // campo de texto para la contraseña
-    QLineEdit *inSeCampoContraseña; // campo de texto para la contraseña
+    QLineEdit *inSeCampoContra; // campo de texto para la contraseña
     // Botón para iniciar sesión
     QPushButton *inSeBotonIniciarSesion; // boton para iniciar sesión
     // Botón para registrar usuario
     QPushButton *inSeBotonRegistrarse; // boton para registrar usuario
+    // Botón para recuperar contraseña
+    QPushButton *inSeBotonRecuperarContra; // boton para recuperar contraseña
+
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME REGISTRO USUARIO
@@ -89,9 +94,9 @@ class MainWindow : public QWidget
     // campo de texto para ingresar nombre de usuario (username)
     QLineEdit *campoRegistroNombreUs; // area para ingresar el apodo del usuario
     // campo de texto para ingresar contraseña
-    QLineEdit *campoRegistroContraseña; // campo para ingresar la conraseña
+    QLineEdit *campoRegistroContra; // campo para ingresar la conraseña
     // campo de texto para confirmar la contraseña
-    QLineEdit *campoRegistroContraseñaConf; // campo para confirmar la contraseña
+    QLineEdit *campoRegistroContraConf; // campo para confirmar la contraseña
     // Boton para seleccionar si se quiere realizar copia de seguridad
     QPushButton *botonRegistroCopiaSeguridad; // boton para seleccionar si se quiere realizar copia de seguridad
     // Selector de frecuencia copia de seguridad
@@ -99,19 +104,37 @@ class MainWindow : public QWidget
     // campo de texto para ingresar correo de copia de seguridad (se usara para google drive)
     QLineEdit *campoRegistroCorreoCopiaSeguridad; // campo para ingresar el correo de copia de seguridad
     // campo de texto para ingresar contraseña de copia de seguridad (se usara para google drive)
-    QLineEdit *campoRegistroContraseñaCopiaSeguridad; // campo para ingresar la contraseña de copia de seguridad
+    QLineEdit *campoRegistroContraCopiaSeguridad; // campo para ingresar la contraseña de copia de seguridad
     // campo de texto para verificar la contraseña de copia de seguridad
-    QLineEdit *campoRegistroContraseñaCopiaSeguridadConf; // campo para verificar la contraseña de copia de seguridad
+    QLineEdit *campoRegistroContraCopiaSeguridadConf; // campo para verificar la contraseña de copia de seguridad
     // Botón para añadir foto de perfil
     QPushButton *botonRegistroFotoPerfil; // boton para añadir foto de perfil
-    // Selector de sexo (la verdad no se si poner sexo o genero
-    QComboBox *selectorRegistroGenero; // selector de genero
     // Selector de edad
     QComboBox *selectorRegistroEdad; // selector edad
+    // campo para añadir pregunta para recuperar contraseña
+    QLineEdit *campoRegistroPreguntaRecuperacion; // campo para añadir pregunta para recuperar contraseña
+    // campo para añadir respuesta para recuperar contraseña
+    QLineEdit *campoRegistroRespuestaRecuperacion; // campo para añadir respuesta para recuperar contraseña
     // Botón para registrar usuario
     QPushButton *botonRegistrarUsuario; // boton para registrar usuario
     // Botón para cancelar registro de usuario
     QPushButton *botonRegistroCancelar; // boton para cancelar registro de usuario
+
+    // -----------------------------------------
+    // COSAS DENTRO DE FRAME Recuperar Contra (reCo)
+    // variables
+    std::string reCoPreguntaContra; // pregunta para recuperar contraseña
+    // selector de usuario
+    QComboBox *reCoSelectorUsuario; // selector de usuario
+    // QLabel para la pregunta de recuperar contraseña
+    QLabel *reCoPreguntaRecuperacion; // etiqueta para la pregunta de recuperar contraseña
+    // campo de texto para ingresar la respuesta
+    QLineEdit *reCoCampoRespuesta; // campo para ingresar la respuesta
+    // boton para recuperar contraseña
+    QPushButton *reCoBotonConfirmar; // boton para recuperar contraseña
+    // boton para cancelar recuperar contraseña
+    QPushButton *reCoBotonCancelar; // boton para cancelar recuperar contraseña
+
 
 
     // Métodos privados de la ventana
@@ -146,7 +169,17 @@ private slots:
     void inSeRegistrarUsuarioNuevo(); // ! registra un nuevo usuario en la aplicación
     void inSeCargarUsuarios(); // ! carga los usuarios en el selector de usuarios
     void inSeIniciarSesion(); // ! inicia sesión en la aplicación
+    void inSeRecuperarContra(); // ! muestra la interfaz de recuperación de contraseña
 
+    // //////////////////////////////////////////////////////////////////////////////////
+    // --------------------------- SLOTS Recuperar Contra ----------------------------------
+    // Relacionados con la interfaz de recuperación de contraseña
+    void activarInterfazRecuperarContra(); // ! muestra la interfaz de recuperación de contraseña
+    void desactivarInterfazRecuperarContra(); // ! oculta la interfaz de recuperación de contraseña
+    void reCoCargarDatosUsuario(); // ! carga los datos del usuario en la interfaz de recuperación de contraseña
+    void reCoCargarUsuarios(); // ! carga los usuarios en el selector de usuarios
+    void reCoRecuperarContra(); // ! recupera la contraseña del usuario
+    void reCoCancelarRecuperarContra(); // ! cancela la recuperación de contraseña
 
     // //////////////////////////////////////////////////////////////////////////////////
     // --------------------------- SLOTS Journaling ----------------------------------
