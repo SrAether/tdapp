@@ -42,13 +42,16 @@ mJson::ManejadorJson::ManejadorJson(const std::string& rutaArchivo, bool nuevo)
 }
 
 // ! método para extraer el mapa del string del archivo
-// ! versión 1.0
+// ! versión 2.0
 // ! modificado por Aether
 // ! solo es funcional si el archivo tiene un solo objeto json
 // ! para archivos con múltiples objetos json, se debe modificar sutilmente el método ademas de cambiar la estructura del mapa ya que es un solo objeto
 // ! se debe cambiar el mapa a un vector de mapas o un mapa de mapas o un vector de pares
 // ! vector<map<string, string>> o map<string, map<string, string>> o vector<pair<string, string>>
-// ? no se realizaron cambios a partir de la versión 1.0
+/* ? Se modifico la forma de iteración del contenido del archivo: pasamos de un for each a
+ *  un for con un índice, esto permite un mejor control de la iteración, además se
+ *  modificaron los casos de los switch para tomar en cuenta todos los caracteres ascii
+ */
 void mJson::ManejadorJson::estructurar()
 {
     // ? usamos el método leerArchivo de la clase manejadorArchivos
@@ -74,7 +77,6 @@ void mJson::ManejadorJson::estructurar()
     //std::cout << contenido << std::endl;
 
     // ? recorremos el contenido del archivo
-    //for (auto i : contenido)
     for (int i = 0; i < contenido.size(); i++)
     {
         // usando un switch para determinar el tipo de carácter

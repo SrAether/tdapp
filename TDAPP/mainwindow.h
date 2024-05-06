@@ -11,6 +11,11 @@
 #include <QPushButton> // ? para crear botones
 #include <QLineEdit> // ? para crear campos de texto
 #include <QLabel> // ? para crear etiquetas
+#include <QListWidget> // ? para crear listas
+#include <QListWidgetItem> // ? para crear elementos de la lista
+#include <QScrollArea> // ? para crear areas de scroll
+#include <QHBoxLayout> // ? para crear layouts horizontales
+#include <QVBoxLayout> // ? para crear layouts verticales
 
 // ! experimental
 #include <QCalendarWidget> // incluimos el calendario
@@ -136,6 +141,46 @@ class MainWindow : public QWidget
     QPushButton *reCoBotonCancelar; // boton para cancelar recuperar contraseña
 
 
+    // -----------------------------------------
+    // COSAS DENTRO DE FRAME BARA DE NAVEGACIÓN (barNa)
+    // Botón para configuración
+    QPushButton *barNaBotonConfiguracion; // boton para configuración
+    // Botón para calendario
+    QPushButton *barNaBotonCalendario; // boton para calendario
+    // Botón para registro de emociones
+    QPushButton *barNaBotonRegistroEmociones; // boton para registro de emociones
+    // Botón para journaling
+    QPushButton *barNaBotonJournaling; // boton para journaling
+    // Botón para hiperfoco
+    QPushButton *barNaBotonHiperfoco; // boton para hiperfoco
+    // Botón para sección actual 0
+    QPushButton *barNaBotonSeccionActual0; // boton para sección actual 0
+    // Botón para sección actual 1
+    QPushButton *barNaBotonSeccionActual1; // boton para sección actual 1
+    // Botón para sección actual 2
+    QPushButton *barNaBotonSeccionActual2; // boton para sección actual 2
+    // Configurar Botones de la barra de navegación
+    void barNaConfigurarBotones(const int& nBoton, const bool& activar, const int& nFuncion, const std::string& textoBoton); // ! configura los botones de la barra de navegación
+
+
+    // -----------------------------------------
+    // COSAS DENTRO DE FRAME JOURNALING (jour)
+    // Botón para cambiar imagen de bienvenida
+    QPushButton *jourBotonCambiarImagenBienvenida; // boton para cambiar imagen de bienvenida
+    // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    // COSAS DENTRO DE FRAME JOURNALING (jour) - PANTALLA LISTA DE NOTAS (jourLiNo)
+    // Label para título de la lista de notas
+    QLabel *jourLiNoTitulo; // etiqueta para título de la lista de notas
+    // Lista de notas
+    QListWidget *jourLiNoListaNotas; // lista de notas
+    // Area de scroll para la lista de notas
+    QScrollArea *jourLiNoScrollArea; // area de scroll para la lista de notas
+    // Layout para la lista de notas
+    QVBoxLayout *jourLiNoLayout; // layout para la lista de notas
+
+
+
+
 
     // Métodos privados de la ventana
     void verificacionInicial(); // ! verifica la existencia de los archivos y carpetas necesarios para el funcionamiento de la aplicación y trata de crearlos si no existen
@@ -182,13 +227,41 @@ private slots:
     void reCoCancelarRecuperarContra(); // ! cancela la recuperación de contraseña
 
     // //////////////////////////////////////////////////////////////////////////////////
+    // --------------------------- SLOTS Barra de Navegación ----------------------------------
+    // Relacionados con la barra de navegación
+    void activarBarraNavegacion(); // ! muestra la barra de navegación
+    void desactivarBarraNavegacion(); // ! oculta la barra de navegación
+    void barNaMostrarJournaling(); // ! muestra la interfaz de journaling
+    void barNaDesactivarTodosLosFrames(); // ! oculta todos los frames de la ventana
+
+    // //////////////////////////////////////////////////////////////////////////////////
     // --------------------------- SLOTS Journaling ----------------------------------
     // Relacionados con la interfaz de journaling
     void activarInterfazJournaling(); // ! muestra la interfaz de journaling
     void desactivarInterfazJournaling(); // ! oculta la interfaz de journaling
     void mostrarPantallaBienvenidaJournaling(); // ! muestra la pantalla de bienvenida de journaling
+    void jourOcultarPantallaBienvenida(); // ! oculta la pantalla de bienvenida de journaling
+    void jourCambiarImagenBienvenida(); // ! cambia la imagen de bienvenida de journaling
+    void jourActivarListaEntradas(); // ! muestra la lista de entradas de journaling
 
 
+    // // DEPENDENCIAS DE LA INTERFAZ JOURNALING (DIARIO)
+    // void mostrarPantallaBienvenidaJournaling(); // ! muestra la pantalla de bienvenida de journaling
+    // void ocultarPantallaBienvenidaJournaling(); // ! oculta la pantalla de bienvenida de journaling
+    // void mostrarListaEntradasJournaling(); // ! muestra la lista de entradas de journaling
+    // void ocultarListaEntradasJournaling(); // ! oculta la lista de entradas de journaling
+    // void mostrarInterfazEditarEntradaJournaling(int idEntrada = 0); // ! muestra la interfaz para editar una entrada de journaling, si es 0 es una entrada nueva
+    // void ocultarInterfazEditarEntradaJournaling(); // ! oculta la interfaz para editar una entrada de journaling
+    // void mostrarEntradaSeleccionadaJournaling(int idEntrada); // ! muestra la interfaz con la información de una entrada seleccionada de journaling
+    // void ocultarEntradaSeleccionadaJournaling(); // ! oculta la interfaz con la información de una entrada seleccionada de journaling
+    // // ? Boton entrar a journaling de mostrarPantallaBienvenidaJournaling
+    // void entrarJournaling(); // ! muestra la interfaz de journaling
+    // // ? Boton nueva entrada de mostrarListaEntradasJournaling
+    // void nuevaEntradaJournaling(); // ! muestra la interfaz para agregar una nueva entrada de journaling
+    // // ? Boton guardar entrada de interfazEditarEntradaJournaling
+    // void guardarEntradaJournaling(int idEntrada); // ! guarda una entrada de journaling
+    // // ? Boton eliminar entrada de interfaz mostrarEntradaSeleccionadaJournaling
+    // void eliminarEntradaJournaling(int idEntrada); // ! elimina una entrada de journaling
 
 
     //void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones
@@ -217,23 +290,7 @@ private slots:
     // // ? boton guardar evento usado en la interfaz de editar evento
     // void guardarEventoCalendario(int idEvent); // ! guarda un evento del calendario
 
-    // // DEPENDENCIAS DE LA INTERFAZ JOURNALING (DIARIO)
-    // void mostrarPantallaBienvenidaJournaling(); // ! muestra la pantalla de bienvenida de journaling
-    // void ocultarPantallaBienvenidaJournaling(); // ! oculta la pantalla de bienvenida de journaling
-    // void mostrarListaEntradasJournaling(); // ! muestra la lista de entradas de journaling
-    // void ocultarListaEntradasJournaling(); // ! oculta la lista de entradas de journaling
-    // void mostrarInterfazEditarEntradaJournaling(int idEntrada = 0); // ! muestra la interfaz para editar una entrada de journaling, si es 0 es una entrada nueva
-    // void ocultarInterfazEditarEntradaJournaling(); // ! oculta la interfaz para editar una entrada de journaling
-    // void mostrarEntradaSeleccionadaJournaling(int idEntrada); // ! muestra la interfaz con la información de una entrada seleccionada de journaling
-    // void ocultarEntradaSeleccionadaJournaling(); // ! oculta la interfaz con la información de una entrada seleccionada de journaling
-    // // ? Boton entrar a journaling de mostrarPantallaBienvenidaJournaling
-    // void entrarJournaling(); // ! muestra la interfaz de journaling
-    // // ? Boton nueva entrada de mostrarListaEntradasJournaling
-    // void nuevaEntradaJournaling(); // ! muestra la interfaz para agregar una nueva entrada de journaling
-    // // ? Boton guardar entrada de interfazEditarEntradaJournaling
-    // void guardarEntradaJournaling(int idEntrada); // ! guarda una entrada de journaling
-    // // ? Boton eliminar entrada de interfaz mostrarEntradaSeleccionadaJournaling
-    // void eliminarEntradaJournaling(int idEntrada); // ! elimina una entrada de journaling
+
 
     // // DEPENDENCIAS DE LA INTERFAZ REGISTRO DE EMOCIONES
     // void mostrarAreaRegistroEmociones(); // ! muestra la interfaz de registro de emociones

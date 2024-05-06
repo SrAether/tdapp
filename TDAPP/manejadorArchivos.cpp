@@ -5,6 +5,9 @@
 #include <vector>
 #include "manejadorArchivos.h"
 
+// eliminame
+#include <iostream>
+
 
 // Lista de códigos de error
 // Err:TDAPP01, No se pudo crear el archivo
@@ -225,3 +228,42 @@ const std::vector<std::string> mArchivos::manejadorArchivos::obtenerContenidoCar
 
     return contenido;
 }
+
+// *Método para obtener la extensión de un archivo
+std::string mArchivos::manejadorArchivos::obtenerExtension(const std::string &ruta)
+{
+    return std::filesystem::path(ruta).extension().string();
+}
+
+// *Método para buscar un archivo con coincidencia exacta sin extensión, retorna la extensión
+std::string mArchivos::manejadorArchivos::buscarExtensionArchivo(const std::string &ruta, const std::string &nombre)
+{
+    // creamos un arreglo de extensiones
+    std::vector<std::string> extensiones;
+    // colocamos las extensiones en el arreglo por el momento de imagen
+    extensiones.push_back(".png");
+    extensiones.push_back(".jpg");
+    extensiones.push_back(".jpeg");
+    extensiones.push_back(".gif");
+
+
+    for (const auto &elemento : std::filesystem::directory_iterator(ruta))
+    {
+        // // mostramos el nombre del archivo
+        // std::cout << elemento.path().filename().string() << std::endl;
+        // if (elemento.path().filename().string() == nombre)
+        // {
+
+        //     return elemento.path().extension().string();
+        // }
+        for (const auto &extension : extensiones)
+        {
+            if (elemento.path().filename().string() == nombre + extension)
+            {
+                return extension;
+            }
+        }
+    }
+    return "";
+}
+

@@ -28,6 +28,10 @@ public:
     void moverCarpeta(const std::string& rutaNueva, const std::string& rutaAnterior);
     // Métodos para obtener el contenido de una carpeta
     const std::vector<std::string> obtenerContenidoCarpeta(const std::string& ruta, const int tipo); // 0 para archivos, 1 para carpetas, 2 para ambos
+    // Método para obtener la extensión de un archivo
+    std::string obtenerExtension(const std::string& ruta);
+    // Buscar archivo concidencia exacta sin extensión, retorna la extensión
+    std::string buscarExtensionArchivo(const std::string& ruta, const std::string& nombre);
 
 };
 }

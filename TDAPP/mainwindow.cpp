@@ -19,6 +19,9 @@
 #include <QLabel> // ? para crear etiquetas
 #include <QFileDialog> // ? para abrir un cuadro de dialogo para seleccionar un archivo
 #include <QMessageBox> // ? para mostrar mensajes emergentes
+#include <QVBoxLayout> // ? para acomodar los elementos de la interfaz VERTICALMENTE
+#include <QHBoxLayout> // ? para acomodar los elementos de la interfaz HORIZONTALMENTE
+#include <QtWidgets> // ? para usar las clases de widgets de qt
 
 // para manejar archivos
 #include "manejadorArchivos.h"
@@ -73,6 +76,11 @@ MainWindow::MainWindow(QWidget *parent)
     frameInicioSesion = new QFrame(framePrincipal);
     // ocultamos por defecto
     frameInicioSesion->hide();
+    frameInicioSesion->setMinimumWidth(500);
+    frameInicioSesion->setMinimumHeight(800);
+
+
+
 
     // en este punto se deberia cargar un estilo para el frame inicio de sesión
     //frameInicioSesion->setStyleSheet("background-color: #000000;"); // estilo para el frame
@@ -82,9 +90,8 @@ MainWindow::MainWindow(QWidget *parent)
     inSeSelectorUsuario = new QComboBox(frameInicioSesion);
     // establecemos la posición del selector
     inSeSelectorUsuario->setGeometry(100, 100, 200, 50);
-    // establecemos el texto del selector
-    //inSeSelectorUsuario->addItem("Usuario 1");
-    //inSeSelectorUsuario->addItem("Usuario 2");
+    // establecemos un tamaño minimo
+    inSeSelectorUsuario->setMinimumSize(200, 50);
 
     // CAMPO DE CONTRASEÑA
     // creamos un campo de contraseña
@@ -141,6 +148,8 @@ MainWindow::MainWindow(QWidget *parent)
     frameRegistroUsuario = new QFrame(framePrincipal);
     // ocultamos por defecto
     frameRegistroUsuario->hide();
+    frameRegistroUsuario->setMinimumWidth(500);
+    frameRegistroUsuario->setMinimumHeight(800);
 
     // en este punto se deberia cargar un estilo para el frame registro de usuarios
     //frameRegistroUsuario->setStyleSheet("background-color: #000000;"); // estilo para el frame
@@ -321,6 +330,8 @@ MainWindow::MainWindow(QWidget *parent)
     frameRecuperarContra = new QFrame(framePrincipal);
     // ocultamos por defecto
     frameRecuperarContra->hide();
+    frameRecuperarContra->setMinimumWidth(500);
+    frameRecuperarContra->setMinimumHeight(800);
 
     // en este punto se deberia cargar un estilo para el frame recuperar contraseña
     //frameRecuperarContra->setStyleSheet("background-color: #000000;"); // estilo para el frame
@@ -377,9 +388,137 @@ MainWindow::MainWindow(QWidget *parent)
      */
 
     // creamos un frame para el journaling
-    frameJournaling = new QFrame(framePrincipal);
+    frameJournaling = new QFrame();
     // ocultamos por defecto
     frameJournaling->hide();
+    frameJournaling->setMinimumWidth(500);
+    frameJournaling->setMinimumHeight(500);
+
+
+
+    // creamos un boton de bienvenida
+    jourBotonCambiarImagenBienvenida = new QPushButton(frameJournaling);
+    // establecemos la posición del boton de bienvenida
+    //jourBotonCambiarImagenBienvenida->setGeometry(0,0,1000,1000);
+    jourBotonCambiarImagenBienvenida->setMinimumWidth(400);
+    jourBotonCambiarImagenBienvenida->setMinimumHeight(400);
+    jourBotonCambiarImagenBienvenida->adjustSize();
+
+    // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
+    // Relacionado con la Lista de Journaling
+    // Label para título de la lista de notas
+    jourLiNoTitulo = new QLabel(frameJournaling);
+    jourLiNoTitulo->setText("Lista de Notas");
+    jourLiNoTitulo->hide();
+    // Lista de notas
+    jourLiNoListaNotas = new QListWidget(frameJournaling);
+    jourLiNoListaNotas->hide();
+    // Area de scroll para la lista de notas
+    jourLiNoScrollArea = new QScrollArea(frameJournaling);
+    jourLiNoScrollArea->setWidget(jourLiNoListaNotas);
+    jourLiNoScrollArea->setWidgetResizable(true);
+    jourLiNoScrollArea->setMinimumWidth(500);
+    jourLiNoScrollArea->hide();
+    // Layout para la lista de notas
+    jourLiNoLayout = new QVBoxLayout(frameJournaling);
+    jourLiNoLayout->addWidget(jourLiNoTitulo);
+    jourLiNoLayout->addWidget(jourLiNoScrollArea, 1);
+
+
+
+    // -----------------------------------------------------------------------------
+    // BARRA DE NAVEGACIÓN NO COMPLETADO
+    /* Debe contener:
+     * 3 secciones: Izquierda, Centro, Derecha
+     * En la sección izquierda:
+     * Boton de configuración
+     * En la sección centro:
+     * Boton de calendario
+     * Boton Registro de emociones
+     * Boton Journaling
+     * Boton Hiperfoco
+     * En la sección derecha:
+     * Botones dependientes de la sección actual (configuración, calendario, registro de emociones, journaling, hiperfoco)
+     */
+
+    // Creamos un frame para la barra de navegación
+    frameBarraNavegacion = new QFrame();
+    // ocultamos por defecto
+    frameBarraNavegacion->hide();
+    // Botón de configuración
+    barNaBotonConfiguracion = new QPushButton(frameBarraNavegacion);
+    barNaBotonConfiguracion->setText("Conf");
+    // Botón de calendario
+    barNaBotonCalendario = new QPushButton(frameBarraNavegacion);
+    barNaBotonCalendario->setText("Cale");
+    // Botón Registro de emociones
+    barNaBotonRegistroEmociones = new QPushButton(frameBarraNavegacion);
+    barNaBotonRegistroEmociones->setText("RegE");
+    // Botón Journaling
+    barNaBotonJournaling = new QPushButton(frameBarraNavegacion);
+    barNaBotonJournaling->setText("Jour");
+    // Botón Hiperfoco
+    barNaBotonHiperfoco = new QPushButton(frameBarraNavegacion);
+    barNaBotonHiperfoco->setText("Hipe");
+    // Botón para sección actual 0
+    barNaBotonSeccionActual0 = new QPushButton(frameBarraNavegacion);
+    barNaBotonSeccionActual0->hide();
+    // Botón para sección actual 1
+    barNaBotonSeccionActual1 = new QPushButton(frameBarraNavegacion);
+    barNaBotonSeccionActual1->hide();
+    // Botón para sección actual 2
+    barNaBotonSeccionActual2 = new QPushButton(frameBarraNavegacion);
+    barNaBotonSeccionActual2->hide();
+
+    // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+    // ACOMODO DE LOS ELEMENTOS DE LA INTERFAZ CON LAYOUTS
+
+    // Sección izquierda
+    QHBoxLayout* disposicionIzquierda = new QHBoxLayout();
+    disposicionIzquierda->addWidget(barNaBotonConfiguracion);
+    // Sección centro
+    QHBoxLayout* disposicionCentro = new QHBoxLayout();
+    disposicionCentro->addWidget(barNaBotonCalendario);
+    disposicionCentro->addWidget(barNaBotonRegistroEmociones);
+    disposicionCentro->addWidget(barNaBotonJournaling);
+    disposicionCentro->addWidget(barNaBotonHiperfoco);
+    // Sección derecha
+    QHBoxLayout* disposicionDerecha = new QHBoxLayout();
+    disposicionDerecha->addWidget(barNaBotonSeccionActual0);
+    disposicionDerecha->addWidget(barNaBotonSeccionActual1);
+    disposicionDerecha->addWidget(barNaBotonSeccionActual2);
+    // Layout principal (MENU)
+    QHBoxLayout* disposicionMenu = new QHBoxLayout(frameBarraNavegacion);
+    disposicionMenu->addLayout(disposicionIzquierda);
+    // colocamos un espacio entre la sección izquierda y la sección central
+    disposicionMenu->addStretch();
+    disposicionMenu->addLayout(disposicionCentro);
+    // colocamos un espacio entre la sección central y la sección derecha
+    disposicionMenu->addStretch();
+    disposicionMenu->addLayout(disposicionDerecha);
+
+
+
+
+
+
+
+    // -----------------------------------------------------------------------------
+    // AREA DE ACOMODO DE FRAMES
+
+    QVBoxLayout* disposicionPrincipal = new QVBoxLayout(this);
+
+    disposicionPrincipal->addWidget(frameBarraNavegacion);
+    // hacemos que los elementos se acomoden de arriba hacía abajo desde la parte superior sin centrar
+    disposicionPrincipal->addStretch();
+    disposicionPrincipal->addWidget(frameInicioSesion);
+    disposicionPrincipal->addWidget(frameRegistroUsuario);
+    disposicionPrincipal->addWidget(frameRecuperarContra);
+    disposicionPrincipal->addWidget(frameJournaling);
+
+
+
+
 
 
 
@@ -446,6 +585,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(reCoBotonConfirmar, SIGNAL(clicked()), this, SLOT(reCoRecuperarContra()));
     // conectamos la señal de cancelar
     connect(reCoBotonCancelar, SIGNAL(clicked()), this, SLOT(reCoCancelarRecuperarContra()));
+
+    // SEÑALES RELACIONADAS CON LA BARRA DE NAVEGACIÓN
+    // conectamos la señal para activar el frame de journaling
+    connect(barNaBotonJournaling, SIGNAL(clicked()), this, SLOT(barNaMostrarJournaling()));
+
+    // SEÑALES RELACIONADAS CON EL JOURNALING
+    // conectamos la señal para cambiar la imagen de bienvenida
+    connect(jourBotonCambiarImagenBienvenida, SIGNAL(clicked()), this, SLOT(jourCambiarImagenBienvenida()));
 
 
 
@@ -523,27 +670,6 @@ void MainWindow::verificacionInicial()
 // ? Se cambio el enfoque de crear un archivo de usuarios por defecto a crear una carpeta de usuarios por defecto
 void MainWindow::verificarExistenciaArchivoUsuario()
 {
-    // // ? se verifica la existencia del archivo de usuarios
-    // if (!manejadorArchivos.verificarExistenciaDeArchivo(RUTA_USUARIOS))
-    // {
-    //     // ? si no existe el archivo de usuarios, se creará uno nuevo
-    //     // ? se crea un archivo con un usuario por defecto
-    //     // ? el archivo de usuarios no contiene campos adicionales
-
-    //     // ? se crea un archivo con un usuario por defecto
-    //     //mJson::ManejadorJson usuarios(RUTA_USUARIOS, true);
-    //     std::cout << "Creando archivo de usuarios" << std::endl;
-    //     usuarios = new mJson::ManejadorJson(RUTA_USUARIOS, true);
-    //     std::cout << "Archivo de usuarios creado" << std::endl;
-    // }
-    // else
-    // {
-    //     // ? si existe el archivo de usuarios, se cargarán los usuarios del archivo
-    //     // ? se cargarán los usuarios del archivo
-    //     usuarios = new mJson::ManejadorJson(RUTA_USUARIOS);
-    //     std::cout << "Archivo de usuarios creado" << std::endl;
-    //     std::cout << usuarios->vacio() << std::endl;
-    // }
 
     // ? En el enfoque anterior se creaba un archivo de usuarios por defecto
     // ? En este enfoque se verificará si existe la carpeta de usuarios
@@ -692,6 +818,8 @@ void MainWindow::inSeIniciarSesion()
     desactivarInterfazInicioSesion();
     // ? se activa el frame de journaling
     activarInterfazJournaling();
+    // ? se activa la barra de navegación
+    activarBarraNavegacion();
 
 }
 
@@ -1146,6 +1274,7 @@ void MainWindow::activarInterfazJournaling()
     std::cout << "Activando interfaz de journaling" << std::endl;
     // ? se activa el frame de journaling
     frameJournaling->show();
+    mostrarPantallaBienvenidaJournaling();
 }
 
 // ! método para desactivar el frame de journaling
@@ -1167,4 +1296,228 @@ void MainWindow::mostrarPantallaBienvenidaJournaling()
     // ? se mostrará la pantalla de bienvenida
     // ? se mostrará una imagen seleccionada por el usuario
     // ? se mostrará un botón para continuar
+    // verificamos que existe la imagen de bienvenida
+    //std::string rutaImagenBienvenida = RUTA_USUARIOS + (*configuracionesUsuario)["nombreUsuario"] + "/imagenBienvenida.png";
+    // usuario descifrado
+    std::string usuario = encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]);
+    // obtenemos la extension del archivo
+    std::string extension = manejadorArchivos.buscarExtensionArchivo(RUTA_USUARIOS + usuario + "/", "imagenBienvenida");
+    // generamos la ruta de la imagen de bienvenida
+    std::string rutaImagenBienvenida = RUTA_USUARIOS + usuario + "/imagenBienvenida" + extension;
+    std::cout << "Ruta de la imagen de bienvenida: " << rutaImagenBienvenida << std::endl;
+    //std::cout << "Ruta de la imagen de bienvenida: " << rutaImagenBienvenida << std::endl;
+    // verificamos que exista la imagen de bienvenida
+    if (manejadorArchivos.verificarExistenciaDeArchivo(rutaImagenBienvenida))
+    {
+        // si existe la imagen de bienvenida, la asignamos al boton de bienvenida
+        jourBotonCambiarImagenBienvenida->setIcon(QIcon(QPixmap(QString::fromStdString(rutaImagenBienvenida))));
+        //jourBotonCambiarImagenBienvenida->setIconSize(QSize(800, 800));
+        //jourBotonCambiarImagenBienvenida->setIconSize()
+    }
+    else
+    {
+        // si no existe la imagen de bienvenida, se llama al metodo para seleccionar la imagen de bienvenida
+        jourCambiarImagenBienvenida();
+    }
+
+    // activamos el primer boton de la barra de navegacion
+    barNaConfigurarBotones(0, true, 0, "Continuar");
+}
+
+// ! método para ocultar la pantalla de bienvenida
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::jourOcultarPantallaBienvenida()
+{
+    // ? se ocultará la pantalla de bienvenida
+    // ? se ocultará la imagen de bienvenida
+    // ? se ocultará el botón de continuar
+
+    jourBotonCambiarImagenBienvenida->hide();
+    // desactivamos el primer boton de la barra de navegacion
+    barNaConfigurarBotones(0, false, 0, "");
+}
+
+// ! método para seleccionar la imagen de bienvenida
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::jourCambiarImagenBienvenida()
+{
+    // mostramos en consola el mensaje
+    std::cout << "Seleccionando Imagen de Bienvenida" << std::endl;
+    //std::string rutaImagenBienvenida = RUTA_USUARIOS + (*configuracionesUsuario)["nombreUsuario"] + "/imagenBienvenida.png";
+    // usuario descifrado
+    std::string usuario = encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]);
+    std::string rutaImagenBienvenida = RUTA_USUARIOS + usuario + "/imagenBienvenida";
+    std::string rutaTemp;
+
+    //std::cout << "Ruta de la imagen de bienvenida: " << rutaImagenBienvenida << std::endl;
+    // ? se seleccionará la imagen de bienvenida
+    // ? se obtendrá la ruta de la imagen de bienvenida
+    // ? se mostrará un mensaje emergente que indica que la imagen de bienvenida se ha seleccionado
+    // ? se obtendrá la ruta de la imagen de bienvenida
+    seleccionarArchivo(rutaTemp, "Imagen (*.png *.jpg *.jpeg)", "Seleccionar Imagen de Bienvenida");
+    std::cout << "Ruta Temporal: " << rutaTemp << std::endl;
+    // extraemos la extension del archivo
+    std::string extension = manejadorArchivos.obtenerExtension(rutaTemp);
+    std::cout << "Extension: " << extension << std::endl;
+    // Bloque de verificación de existencia de la imagen de bienvenida
+    // ? obtenemos la extension de la imagen de bienvenida
+    std::string extensionImEx = manejadorArchivos.buscarExtensionArchivo(RUTA_USUARIOS + usuario + "/", "imagenBienvenida");
+    std::cout << "Extension ImEx: " << extensionImEx << std::endl;
+    // si la imagen de bienvenida ya existe la extension no será vacía
+    if (!extensionImEx.empty())
+    {
+        // si ya existe una imagen de bienvenida, la renombramos a imagenBienvenidaAnterior
+        manejadorArchivos.moverArchivo(RUTA_USUARIOS + usuario + "/imagenBienvenidaAnterior" + extensionImEx, rutaImagenBienvenida + extensionImEx);
+    }
+    // copiamos la imagen a la carpeta del usuario
+    try {
+         manejadorArchivos.copiarArchivo(rutaImagenBienvenida + extension, rutaTemp);
+    }
+    catch (const std::exception& e)
+    {
+        // si hay un error, restauramos la imagen anterior
+        manejadorArchivos.moverArchivo(rutaImagenBienvenida + extensionImEx, rutaImagenBienvenida + "Anterior" + extensionImEx);
+    }
+    // mostramos la imagen en el boton
+    jourBotonCambiarImagenBienvenida->setIcon(QIcon(QPixmap(QString::fromStdString(rutaImagenBienvenida + extension))));
+    // eliminamos la imagen anterior
+    manejadorArchivos.eliminarArchivo(rutaImagenBienvenida + "Anterior" + extensionImEx);
+}
+
+// ! método para activar la lista de entradas de journaling
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::jourActivarListaEntradas()
+{
+    // ? se desactiva la pantalla de bienvenida
+    jourOcultarPantallaBienvenida();
+
+    // ? se activará la lista de entradas de journaling
+    jourLiNoTitulo->show();
+    jourLiNoListaNotas->show();
+    jourLiNoScrollArea->show();
+
+}
+
+
+// ////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------------
+// ! RELACIONADOS CON LA BARRA DE NAVEGACIÓN
+
+// ! método para activar la barra de navegación
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::activarBarraNavegacion()
+{
+    // ? se activa la barra de navegación
+    frameBarraNavegacion->show();
+}
+
+// ! método para desactivar la barra de navegación
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::desactivarBarraNavegacion()
+{
+    // ? se desactiva la barra de navegación
+    frameBarraNavegacion->hide();
+}
+
+// ! método para mostrar la interfaz de journaling
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaMostrarJournaling()
+{
+    // ? se desactivan todas las interfaces (frames)
+    barNaDesactivarTodosLosFrames();
+    // ? se activa el frame de journaling
+    activarInterfazJournaling();
+}
+
+// ! método para desactivar todos los frames
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaDesactivarTodosLosFrames()
+{
+    // ? se desactivan todos los frames
+    desactivarInterfazInicioSesion();
+    desactivarInterfazRegistroUsuario();
+    desactivarInterfazRecuperarContra();
+    desactivarInterfazJournaling();
+}
+
+// ! método para activar o desactivar los botones de la barra de navegación
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaConfigurarBotones(const int& nBoton, const bool& activar, const int& nFuncion, const std::string& textoBoton)
+{
+    // ? primero usamos un if para seleccionar el boton a activar o desactivar
+    // ? luego usamos un switch para seleccionar la función del boton
+    // ? finalmente, activamos o desactivamos el boton y asignamos el texto
+
+    // verificamos que el numero del boton sea correcto
+    if (nBoton < 0 || nBoton > 2)
+    {
+        // si el numero del boton es incorrecto, se mostrará un mensaje emergente
+        QMessageBox::critical(this, "Error", "BARNA:01, El número de botón es incorrecto");
+        return;
+    }
+    // creamos un puntero a un boton
+    QPushButton* boton;
+    // seleccionamos el boton
+    switch (nBoton)
+    {
+        case 0:
+            boton = barNaBotonSeccionActual0;
+            //std::cout << "Boton 0" << std::endl;
+            break;
+        case 1:
+            boton = barNaBotonSeccionActual1;
+            break;
+        case 2:
+            boton = barNaBotonSeccionActual2;
+            break;
+    }
+    // verificamos que el numero de la función sea correcto
+    if (nFuncion < 0)
+    {
+        // si el numero de la función es incorrecto, se mostrará un mensaje emergente
+        QMessageBox::critical(this, "Error", "BARNA:02, El número de función es incorrecto");
+        return;
+    }
+    // seleccionamos la función del boton
+    switch (nFuncion)
+    {
+        // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+        // ----------------------------JOURNALING-------------------------------------
+
+        // ? Para activar la lista de entradas de journaling (estando en la pantalla de bienvenida)
+        case 0:
+            connect(boton, SIGNAL(clicked()), this, SLOT(jourActivarListaEntradas()));
+            break;
+
+    }
+    // asignamos el texto al boton
+    boton->setText(QString::fromStdString(textoBoton));
+    // activamos o desactivamos el boton
+    if (activar)
+    {
+        boton->show();
+        //std::cout << "Activando boton" << std::endl;
+    }
+    else
+    {
+        boton->hide();
+        //std::cout << "Desactivando boton" << std::endl;
+    }
+
 }
