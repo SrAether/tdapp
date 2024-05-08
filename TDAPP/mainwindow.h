@@ -16,6 +16,7 @@
 #include <QScrollArea> // ? para crear areas de scroll
 #include <QHBoxLayout> // ? para crear layouts horizontales
 #include <QVBoxLayout> // ? para crear layouts verticales
+#include <QTextEdit> // ? para crear areas de texto
 
 // ! experimental
 #include <QCalendarWidget> // incluimos el calendario
@@ -143,6 +144,8 @@ class MainWindow : public QWidget
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME BARA DE NAVEGACIÓN (barNa)
+    // arreglo de 3 enteros que nos indica el numero de función que ejecuta cada boton
+    int barNaFunciones[3]; // ! arreglo de 3 enteros que nos indica el numero de función que ejecuta cada boton
     // Botón para configuración
     QPushButton *barNaBotonConfiguracion; // boton para configuración
     // Botón para calendario
@@ -161,7 +164,8 @@ class MainWindow : public QWidget
     QPushButton *barNaBotonSeccionActual2; // boton para sección actual 2
     // Configurar Botones de la barra de navegación
     void barNaConfigurarBotones(const int& nBoton, const bool& activar, const int& nFuncion, const std::string& textoBoton); // ! configura los botones de la barra de navegación
-
+    // Ejecutor de funciones de la barra de navegación
+    void barNaEjecutorFunciones(const int& nFuncion); // ! ejecuta las funciones de la barra de navegación
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME JOURNALING (jour)
@@ -177,6 +181,12 @@ class MainWindow : public QWidget
     QScrollArea *jourLiNoScrollArea; // area de scroll para la lista de notas
     // Layout para la lista de notas
     QVBoxLayout *jourLiNoLayout; // layout para la lista de notas
+    // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    // COSAS DENTRO DE FRAME JOURNALING (jour) - PANTALLA REGISTRO DE ENTRADA (jourReEn)
+    mJson::ManejadorJson *entradaSeleccionada; // ! objeto de la clase manejadorJson que contiene la entrada seleccionada
+    QLineEdit *jourReEnCampoTitulo; // campo para el título de la entrada
+    QTextEdit *jourReEnCampoTexto; // campo para el texto de la entrada
+    QVBoxLayout *jourReEnLayout; // layout para la entrada
 
 
 
@@ -233,6 +243,10 @@ private slots:
     void desactivarBarraNavegacion(); // ! oculta la barra de navegación
     void barNaMostrarJournaling(); // ! muestra la interfaz de journaling
     void barNaDesactivarTodosLosFrames(); // ! oculta todos los frames de la ventana
+    void barNaBotonSeccionActual0Click(); // ! metodo para el boton de la seccion actual 0
+    void barNaBotonSeccionActual1Click(); // ! metodo para el boton de la seccion actual 1
+    void barNaBotonSeccionActual2Click(); // ! metodo para el boton de la seccion actual 2
+    void barNaLimpiarBotonesSeccionActual(); // ! limpia los botones de la seccion actual
 
     // //////////////////////////////////////////////////////////////////////////////////
     // --------------------------- SLOTS Journaling ----------------------------------
@@ -243,6 +257,14 @@ private slots:
     void jourOcultarPantallaBienvenida(); // ! oculta la pantalla de bienvenida de journaling
     void jourCambiarImagenBienvenida(); // ! cambia la imagen de bienvenida de journaling
     void jourActivarListaEntradas(); // ! muestra la lista de entradas de journaling
+    void jourDesactivarListaEntradas(); // ! oculta la lista de entradas de journaling
+    void jourActualizarListaEntradas(); // ! actualiza la lista de entradas de journaling
+    void jourLiNoNuevaEntrada(); // ! agrega una entrada a la lista de entradas de journaling
+    void jourLiNoCargarEntrada(const int& tipoCarga = 0, const std::string& nombreEntrada = ""); // ! carga una entrada de journaling
+    void jourGuardarEntrada(); // ! guarda una entrada de journaling
+    void jourEliminarEntrada(); // ! elimina una entrada de journaling
+    void jourActivarEditarEntrada(const bool& soloLectura = false); // ! muestra la interfaz para editar una entrada de journaling
+    void jourDesactivarEditarEntrada(); // ! oculta la interfaz para editar una entrada de journaling
 
 
     // // DEPENDENCIAS DE LA INTERFAZ JOURNALING (DIARIO)

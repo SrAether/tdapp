@@ -39,7 +39,7 @@ const std::string RUTA_CONFIGURACIONES = "./config/config.json"; // ? ruta del a
 const std::string RUTA_CARPETA_CONFIGURACIONES = "./config"; // ? ruta de la carpeta de configuraciones
 const std::string RUTA_USUARIOS = "./usuarios/"; // ? ruta de la carpeta de usuarios
 const std::string CONTRASEÑA_ENCRIPTADO = "GULRarfiubh12#"; // ? contraseña para el encriptado
-
+const QRegularExpression NO_VALIDO_EN_ARCHIVOS("[\\/:*?\"<>|]"); // ? caracteres no permitidos en archivos
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget{parent}
@@ -424,6 +424,25 @@ MainWindow::MainWindow(QWidget *parent)
     jourLiNoLayout->addWidget(jourLiNoTitulo);
     jourLiNoLayout->addWidget(jourLiNoScrollArea, 1);
 
+    // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
+    // Relacionado con la edicion de entradas de journaling
+    // campo para el título de la entrada
+    jourReEnCampoTitulo = new QLineEdit(frameJournaling);
+    jourReEnCampoTitulo->hide();
+    jourReEnCampoTitulo->setPlaceholderText("Título de la entrada");
+    //jourReEnCampoTitulo->setMinimumSize(600, 100);
+    // campo para el texto de la entrada
+    jourReEnCampoTexto = new QTextEdit(frameJournaling);
+    jourReEnCampoTexto->hide();
+    //jourReEnCampoTexto->setMinimumSize(600, 400);
+    // layout para la entrada
+    // jourReEnLayout = new QVBoxLayout(frameJournaling);
+    // jourReEnLayout->addWidget(jourReEnCampoTexto, 1);
+    // jourReEnLayout->addWidget(jourReEnCampoTitulo);
+    jourLiNoLayout->addWidget(jourReEnCampoTitulo);
+    jourLiNoLayout->addWidget(jourReEnCampoTexto, 1);
+
+
 
 
     // -----------------------------------------------------------------------------
@@ -503,6 +522,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
+
     // -----------------------------------------------------------------------------
     // AREA DE ACOMODO DE FRAMES
 
@@ -510,7 +530,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     disposicionPrincipal->addWidget(frameBarraNavegacion);
     // hacemos que los elementos se acomoden de arriba hacía abajo desde la parte superior sin centrar
-    disposicionPrincipal->addStretch();
+    //disposicionPrincipal->addStretch();
     disposicionPrincipal->addWidget(frameInicioSesion);
     disposicionPrincipal->addWidget(frameRegistroUsuario);
     disposicionPrincipal->addWidget(frameRecuperarContra);
@@ -589,11 +609,18 @@ MainWindow::MainWindow(QWidget *parent)
     // SEÑALES RELACIONADAS CON LA BARRA DE NAVEGACIÓN
     // conectamos la señal para activar el frame de journaling
     connect(barNaBotonJournaling, SIGNAL(clicked()), this, SLOT(barNaMostrarJournaling()));
+    // conectamos la señal del boton 1 de la barra de navegación
+    connect(barNaBotonSeccionActual0, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual0Click()));
+    // conectamos la señal del boton 2 de la barra de navegación
+    connect(barNaBotonSeccionActual1, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual1Click()));
+    // conectamos la señal del boton 3 de la barra de navegación
+    connect(barNaBotonSeccionActual2, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual2Click()));
 
     // SEÑALES RELACIONADAS CON EL JOURNALING
     // conectamos la señal para cambiar la imagen de bienvenida
     connect(jourBotonCambiarImagenBienvenida, SIGNAL(clicked()), this, SLOT(jourCambiarImagenBienvenida()));
-
+    // conectamos la señal de click en una entrada de journaling
+    connect(jourLiNoListaNotas, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(jourLiNoCargarEntrada()));
 
 
 }
@@ -1272,6 +1299,10 @@ void MainWindow::seleccionarArchivo(std::string& dondeGuardar, const std::string
 void MainWindow::activarInterfazJournaling()
 {
     std::cout << "Activando interfaz de journaling" << std::endl;
+    // ? se desactiva todo lo relacionado con el journaling
+    jourOcultarPantallaBienvenida();
+    jourDesactivarListaEntradas();
+    jourDesactivarEditarEntrada();
     // ? se activa el frame de journaling
     frameJournaling->show();
     mostrarPantallaBienvenidaJournaling();
@@ -1311,7 +1342,7 @@ void MainWindow::mostrarPantallaBienvenidaJournaling()
     {
         // si existe la imagen de bienvenida, la asignamos al boton de bienvenida
         jourBotonCambiarImagenBienvenida->setIcon(QIcon(QPixmap(QString::fromStdString(rutaImagenBienvenida))));
-        //jourBotonCambiarImagenBienvenida->setIconSize(QSize(800, 800));
+        jourBotonCambiarImagenBienvenida->setIconSize(QSize(800, 800));
         //jourBotonCambiarImagenBienvenida->setIconSize()
     }
     else
@@ -1319,7 +1350,7 @@ void MainWindow::mostrarPantallaBienvenidaJournaling()
         // si no existe la imagen de bienvenida, se llama al metodo para seleccionar la imagen de bienvenida
         jourCambiarImagenBienvenida();
     }
-
+    jourBotonCambiarImagenBienvenida->show();
     // activamos el primer boton de la barra de navegacion
     barNaConfigurarBotones(0, true, 0, "Continuar");
 }
@@ -1336,7 +1367,7 @@ void MainWindow::jourOcultarPantallaBienvenida()
 
     jourBotonCambiarImagenBienvenida->hide();
     // desactivamos el primer boton de la barra de navegacion
-    barNaConfigurarBotones(0, false, 0, "");
+    barNaConfigurarBotones(0, false, -1, "");
 }
 
 // ! método para seleccionar la imagen de bienvenida
@@ -1396,14 +1427,261 @@ void MainWindow::jourActivarListaEntradas()
 {
     // ? se desactiva la pantalla de bienvenida
     jourOcultarPantallaBienvenida();
+    // ? se activará la lista de entradas de journaling
+    jourDesactivarEditarEntrada();
+    // modifcamos el tamaño de la ventana
+    this->resize(400, 400);
 
     // ? se activará la lista de entradas de journaling
     jourLiNoTitulo->show();
     jourLiNoListaNotas->show();
     jourLiNoScrollArea->show();
+    // ? se actualizará la lista de entradas
+    jourActualizarListaEntradas();
+    // ? se activará el botón de nueva entrada
+    barNaConfigurarBotones(0, true, 1, "Nueva Entrada");
 
 }
 
+// ! método para desactivar la lista de entradas de journaling
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::jourDesactivarListaEntradas()
+{
+    jourLiNoTitulo->hide();
+    jourLiNoListaNotas->hide();
+    jourLiNoScrollArea->hide();
+    // ? se desactivará el botón de nueva entrada
+    barNaConfigurarBotones(0, false, -1, "");
+}
+
+// ! método para actualizar la lista de entradas del journaling
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::jourActualizarListaEntradas()
+{
+    // limpia la lista de notas
+    jourLiNoListaNotas->clear();
+    // dentro de un try catch
+    try {
+        std::string rutaEntradasJournaling = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/journaling";
+        // verificamos que exista la carpeta de notas
+        if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEntradasJournaling))
+        {
+            // si no existe la carpeta de notas, se crea
+            manejadorArchivos.crearCarpeta(rutaEntradasJournaling);
+        }
+        // cargamos las notas en un arreglo
+        std::vector<std::string> notas = manejadorArchivos.obtenerContenidoCarpeta(rutaEntradasJournaling, 1);
+        // recorremos el arreglo de notas
+        for (const std::string& nota : notas)
+        {
+            // agregamos la nota a la lista de notas
+            jourLiNoListaNotas->addItem(QString::fromStdString(nota));
+        }
+    } catch (const std::exception &e) {
+        // si hay un error, se mostrará un mensaje emergente
+        QMessageBox::critical(this, "Error", e.what());
+    }
+}
+
+// ! método para crear una nueva entrada en el journaling
+// ! versión 1.0
+// ! modificado por Aether
+void MainWindow::jourLiNoNuevaEntrada()
+{
+    bool ok;
+    QString nombreEntrada = QInputDialog::getText(this, "Nueva Entrada", "Nombre de la Entrada:", QLineEdit::Normal, "", &ok);
+    try {
+        if (nombreEntrada.contains(NO_VALIDO_EN_ARCHIVOS))
+        {
+            QMessageBox::critical(this, "Error", "El nombre de la entrada no puede contener los siguientes caracteres: \\ / : * ? \" < > |");
+            return;
+        }
+        if (ok && !nombreEntrada.isEmpty())
+        {
+            std::string rutaEntradaJournaling = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/journaling/" + nombreEntrada.toStdString();
+            // Creamos la carpeta de la entrada
+            manejadorArchivos.crearCarpeta(rutaEntradaJournaling);
+            // Creamos el archivo de la entrada
+            //mJson::ManejadorJson entrada(rutaEntradaJournaling + nombreEntrada.toStdString() + ".tdapp", true);
+            manejadorArchivos.crearArchivo(rutaEntradaJournaling + "/" + nombreEntrada.toStdString() + ".tdapp", "");
+
+            // En este punto deberia de abrirse la interfaz de la entrada
+            jourLiNoCargarEntrada(2, nombreEntrada.toStdString());
+        }
+
+    } catch (const std::exception &e)
+    {
+        // si hay un error, se mostrará un mensaje emergente
+        QMessageBox::critical(this, "Error", e.what());
+    }
+}
+
+// ! método para cargar una entrada en el journaling
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::jourLiNoCargarEntrada(const int& tipoCarga, const std::string& nombreEntrada)
+{
+    // tipo carga
+    // 0 = cargar entrada de journaling a partir de la lista de entradas esto implica que no se puede modificar
+    // 1 = cargar entrada de journaling para modificarla
+    // 2 = cargar entrada de journaling como recien creada
+    try {
+        std::string rutaEntradaJournaling = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/journaling/";
+        // activamos la interfaz de la entrada del journaling
+        jourActivarEditarEntrada();
+        switch (tipoCarga)
+        {
+        // ! Este caso solo se cumple si recien se ha creado la entrada
+        case 2:
+            // ? completamos la ruta de la carpeta de la entrada
+            rutaEntradaJournaling += nombreEntrada;
+            // ? Cargamos la entrada en el objeto manejadorJson
+            entradaSeleccionada = new mJson::ManejadorJson(rutaEntradaJournaling + "/" + nombreEntrada + ".tdapp");
+            // ? Agregamos la fecha de creación osea la fecha actual
+            (*entradaSeleccionada)["fechaCreacion"] = QDateTime::currentDateTime().toString("dd/MM/yyyy hh:mm:ss").toStdString();
+            break;
+        // Este caso solo se cumple si se carga una entrada de la lista de entradas
+        case 0 : case 1:
+            // verificamos si tenemos un item seleccionado en la lista
+            if (jourLiNoListaNotas->currentItem() == nullptr)
+            {
+                QMessageBox::critical(this, "Error", "Debes seleccionar una entrada");
+                return;
+            }
+            // ? completamos la ruta de la carpeta de la entrada
+            rutaEntradaJournaling += jourLiNoListaNotas->currentItem()->text().toStdString();
+            // ? Cargamos la entrada en el objeto manejadorJson
+            entradaSeleccionada = new mJson::ManejadorJson(rutaEntradaJournaling + "/" + jourLiNoListaNotas->currentItem()->text().toStdString() + ".tdapp");
+            // ? Desactivamos la lista de entradas
+            //jourDesactivarListaEntradas(); < - ya lo hace jourActivarEditarEntrada
+            // ? Activamos la interfaz de la entrada del journaling
+            jourActivarEditarEntrada(true); // ? Solo lectura
+            // ? Cargar el titulo y el texto de la entrada en la interfaz de la entrada del journaling
+            jourReEnCampoTitulo->setText(QString::fromStdString(encriptado->desencriptar((*entradaSeleccionada)["titulo"])));
+            //jourReEnCampoTitulo->setReadOnly(true);
+            jourReEnCampoTexto->setHtml(QString::fromStdString(encriptado->desencriptar((*entradaSeleccionada)["texto"])));
+            //jourReEnCampoTexto->setReadOnly(true);
+            break;
+        }
+
+    } catch (const std::exception &e)
+    {
+        // si hay un error, se mostrará un mensaje emergente
+        QMessageBox::critical(this, "Error", e.what());
+    }
+}
+
+// ! método para guardar una entrada en el journaling
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::jourGuardarEntrada()
+{
+    // ? se obtendrá el titulo y el texto de la entrada
+    // ? se guardará el titulo y el texto de la entrada en el archivo de la entrada controlado por el manejadorJson "entradaSeleccionada"
+    // ? se mostrará un mensaje emergente que indica que la entrada se ha guardado correctamente
+
+    // obtenemos el titulo y el texto de la entrada
+    std::string titulo = jourReEnCampoTitulo->text().toStdString();
+    std::string texto = jourReEnCampoTexto->toHtml().toStdString();
+    // Guardamos el titulo y el texto de la entrada
+    (*entradaSeleccionada)["titulo"] = encriptado->encriptar(titulo);
+    (*entradaSeleccionada)["texto"] = encriptado->encriptar(texto);
+    // Guardamos la entrada
+    entradaSeleccionada->guardar();
+
+}
+
+// ! Método para eliminar una entrada en el journaling
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::jourEliminarEntrada()
+{
+    // ? se mostrara un mensaje emergente para confirmar si se desea eliminar la entrada
+    // ? se eliminara la entrada
+    // se actualizara la lista de entradas
+
+    // verificamos si tenemos un item seleccionado en la lista
+    if (jourLiNoListaNotas->currentItem() == nullptr)
+    {
+        QMessageBox::critical(this, "Error", "Debes seleccionar una entrada");
+        return;
+    }
+    // Armamos la ruta de la entrada
+    std::string rutaEntradaJournaling = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/journaling/" + jourLiNoListaNotas->currentItem()->text().toStdString();
+    // verificamos si existe la entrada
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEntradaJournaling))
+    {
+        QMessageBox::critical(this, "Error", "La entrada no existe");
+        return;
+    }
+    // mostramos un mensaje emergente para confirmar si se desea eliminar la entrada
+    QMessageBox::StandardButton respuesta = QMessageBox::question(this, "Eliminar Entrada", "¿Estás seguro de que deseas eliminar la entrada?", QMessageBox::Yes | QMessageBox::No);
+    if (respuesta == QMessageBox::Yes)
+    {
+        // eliminamos la entrada
+        manejadorArchivos.eliminarCarpeta(rutaEntradaJournaling);
+        // actualizamos la lista de entradas
+        //jourActualizarListaEntradas();
+        // activamos la lista de entradas
+        jourActivarListaEntradas();
+    }
+
+}
+
+// ! método para activar la interfaz de la entrada del journaling
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::jourActivarEditarEntrada(const bool& soloLectura)
+{
+    // ? se desactiva la pantalla de bienvenida
+    jourOcultarPantallaBienvenida();
+    // ? se desactiva la lista de entradas
+    jourDesactivarListaEntradas();
+    // ? limpiamos los botones de la barra de navegación
+    barNaLimpiarBotonesSeccionActual();
+    // ? modificamos el tamaño de la ventana
+    this->resize(400, 400);
+    // ? se activa la interfaz de la entrada del journaling
+    jourReEnCampoTitulo->show();
+    jourReEnCampoTexto->show();
+    if (soloLectura)
+    {
+        jourReEnCampoTexto->setReadOnly(true);
+        jourReEnCampoTitulo->setReadOnly(true);
+        barNaConfigurarBotones(0, true, 4, "Eliminar");
+        barNaConfigurarBotones(1, true, 3, "Editar");
+    }
+    else
+    {
+        jourReEnCampoTexto->setReadOnly(false);
+        jourReEnCampoTitulo->setReadOnly(false);
+        barNaConfigurarBotones(0, true, 2, "Guardar");
+    }
+
+}
+
+// ! método para desactivar la interfaz de la entrada del journaling
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::jourDesactivarEditarEntrada()
+{
+    // ? se desactiva la interfaz de la entrada del journaling
+    jourReEnCampoTitulo->hide();
+    jourReEnCampoTitulo->clear();
+    jourReEnCampoTexto->hide();
+    jourReEnCampoTexto->clear();
+    // ? se limpian los botones de la barra de navegación
+    barNaLimpiarBotonesSeccionActual();
+}
 
 // ////////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------------------------
@@ -1488,24 +1766,40 @@ void MainWindow::barNaConfigurarBotones(const int& nBoton, const bool& activar, 
             break;
     }
     // verificamos que el numero de la función sea correcto
-    if (nFuncion < 0)
+    if (nFuncion < -1)
     {
         // si el numero de la función es incorrecto, se mostrará un mensaje emergente
         QMessageBox::critical(this, "Error", "BARNA:02, El número de función es incorrecto");
         return;
     }
+
     // seleccionamos la función del boton
-    switch (nFuncion)
-    {
-        // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-        // ----------------------------JOURNALING-------------------------------------
+    // switch (nFuncion)
+    // {
+    //     // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+    //     // ----------------------------JOURNALING-------------------------------------
 
-        // ? Para activar la lista de entradas de journaling (estando en la pantalla de bienvenida)
-        case 0:
-            connect(boton, SIGNAL(clicked()), this, SLOT(jourActivarListaEntradas()));
-            break;
+    //     // ? Para activar la lista de entradas de journaling (estando en la pantalla de bienvenida)
+    //     case 0:
+    //         std::cout << "JourActivarListaEntradas" << std::endl;
+    //         connect(boton, SIGNAL(clicked()), this, SLOT(jourActivarListaEntradas()));
+    //         break;
+    //     // ? Para crear una nueva entrada en journaling
+    //     case 1:
+    //         std::cout << "JourLiNoNuevaEntrada" << std::endl;
+    //         connect(boton, SIGNAL(clicked()), this, SLOT(jourLiNoNuevaEntrada()));
+    //         break;
+    //     // ? Para guardar una entrada en journaling
+    //     case 2:
+    //         std::cout << "JourGuardarEntrada" << std::endl;
+    //         connect(boton, SIGNAL(clicked()), this, SLOT(jourGuardarEntrada()));
+    //         break;
+    //     default:
+    //         break;
 
-    }
+    // }
+    // conectamos la función del boton
+    barNaFunciones[nBoton] = nFuncion;
     // asignamos el texto al boton
     boton->setText(QString::fromStdString(textoBoton));
     // activamos o desactivamos el boton
@@ -1520,4 +1814,89 @@ void MainWindow::barNaConfigurarBotones(const int& nBoton, const bool& activar, 
         //std::cout << "Desactivando boton" << std::endl;
     }
 
+}
+
+// ! Método encargado de ejecutar las funciones de los botons de la barra de navegación
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaEjecutorFunciones(const int& nFuncion)
+{
+    switch (nFuncion)
+    {
+        // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+        // ----------------------------JOURNALING-------------------------------------
+
+        // ? Para activar la lista de entradas de journaling (estando en la pantalla de bienvenida)
+    case 0:
+        std::cout << "JourActivarListaEntradas" << std::endl;
+        //connect(boton, SIGNAL(clicked()), this, SLOT(jourActivarListaEntradas()));
+        jourActivarListaEntradas();
+        break;
+    // ? Para crear una nueva entrada en journaling
+    case 1:
+        std::cout << "JourLiNoNuevaEntrada" << std::endl;
+        //connect(boton, SIGNAL(clicked()), this, SLOT(jourLiNoNuevaEntrada()));
+        jourLiNoNuevaEntrada();
+        break;
+    // ? Para guardar una entrada en journaling
+    case 2:
+        std::cout << "JourGuardarEntrada" << std::endl;
+        //connect(boton, SIGNAL(clicked()), this, SLOT(jourGuardarEntrada()));
+        jourGuardarEntrada();
+        break;
+    // ? Para activar editar entrada en journaling en modo escritura
+    case 3:
+        std::cout << "JourActivarEditarEntrada" << std::endl;
+        //connect(boton, SIGNAL(clicked()), this, SLOT(jourActivarEditarEntrada()));
+        jourActivarEditarEntrada();
+        break;
+    // ? Para eliminar una entrada en journaling
+    case 4:
+        std::cout << "JourEliminarEntrada" << std::endl;
+        //connect(boton, SIGNAL(clicked()), this, SLOT(jourEliminarEntrada()));
+        jourEliminarEntrada();
+        break;
+    default:
+        break;
+
+    }
+}
+
+// ! Método para ejecutar bóton 1 de la barra de navegación
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaBotonSeccionActual0Click()
+{
+    barNaEjecutorFunciones(barNaFunciones[0]);
+}
+
+// ! Método para ejecutar bóton 2 de la barra de navegación
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaBotonSeccionActual1Click()
+{
+    barNaEjecutorFunciones(barNaFunciones[1]);
+}
+
+// ! Método para ejecutar bóton 3 de la barra de navegación
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaBotonSeccionActual2Click()
+{
+    barNaEjecutorFunciones(barNaFunciones[2]);
+}
+
+// ! Método para limpiar botones de la seleccion actual
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaLimpiarBotonesSeccionActual()
+{
+    barNaConfigurarBotones(0, false, -1, "");
+    barNaConfigurarBotones(1, false, -1, "");
+    barNaConfigurarBotones(2, false, -1, "");
 }

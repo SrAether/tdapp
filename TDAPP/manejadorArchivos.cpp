@@ -6,7 +6,7 @@
 #include "manejadorArchivos.h"
 
 // eliminame
-#include <iostream>
+//#include <iostream>
 
 
 // Lista de códigos de error
