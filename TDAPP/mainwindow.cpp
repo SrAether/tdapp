@@ -2,7 +2,7 @@
 #include <string>
 
 // para debug de terminal
-#include <map>
+//#include <map>
 #include <iostream>
 
 #include <vector> // para manejar vectores
@@ -40,6 +40,8 @@ const std::string RUTA_CARPETA_CONFIGURACIONES = "./config"; // ? ruta de la car
 const std::string RUTA_USUARIOS = "./usuarios/"; // ? ruta de la carpeta de usuarios
 const std::string CONTRASEÑA_ENCRIPTADO = "GULRarfiubh12#"; // ? contraseña para el encriptado
 const QRegularExpression NO_VALIDO_EN_ARCHIVOS("[\\/:*?\"<>|]"); // ? caracteres no permitidos en archivos
+const std::string RUTA_ICONOS = "./iconos/"; // ? ruta de los iconos
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget{parent}
@@ -464,9 +466,13 @@ MainWindow::MainWindow(QWidget *parent)
     frameBarraNavegacion = new QFrame();
     // ocultamos por defecto
     frameBarraNavegacion->hide();
+    // Icono de configuración
+    barNaIconoConfiguracion = new QIcon(QString(RUTA_ICONOS.c_str()) + "configuraciones.svg");
     // Botón de configuración
     barNaBotonConfiguracion = new QPushButton(frameBarraNavegacion);
-    barNaBotonConfiguracion->setText("Conf");
+    barNaBotonConfiguracion->setIcon(*barNaIconoConfiguracion);
+    barNaBotonConfiguracion->setIconSize(QSize(50, 50));
+    //barNaBotonConfiguracion->setText("Conf");
     // Botón de calendario
     barNaBotonCalendario = new QPushButton(frameBarraNavegacion);
     barNaBotonCalendario->setText("Cale");
@@ -518,7 +524,30 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
+    // -----------------------------------------------------------------------------
+    // CALENDARIO NO COMPLETADO
+    /* Debe contener:
+     * un calendario
+     * una pantalla de dia seleccionado donde se muestren las entradas de ese día
+     * una pantalla de evento seleccionado donde se muestre la información del evento
+     * una pantalla de evento nuevo donde se pueda añadir un evento nuevo
+     * una pantalla de editar evento donde se pueda editar un evento
+     */
 
+    // creamos un frame para el calendario
+    frameCalendario = new QFrame(framePrincipal);
+    // ocultamos por defecto
+    frameCalendario->hide();
+
+    // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
+    // Relacionado con el calendario en sí
+    // creamos un calendario
+    calCalendario = new QCalendarWidget(frameCalendario);
+    calCalendario->hide();
+    calCalendario->setMinimumSize(500, 500);
+    // creamos un layout para el calendario
+    calLayout = new QVBoxLayout(frameCalendario);
+    calLayout->addWidget(calCalendario);
 
 
 
@@ -535,6 +564,7 @@ MainWindow::MainWindow(QWidget *parent)
     disposicionPrincipal->addWidget(frameRegistroUsuario);
     disposicionPrincipal->addWidget(frameRecuperarContra);
     disposicionPrincipal->addWidget(frameJournaling);
+    disposicionPrincipal->addWidget(frameCalendario);
 
 
 
@@ -607,6 +637,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(reCoBotonCancelar, SIGNAL(clicked()), this, SLOT(reCoCancelarRecuperarContra()));
 
     // SEÑALES RELACIONADAS CON LA BARRA DE NAVEGACIÓN
+    // conectamos la señal para activar el frame de calendario
+    connect(barNaBotonCalendario, SIGNAL(clicked()), this, SLOT(barNaMostrarCalendario()));
     // conectamos la señal para activar el frame de journaling
     connect(barNaBotonJournaling, SIGNAL(clicked()), this, SLOT(barNaMostrarJournaling()));
     // conectamos la señal del boton 1 de la barra de navegación
@@ -1707,6 +1739,18 @@ void MainWindow::desactivarBarraNavegacion()
     frameBarraNavegacion->hide();
 }
 
+// ! método para mostrar la interfaz de calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaMostrarCalendario()
+{
+    // ? se desactivan todas las interfaces (frames)
+    barNaDesactivarTodosLosFrames();
+    // ? se activa el frame de calendario
+    activarInterfazCalendario();
+}
+
 // ! método para mostrar la interfaz de journaling
 // ! versión 1.0
 // ! modificado por Aether
@@ -1730,6 +1774,7 @@ void MainWindow::barNaDesactivarTodosLosFrames()
     desactivarInterfazRegistroUsuario();
     desactivarInterfazRecuperarContra();
     desactivarInterfazJournaling();
+    desactivarInterfazCalendario();
 }
 
 // ! método para activar o desactivar los botones de la barra de navegación
@@ -1900,3 +1945,44 @@ void MainWindow::barNaLimpiarBotonesSeccionActual()
     barNaConfigurarBotones(1, false, -1, "");
     barNaConfigurarBotones(2, false, -1, "");
 }
+
+// ////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------------
+// ! RELACIONADO CON EL CALENDARIO
+
+// ! método para activar el frame del calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::activarInterfazCalendario()
+{
+    // desactivamos todos los frames
+
+    frameCalendario->show();
+    std::cout << "Activando interfaz de calendario" << std::endl;
+    // ? se desactiva todo lo relacionado con el calendario
+    // aun no se ha implementado
+    // ? se activa el frame de calendario
+    calActivarCalendario();
+}
+
+// ! método para desactivar el frame del calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::desactivarInterfazCalendario()
+{
+    frameCalendario->hide();
+}
+
+// ! método para mostrar el calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calActivarCalendario()
+{
+    calCalendario->show();
+}
+
+
+

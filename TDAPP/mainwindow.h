@@ -51,8 +51,8 @@ class MainWindow : public QWidget
 
     // Frame que contiene todos los elementos de la ventana
     QFrame *framePrincipal; // frame principal
-    // Calendario
-    QCalendarWidget *calendario; // calendario
+    // Frame para el calendario
+    QFrame *frameCalendario; // frame para el calendario
     // Frame para iniciar sesión
     QFrame *frameInicioSesion; // frame para iniciar sesión
     // Frame para el registro de emociones
@@ -166,6 +166,9 @@ class MainWindow : public QWidget
     void barNaConfigurarBotones(const int& nBoton, const bool& activar, const int& nFuncion, const std::string& textoBoton); // ! configura los botones de la barra de navegación
     // Ejecutor de funciones de la barra de navegación
     void barNaEjecutorFunciones(const int& nFuncion); // ! ejecuta las funciones de la barra de navegación
+    // iconos de la barra de navegación
+    QIcon *barNaIconoConfiguracion; // icono para configuración
+
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME JOURNALING (jour)
@@ -188,7 +191,12 @@ class MainWindow : public QWidget
     QTextEdit *jourReEnCampoTexto; // campo para el texto de la entrada
     QVBoxLayout *jourReEnLayout; // layout para la entrada
 
-
+    // -----------------------------------------
+    // COSAS DENTRO DE FRAME CALENDARIO (cal)
+    // Calendario
+    QCalendarWidget *calCalendario; // calendario
+    // Layout para el calendario
+    QVBoxLayout *calLayout; // layout para el calendario
 
 
 
@@ -200,7 +208,12 @@ public:
     ~MainWindow();
 
 private slots:
+    // //////////////////////////////////////////////////////////////////////////////////
+    // --------------------------- SLOTS Generales ----------------------------------
+    //void cerrarAplicacion(); // ! cierra la aplicación
 
+    // //////////////////////////////////////////////////////////////////////////////////
+    // --------------------------- SLOTS Inicio ----------------------------------
     void activarInterfazInicioSesion(); // ! muestra la interfaz de inicio de sesión
     void desactivarInterfazInicioSesion(); // ! oculta la interfaz de inicio de sesión
 
@@ -241,6 +254,7 @@ private slots:
     // Relacionados con la barra de navegación
     void activarBarraNavegacion(); // ! muestra la barra de navegación
     void desactivarBarraNavegacion(); // ! oculta la barra de navegación
+    void barNaMostrarCalendario(); // ! muestra la interfaz del calendario
     void barNaMostrarJournaling(); // ! muestra la interfaz de journaling
     void barNaDesactivarTodosLosFrames(); // ! oculta todos los frames de la ventana
     void barNaBotonSeccionActual0Click(); // ! metodo para el boton de la seccion actual 0
@@ -266,37 +280,12 @@ private slots:
     void jourActivarEditarEntrada(const bool& soloLectura = false); // ! muestra la interfaz para editar una entrada de journaling
     void jourDesactivarEditarEntrada(); // ! oculta la interfaz para editar una entrada de journaling
 
-
-    // // DEPENDENCIAS DE LA INTERFAZ JOURNALING (DIARIO)
-    // void mostrarPantallaBienvenidaJournaling(); // ! muestra la pantalla de bienvenida de journaling
-    // void ocultarPantallaBienvenidaJournaling(); // ! oculta la pantalla de bienvenida de journaling
-    // void mostrarListaEntradasJournaling(); // ! muestra la lista de entradas de journaling
-    // void ocultarListaEntradasJournaling(); // ! oculta la lista de entradas de journaling
-    // void mostrarInterfazEditarEntradaJournaling(int idEntrada = 0); // ! muestra la interfaz para editar una entrada de journaling, si es 0 es una entrada nueva
-    // void ocultarInterfazEditarEntradaJournaling(); // ! oculta la interfaz para editar una entrada de journaling
-    // void mostrarEntradaSeleccionadaJournaling(int idEntrada); // ! muestra la interfaz con la información de una entrada seleccionada de journaling
-    // void ocultarEntradaSeleccionadaJournaling(); // ! oculta la interfaz con la información de una entrada seleccionada de journaling
-    // // ? Boton entrar a journaling de mostrarPantallaBienvenidaJournaling
-    // void entrarJournaling(); // ! muestra la interfaz de journaling
-    // // ? Boton nueva entrada de mostrarListaEntradasJournaling
-    // void nuevaEntradaJournaling(); // ! muestra la interfaz para agregar una nueva entrada de journaling
-    // // ? Boton guardar entrada de interfazEditarEntradaJournaling
-    // void guardarEntradaJournaling(int idEntrada); // ! guarda una entrada de journaling
-    // // ? Boton eliminar entrada de interfaz mostrarEntradaSeleccionadaJournaling
-    // void eliminarEntradaJournaling(int idEntrada); // ! elimina una entrada de journaling
-
-
-    //void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones
-    //void desactivarInterfazRegistroEmociones(); // ! oculta la interfaz de registro de emociones
-    // void activarInterfazHiperfoco(); // ! muestra la interfaz de hiperfoco
-    // void desactivarInterfazHiperfoco(); // ! oculta la interfaz de hiperfoco
-    // void activarInterfazConfiguracion(); // ! muestra la interfaz de configuración
-    // void desactivarInterfazConfiguracion(); // ! oculta la interfaz de configuración
-    // void activarInterfazCalendario(); // ! muestra la interfaz del calendario
-    // void desactivarInterfazCalendario(); // ! oculta la interfaz del calendario
-    // void activarInterfazJournaling(); // ! muestra la interfaz de journaling
-    // void desactivarInterfazJournaling(); // ! oculta la interfaz de
-
+    // //////////////////////////////////////////////////////////////////////////////////
+    // --------------------------- SLOTS Calendario ----------------------------------
+    // Relacionados con la interfaz del calendario
+    void activarInterfazCalendario(); // ! muestra la interfaz del calendario
+    void desactivarInterfazCalendario(); // ! oculta la interfaz del calendario
+    void calActivarCalendario(); // ! activa el calendario
 
     // // DEPENDENCIAS DE LA INTERFAZ CALENDARIO
     // void mostrarRegistroEmociones(time_t fecha); // ! muestra la interfaz con la grafica de emociones
@@ -311,6 +300,21 @@ private slots:
     // void eliminarEventoCalendario(int idEvent); // ! elimina un evento del calendario
     // // ? boton guardar evento usado en la interfaz de editar evento
     // void guardarEventoCalendario(int idEvent); // ! guarda un evento del calendario
+
+
+
+    //void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones
+    //void desactivarInterfazRegistroEmociones(); // ! oculta la interfaz de registro de emociones
+    // void activarInterfazHiperfoco(); // ! muestra la interfaz de hiperfoco
+    // void desactivarInterfazHiperfoco(); // ! oculta la interfaz de hiperfoco
+    // void activarInterfazConfiguracion(); // ! muestra la interfaz de configuración
+    // void desactivarInterfazConfiguracion(); // ! oculta la interfaz de configuración
+    // void activarInterfazCalendario(); // ! muestra la interfaz del calendario
+    // void desactivarInterfazCalendario(); // ! oculta la interfaz del calendario
+    // void activarInterfazJournaling(); // ! muestra la interfaz de journaling
+    // void desactivarInterfazJournaling(); // ! oculta la interfaz de
+
+
 
 
 
@@ -358,18 +362,6 @@ private slots:
     // // ? boton modificar información de usuario de mostrarAreaConfiguracion
     // void modificarInformacionUsuario(); // ! modifica la información del usuario de la aplicación
 
-
-    // // DEPENDENCIAS DE LA BARRA DE NAVEGACIÓN
-    // // ? boton mostrar calendario de mostrarBarraNavegacion
-    // void mostrarCalendario(); // ! muestra la interfaz del calendario
-    // // ? boton mostrar journaling de mostrarBarraNavegacion
-    // void mostrarJournaling(); // ! muestra la interfaz de journaling
-    // // ? boton mostrar registro de emociones de mostrarBarraNavegacion
-    // void mostrarRegistroEmociones(); // ! muestra la interfaz de registro de emociones
-    // // ? boton mostrar hiperfoco de mostrarBarraNavegacion
-    // void mostrarHiperfoco(); // ! muestra la interfaz de hiperfoco
-    // // ? boton mostrar configuración de mostrarBarraNavegacion
-    // void mostrarConfiguracion(); // ! muestra la interfaz de configuración
 
 signals:
 

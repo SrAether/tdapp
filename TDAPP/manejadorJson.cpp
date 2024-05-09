@@ -6,7 +6,7 @@
 #include <stdexcept>            // * para lanzar excepciones
 
 // para depuración
-#include <iostream>
+//#include <iostream>
 
 // Códigos de error de la clase ManejadorJson parten de TDAPP20
 // Err:TDAPP20, El archivo "rutaArchivo" ya existe
