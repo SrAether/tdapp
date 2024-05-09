@@ -146,7 +146,9 @@ class MainWindow : public QWidget
     // COSAS DENTRO DE FRAME BARA DE NAVEGACIÓN (barNa)
     // arreglo de 3 enteros que nos indica el numero de función que ejecuta cada boton
     int barNaFunciones[3]; // ! arreglo de 3 enteros que nos indica el numero de función que ejecuta cada boton
+
     // Botón para configuración
+    QSize barNaTamBotones; // ! tamaño de los botones de la barra de navegación
     QPushButton *barNaBotonConfiguracion; // boton para configuración
     // Botón para calendario
     QPushButton *barNaBotonCalendario; // boton para calendario
@@ -168,6 +170,11 @@ class MainWindow : public QWidget
     void barNaEjecutorFunciones(const int& nFuncion); // ! ejecuta las funciones de la barra de navegación
     // iconos de la barra de navegación
     QIcon *barNaIconoConfiguracion; // icono para configuración
+    QIcon *barNaIconoCalendario; // icono para calendario
+    QIcon *barNaIconoRegistroEmociones; // icono para registro de emociones
+    QIcon *barNaIconoJournaling; // icono para journaling
+    QIcon *barNaIconoHiperfoco; // icono para hiperfoco
+
 
 
     // -----------------------------------------
@@ -190,6 +197,14 @@ class MainWindow : public QWidget
     QLineEdit *jourReEnCampoTitulo; // campo para el título de la entrada
     QTextEdit *jourReEnCampoTexto; // campo para el texto de la entrada
     QVBoxLayout *jourReEnLayout; // layout para la entrada
+
+    // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    // ICONOS DE LA INTERFAZ DE JOURNALING PARA BOTONES DE LA BARRA DE NAVEGACIÓN
+    QIcon *jourIconoActivarListaEntradas; // icono para activar lista de entradas
+    QIcon *jourIconoNuevaEntrada; // icono para nueva entrada
+    QIcon *jourIconoGuardarEntrada; // icono para guardar entrada
+    QIcon *jourIconoEliminarEntrada; // icono para eliminar entrada
+    QIcon *jourIconoEditarEntrada; // icono para editar entrada
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME CALENDARIO (cal)

@@ -393,8 +393,18 @@ MainWindow::MainWindow(QWidget *parent)
     frameJournaling = new QFrame();
     // ocultamos por defecto
     frameJournaling->hide();
-    frameJournaling->setMinimumWidth(500);
-    frameJournaling->setMinimumHeight(500);
+    //frameJournaling->setMinimumWidth(400);
+    //frameJournaling->setMaximumWidth(2000);
+    //frameJournaling->setMinimumHeight(400);
+    //frameJournaling->setMaximumHeight(2000);
+    frameJournaling->adjustSize(); // ? ajustamos el tamaño del frame
+
+    // Iconos para la barra de navegación del journaling
+    jourIconoActivarListaEntradas = new QIcon(QString(RUTA_ICONOS.c_str()) + "activar_lista_entradas.png");
+    jourIconoEditarEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "editar_entrada.png");
+    jourIconoNuevaEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "nueva_entrada.png");
+    jourIconoEliminarEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "eliminar_entrada.png");
+    jourIconoGuardarEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "guardar_entrada.png");
 
 
 
@@ -402,8 +412,10 @@ MainWindow::MainWindow(QWidget *parent)
     jourBotonCambiarImagenBienvenida = new QPushButton(frameJournaling);
     // establecemos la posición del boton de bienvenida
     //jourBotonCambiarImagenBienvenida->setGeometry(0,0,1000,1000);
-    jourBotonCambiarImagenBienvenida->setMinimumWidth(400);
-    jourBotonCambiarImagenBienvenida->setMinimumHeight(400);
+    //jourBotonCambiarImagenBienvenida->setMinimumWidth(400);
+    //jourBotonCambiarImagenBienvenida->setMaximumWidth(2000);
+    //jourBotonCambiarImagenBienvenida->setMinimumHeight(400);
+    //jourBotonCambiarImagenBienvenida->setMaximumHeight(2000);
     jourBotonCambiarImagenBienvenida->adjustSize();
 
     // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
@@ -425,6 +437,7 @@ MainWindow::MainWindow(QWidget *parent)
     jourLiNoLayout = new QVBoxLayout(frameJournaling);
     jourLiNoLayout->addWidget(jourLiNoTitulo);
     jourLiNoLayout->addWidget(jourLiNoScrollArea, 1);
+    jourLiNoLayout->addWidget(jourBotonCambiarImagenBienvenida);
 
     // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
     // Relacionado con la edicion de entradas de journaling
@@ -466,34 +479,55 @@ MainWindow::MainWindow(QWidget *parent)
     frameBarraNavegacion = new QFrame();
     // ocultamos por defecto
     frameBarraNavegacion->hide();
+    // Tamaño de boton
+    barNaTamBotones = QSize(50, 50);
     // Icono de configuración
     barNaIconoConfiguracion = new QIcon(QString(RUTA_ICONOS.c_str()) + "configuraciones.svg");
+    // Icono de calendario
+    barNaIconoCalendario = new QIcon(QString(RUTA_ICONOS.c_str()) + "calendario.svg");
+    // Icono de registro de emociones
+    barNaIconoRegistroEmociones = new QIcon(QString(RUTA_ICONOS.c_str()) + "registro_emociones.svg");
+    // Icono de journaling
+    barNaIconoJournaling = new QIcon(QString(RUTA_ICONOS.c_str()) + "journaling.png");
+    // Icono de hiperfoco
+    barNaIconoHiperfoco = new QIcon(QString(RUTA_ICONOS.c_str()) + "hiperfoco.png");
     // Botón de configuración
     barNaBotonConfiguracion = new QPushButton(frameBarraNavegacion);
     barNaBotonConfiguracion->setIcon(*barNaIconoConfiguracion);
-    barNaBotonConfiguracion->setIconSize(QSize(50, 50));
-    //barNaBotonConfiguracion->setText("Conf");
+    barNaBotonConfiguracion->setIconSize(barNaTamBotones);
+    barNaBotonConfiguracion->setToolTip("Configuración");
     // Botón de calendario
     barNaBotonCalendario = new QPushButton(frameBarraNavegacion);
-    barNaBotonCalendario->setText("Cale");
+    barNaBotonCalendario->setToolTip("Calendario");
+    barNaBotonCalendario->setIcon(*barNaIconoCalendario);
+    barNaBotonCalendario->setIconSize(barNaTamBotones);
     // Botón Registro de emociones
     barNaBotonRegistroEmociones = new QPushButton(frameBarraNavegacion);
-    barNaBotonRegistroEmociones->setText("RegE");
+    barNaBotonRegistroEmociones->setToolTip("Registro de Emociones");
+    barNaBotonRegistroEmociones->setIcon(*barNaIconoRegistroEmociones);
+    barNaBotonRegistroEmociones->setIconSize(barNaTamBotones);
     // Botón Journaling
     barNaBotonJournaling = new QPushButton(frameBarraNavegacion);
-    barNaBotonJournaling->setText("Jour");
+    barNaBotonJournaling->setToolTip("Journaling");
+    barNaBotonJournaling->setIcon(*barNaIconoJournaling);
+    barNaBotonJournaling->setIconSize(barNaTamBotones);
     // Botón Hiperfoco
     barNaBotonHiperfoco = new QPushButton(frameBarraNavegacion);
-    barNaBotonHiperfoco->setText("Hipe");
+    barNaBotonHiperfoco->setToolTip("Hiperfoco");
+    barNaBotonHiperfoco->setIcon(*barNaIconoHiperfoco);
+    barNaBotonHiperfoco->setIconSize(barNaTamBotones);
     // Botón para sección actual 0
     barNaBotonSeccionActual0 = new QPushButton(frameBarraNavegacion);
     barNaBotonSeccionActual0->hide();
+    barNaBotonSeccionActual0->setIconSize(barNaTamBotones);
     // Botón para sección actual 1
     barNaBotonSeccionActual1 = new QPushButton(frameBarraNavegacion);
     barNaBotonSeccionActual1->hide();
+    barNaBotonSeccionActual1->setIconSize(barNaTamBotones);
     // Botón para sección actual 2
     barNaBotonSeccionActual2 = new QPushButton(frameBarraNavegacion);
     barNaBotonSeccionActual2->hide();
+    barNaBotonSeccionActual2->setIconSize(barNaTamBotones);
 
     // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
     // ACOMODO DE LOS ELEMENTOS DE LA INTERFAZ CON LAYOUTS
@@ -1348,6 +1382,8 @@ void MainWindow::desactivarInterfazJournaling()
 {
     // ? se desactiva el frame de journaling
     frameJournaling->hide();
+    // ? se desactivan los botones de la barra de navegación
+    barNaLimpiarBotonesSeccionActual();
 }
 
 // ! método para mostrar la pantalla de bienvenida
@@ -1374,7 +1410,13 @@ void MainWindow::mostrarPantallaBienvenidaJournaling()
     {
         // si existe la imagen de bienvenida, la asignamos al boton de bienvenida
         jourBotonCambiarImagenBienvenida->setIcon(QIcon(QPixmap(QString::fromStdString(rutaImagenBienvenida))));
-        jourBotonCambiarImagenBienvenida->setIconSize(QSize(800, 800));
+        // obtenemos el tamaño de la pantalla
+        QSize size = frameJournaling->size();
+        // restamos el tamaño del margen
+        size.setWidth(size.width() - 40);
+        size.setHeight(size.height() - 40);
+        jourBotonCambiarImagenBienvenida->setIconSize(size);
+        //jourBotonCambiarImagenBienvenida->setFixedSize(size);
         //jourBotonCambiarImagenBienvenida->setIconSize()
     }
     else
@@ -1399,7 +1441,8 @@ void MainWindow::jourOcultarPantallaBienvenida()
 
     jourBotonCambiarImagenBienvenida->hide();
     // desactivamos el primer boton de la barra de navegacion
-    barNaConfigurarBotones(0, false, -1, "");
+    //barNaConfigurarBotones(0, false, -1, "");
+    barNaLimpiarBotonesSeccionActual();
 }
 
 // ! método para seleccionar la imagen de bienvenida
@@ -1462,7 +1505,7 @@ void MainWindow::jourActivarListaEntradas()
     // ? se activará la lista de entradas de journaling
     jourDesactivarEditarEntrada();
     // modifcamos el tamaño de la ventana
-    this->resize(400, 400);
+    //this->resize(400, 400);
 
     // ? se activará la lista de entradas de journaling
     jourLiNoTitulo->show();
@@ -1485,7 +1528,8 @@ void MainWindow::jourDesactivarListaEntradas()
     jourLiNoListaNotas->hide();
     jourLiNoScrollArea->hide();
     // ? se desactivará el botón de nueva entrada
-    barNaConfigurarBotones(0, false, -1, "");
+    //barNaConfigurarBotones(0, false, -1, "");
+    barNaLimpiarBotonesSeccionActual();
 }
 
 // ! método para actualizar la lista de entradas del journaling
@@ -1680,7 +1724,7 @@ void MainWindow::jourActivarEditarEntrada(const bool& soloLectura)
     // ? limpiamos los botones de la barra de navegación
     barNaLimpiarBotonesSeccionActual();
     // ? modificamos el tamaño de la ventana
-    this->resize(400, 400);
+    //this->resize(400, 400);
     // ? se activa la interfaz de la entrada del journaling
     jourReEnCampoTitulo->show();
     jourReEnCampoTexto->show();
@@ -1819,34 +1863,39 @@ void MainWindow::barNaConfigurarBotones(const int& nBoton, const bool& activar, 
     }
 
     // seleccionamos la función del boton
-    // switch (nFuncion)
-    // {
-    //     // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-    //     // ----------------------------JOURNALING-------------------------------------
-
-    //     // ? Para activar la lista de entradas de journaling (estando en la pantalla de bienvenida)
-    //     case 0:
-    //         std::cout << "JourActivarListaEntradas" << std::endl;
-    //         connect(boton, SIGNAL(clicked()), this, SLOT(jourActivarListaEntradas()));
-    //         break;
-    //     // ? Para crear una nueva entrada en journaling
-    //     case 1:
-    //         std::cout << "JourLiNoNuevaEntrada" << std::endl;
-    //         connect(boton, SIGNAL(clicked()), this, SLOT(jourLiNoNuevaEntrada()));
-    //         break;
-    //     // ? Para guardar una entrada en journaling
-    //     case 2:
-    //         std::cout << "JourGuardarEntrada" << std::endl;
-    //         connect(boton, SIGNAL(clicked()), this, SLOT(jourGuardarEntrada()));
-    //         break;
-    //     default:
-    //         break;
-
-    // }
     // conectamos la función del boton
     barNaFunciones[nBoton] = nFuncion;
     // asignamos el texto al boton
-    boton->setText(QString::fromStdString(textoBoton));
+    boton->setToolTip(QString::fromStdString(textoBoton));
+    switch (nFuncion)
+    {
+        // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+        // ----------------------------JOURNALING-------------------------------------
+
+        // ? Para activar la lista de entradas de journaling (estando en la pantalla de bienvenida)
+    case 0:
+        boton->setIcon(*jourIconoActivarListaEntradas);
+        break;
+    // ? Para crear una nueva entrada en journaling
+    case 1:
+        boton->setIcon(*jourIconoNuevaEntrada);
+        break;
+    // ? Para guardar una entrada en journaling
+    case 2:
+        boton->setIcon(*jourIconoGuardarEntrada);
+        break;
+    // ? Para activar editar entrada en journaling en modo escritura
+    case 3:
+        boton->setIcon(*jourIconoEditarEntrada);
+        break;
+    // ? Para eliminar una entrada en journaling
+    case 4:
+        boton->setIcon(*jourIconoEliminarEntrada);
+        break;
+    default:
+        break;
+
+    }
     // activamos o desactivamos el boton
     if (activar)
     {
