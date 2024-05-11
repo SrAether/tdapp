@@ -283,6 +283,7 @@ private slots:
     void activarInterfazJournaling(); // ! muestra la interfaz de journaling
     void desactivarInterfazJournaling(); // ! oculta la interfaz de journaling
     void mostrarPantallaBienvenidaJournaling(); // ! muestra la pantalla de bienvenida de journaling
+    void jourPanBiRedimensionarIconoBoton(); // ! redimensiona el icono de la pantalla de bienvenida de journaling
     void jourOcultarPantallaBienvenida(); // ! oculta la pantalla de bienvenida de journaling
     void jourCambiarImagenBienvenida(); // ! cambia la imagen de bienvenida de journaling
     void jourActivarListaEntradas(); // ! muestra la lista de entradas de journaling
@@ -382,6 +383,7 @@ signals:
 
 
 protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 };
 #endif // MAINWINDOW_H

@@ -30,6 +30,9 @@
 #include "encriptado.h"
 
 
+
+
+
 // ! Rutas de archivos y carpetas necesarios
 
 // obsoleto
@@ -63,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
     // creamos el frame principal
     framePrincipal = new QFrame(this);
     // establecemos el tamaño del frame principal
-    framePrincipal->setGeometry(0, 0, 1920, 1080);
+    //framePrincipal->setGeometry(0, 0, 1920, 1080);
 
     // -----------------------------------------------------------------------------
     // INICIO DE SESIÓN NO COMPLETADO
@@ -79,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     // ocultamos por defecto
     frameInicioSesion->hide();
     frameInicioSesion->setMinimumWidth(500);
-    frameInicioSesion->setMinimumHeight(800);
+    frameInicioSesion->setMinimumHeight(600);
 
 
 
@@ -579,6 +582,27 @@ MainWindow::MainWindow(QWidget *parent)
     calCalendario = new QCalendarWidget(frameCalendario);
     calCalendario->hide();
     calCalendario->setMinimumSize(500, 500);
+    // añadimos un evento al calendario para el dia 10 de mayo del 2024
+    QDate fechaEvento = QDate(2024, 5, 10);
+    QTextCharFormat formatoEvento;
+    formatoEvento.setBackground(Qt::red);
+    formatoEvento.setForeground(Qt::white);
+    formatoEvento.setFontWeight(QFont::Bold);
+    calCalendario->setDateTextFormat(fechaEvento, formatoEvento);
+    // creamos un evento para el dia 12 de mayo del 2024 con el texto "Evento 2" que se mostrará en el calendario
+    QDate fechaEvento2 = QDate(2024, 5, 12);
+    QTextCharFormat formatoEvento2;
+    formatoEvento2.setBackground(Qt::blue);
+    formatoEvento2.setForeground(Qt::white);
+    formatoEvento2.setFontWeight(QFont::Bold);
+    calCalendario->setDateTextFormat(fechaEvento2, formatoEvento2);
+
+
+
+
+
+
+
     // creamos un layout para el calendario
     calLayout = new QVBoxLayout(frameCalendario);
     calLayout->addWidget(calCalendario);
@@ -1410,14 +1434,8 @@ void MainWindow::mostrarPantallaBienvenidaJournaling()
     {
         // si existe la imagen de bienvenida, la asignamos al boton de bienvenida
         jourBotonCambiarImagenBienvenida->setIcon(QIcon(QPixmap(QString::fromStdString(rutaImagenBienvenida))));
-        // obtenemos el tamaño de la pantalla
-        QSize size = frameJournaling->size();
-        // restamos el tamaño del margen
-        size.setWidth(size.width() - 40);
-        size.setHeight(size.height() - 40);
-        jourBotonCambiarImagenBienvenida->setIconSize(size);
-        //jourBotonCambiarImagenBienvenida->setFixedSize(size);
-        //jourBotonCambiarImagenBienvenida->setIconSize()
+        // redimensionamos la imagen
+        jourPanBiRedimensionarIconoBoton();
     }
     else
     {
@@ -1759,6 +1777,26 @@ void MainWindow::jourDesactivarEditarEntrada()
     barNaLimpiarBotonesSeccionActual();
 }
 
+// ! método para redimencionar el icono del boton de la pantalla de bienvenida
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::jourPanBiRedimensionarIconoBoton()
+{
+    // extraemos y mostramos el tamaño del frame de journaling
+    QSize size = frameJournaling->size();
+    std::cout << "Tamaño del frame de journaling: " << size.width() << " x " << size.height() << std::endl;
+    jourBotonCambiarImagenBienvenida->setFixedSize(size.width() - 40, size.height() - 40);
+    //jourBotonCambiarImagenBienvenida->size();
+    //jourBotonCambiarImagenBienvenida->setIconSize(jourBotonCambiarImagenBienvenida->size());
+    QSize BotonSize = jourBotonCambiarImagenBienvenida->size();
+    BotonSize.setWidth(BotonSize.width());
+    BotonSize.setHeight(BotonSize.height());
+    jourBotonCambiarImagenBienvenida->setIconSize(BotonSize);
+    std::cout << "Tamaño final del frame de journaling: " << frameJournaling->size().width() << " x " << frameJournaling->size().height() << std::endl;
+}
+
+
 // ////////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------------------------
 // ! RELACIONADOS CON LA BARRA DE NAVEGACIÓN
@@ -2035,3 +2073,14 @@ void MainWindow::calActivarCalendario()
 
 
 
+// ////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------------
+// ! RELACIONADOS CON LA INTERFAZ GRÁFICA
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+
+    QWidget::resizeEvent(event);
+    //frame->setFixedSize(this->size());
+    jourPanBiRedimensionarIconoBoton();
+
+}
