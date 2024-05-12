@@ -41,8 +41,12 @@ public:
     bool modificarRuta(std::string nuevaRuta, bool guardar=false, bool eliminarAnterior=false);
     // método para eliminar el archivo
     bool eliminar(bool eliminarArchivo=true);
+    // método para cargar el archivo
+    bool cargar(const std::string& rutaArchivo = "archivo.txt", bool nuevo=false);
     // método para saber si el mapa está vacío
     bool vacio();
+    // método para obtener claves
+    std::vector<std::string> claves();
     // destructor (llama al método guardar)
     ~ManejadorJson();
 };

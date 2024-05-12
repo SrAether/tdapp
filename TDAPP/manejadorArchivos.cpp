@@ -42,6 +42,7 @@ void mArchivos::manejadorArchivos::crearArchivo(const std::string &nombre, const
         //throw std::runtime_error("No se pudo abrir el archivo");
         throw std::runtime_error("Err:TDAPP01, No se pudo crear el archivo");
     }
+    // este simbolo "<<" se llama operador de inserción
     archivo << contenido;
     archivo.close();
 }

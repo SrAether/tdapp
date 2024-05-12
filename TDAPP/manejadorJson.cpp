@@ -77,7 +77,7 @@ void mJson::ManejadorJson::estructurar()
     //std::cout << contenido << std::endl;
 
     // ? recorremos el contenido del archivo
-    for (int i = 0; i < contenido.size(); i++)
+    for (int i = 0; i < int(contenido.size()); i++)
     {
         // usando un switch para determinar el tipo de carácter
         unsigned char c = contenido[i];
@@ -335,6 +335,40 @@ bool mJson::ManejadorJson::eliminar(bool eliminarArchivo)
     return true;
 }
 
+// ! método para cargar el archivo
+// ! versión 1.0
+// ! modificado por Aether
+// ? no se realizaron cambios a partir de la versión 1.0
+bool mJson::ManejadorJson::cargar(const std::string& rutaArchivo, bool nuevo)
+{
+    // ? eliminamos el objeto anterior
+    eliminar(false);
+    // ? si la rutaArchivo es diferente de la ruta actual, modificamos la ruta
+    if (rutaArchivo != ruta)
+    {
+        // ? modificamos la ruta
+        ruta = rutaArchivo;
+    }
+    // ? si el archivo no existe, lo creamos
+    if (nuevo)
+    {
+        // ? verificamos si el archivo ya existe
+        if (manejadorArchivos.verificarExistenciaDeArchivo(rutaArchivo))
+        {
+            throw std::runtime_error("El archivo ya existe");
+        }
+        // ? creamos el archivo
+        manejadorArchivos.crearArchivo(rutaArchivo, "{}");
+        // ? creamos el mapa vacío
+        map = std::map<std::string, std::string>{};
+        // ? no es necesario guardar el archivo, ya que se creó vacío
+        return true;
+    }
+    // ? usamos el método estructurar
+    estructurar();
+    return true;
+}
+
 // ! destructor (llama al método guardar)
 // ! versión 1.0
 // ! modificado por Aether
@@ -467,6 +501,23 @@ bool mJson::ManejadorJson::vacio()
 {
     return map.empty();
     //return true;
+}
+
+// ! método para obtener claves
+// ! versión 1.0
+// ! modificado por Aether
+// ? no se realizaron cambios a partir de la versión 1.0
+std::vector<std::string> mJson::ManejadorJson::claves()
+{
+    // ? creamos un vector para guardar las claves
+    std::vector<std::string> claves;
+    // ? recorremos el mapa
+    for (auto i : map)
+    {
+        // ? agregamos la clave al vector
+        claves.push_back(i.first);
+    }
+    return claves;
 }
 
 // ! fin de la clase ManejadorJson

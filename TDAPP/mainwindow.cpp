@@ -76,59 +76,60 @@ MainWindow::MainWindow(QWidget *parent)
      * un botón para iniciar sesión
      * un botón para registrarse
      */
-
-    // creamos un frame para iniciar sesión
-    frameInicioSesion = new QFrame(framePrincipal);
-    // ocultamos por defecto
-    frameInicioSesion->hide();
-    frameInicioSesion->setMinimumWidth(500);
-    frameInicioSesion->setMinimumHeight(600);
-
-
+    {
+        // creamos un frame para iniciar sesión
+        frameInicioSesion = new QFrame(framePrincipal);
+        // ocultamos por defecto
+        frameInicioSesion->hide();
+        frameInicioSesion->setMinimumWidth(500);
+        frameInicioSesion->setMinimumHeight(600);
 
 
-    // en este punto se deberia cargar un estilo para el frame inicio de sesión
-    //frameInicioSesion->setStyleSheet("background-color: #000000;"); // estilo para el frame
 
-    // SELECTOR DE USUARIO
-    // creamos un selector de usuario
-    inSeSelectorUsuario = new QComboBox(frameInicioSesion);
-    // establecemos la posición del selector
-    inSeSelectorUsuario->setGeometry(100, 100, 200, 50);
-    // establecemos un tamaño minimo
-    inSeSelectorUsuario->setMinimumSize(200, 50);
 
-    // CAMPO DE CONTRASEÑA
-    // creamos un campo de contraseña
-    inSeCampoContra = new QLineEdit(frameInicioSesion);
-    // establecemos la posición del campo de contraseña
-    inSeCampoContra->setGeometry(100, 200, 200, 50);
-    // establecemos el texto del campo de contraseña
-    inSeCampoContra->setPlaceholderText("Contraseña");
+        // en este punto se deberia cargar un estilo para el frame inicio de sesión
+        //frameInicioSesion->setStyleSheet("background-color: #000000;"); // estilo para el frame
 
-    // BOTÓN DE INICIAR SESIÓN
-    // creamos un botón para iniciar sesión
-    inSeBotonIniciarSesion = new QPushButton(frameInicioSesion);
-    // establecemos la posición del botón de iniciar sesión
-    inSeBotonIniciarSesion->setGeometry(100, 300, 200, 50);
-    // establecemos el texto del botón de iniciar sesión
-    inSeBotonIniciarSesion->setText("Iniciar Sesión");
+        // SELECTOR DE USUARIO
+        // creamos un selector de usuario
+        inSeSelectorUsuario = new QComboBox(frameInicioSesion);
+        // establecemos la posición del selector
+        inSeSelectorUsuario->setGeometry(100, 100, 200, 50);
+        // establecemos un tamaño minimo
+        inSeSelectorUsuario->setMinimumSize(200, 50);
 
-    // BOTÓN DE REGISTRARSE
-    // creamos un botón para registrarse
-    inSeBotonRegistrarse = new QPushButton(frameInicioSesion);
-    // establecemos la posición del botón de registrarse
-    inSeBotonRegistrarse->setGeometry(100, 400, 200, 50);
-    // establecemos el texto del botón de registrarse
-    inSeBotonRegistrarse->setText("Registrarse");
+        // CAMPO DE CONTRASEÑA
+        // creamos un campo de contraseña
+        inSeCampoContra = new QLineEdit(frameInicioSesion);
+        // establecemos la posición del campo de contraseña
+        inSeCampoContra->setGeometry(100, 200, 200, 50);
+        // establecemos el texto del campo de contraseña
+        inSeCampoContra->setPlaceholderText("Contraseña");
 
-    // BOTÓN DE RECUPERAR CONTRASEÑA
-    // creamos un botón para recuperar contraseña
-    inSeBotonRecuperarContra = new QPushButton(frameInicioSesion);
-    // establecemos la posición del botón de recuperar contraseña
-    inSeBotonRecuperarContra->setGeometry(100, 500, 200, 50);
-    // establecemos el texto del botón de recuperar contraseña
-    inSeBotonRecuperarContra->setText("Recuperar Contraseña");
+        // BOTÓN DE INICIAR SESIÓN
+        // creamos un botón para iniciar sesión
+        inSeBotonIniciarSesion = new QPushButton(frameInicioSesion);
+        // establecemos la posición del botón de iniciar sesión
+        inSeBotonIniciarSesion->setGeometry(100, 300, 200, 50);
+        // establecemos el texto del botón de iniciar sesión
+        inSeBotonIniciarSesion->setText("Iniciar Sesión");
+
+        // BOTÓN DE REGISTRARSE
+        // creamos un botón para registrarse
+        inSeBotonRegistrarse = new QPushButton(frameInicioSesion);
+        // establecemos la posición del botón de registrarse
+        inSeBotonRegistrarse->setGeometry(100, 400, 200, 50);
+        // establecemos el texto del botón de registrarse
+        inSeBotonRegistrarse->setText("Registrarse");
+
+        // BOTÓN DE RECUPERAR CONTRASEÑA
+        // creamos un botón para recuperar contraseña
+        inSeBotonRecuperarContra = new QPushButton(frameInicioSesion);
+        // establecemos la posición del botón de recuperar contraseña
+        inSeBotonRecuperarContra->setGeometry(100, 500, 200, 50);
+        // establecemos el texto del botón de recuperar contraseña
+        inSeBotonRecuperarContra->setText("Recuperar Contraseña");
+    }
 
     // -----------------------------------------------------------------------------
     // REGISTRO DE USUARIOS NO COMPLETADO
@@ -143,183 +144,185 @@ MainWindow::MainWindow(QWidget *parent)
      * un botón para registrarse
      * un botón para cancelar
      */
-    // inicializamos las variables
-    // ? La etiqueta de titulo
-    contenidoEtiquetaRegistroUsuario = "Registro de Usuarios"; // contenido de la etiqueta de registro de usuarios
-    // ? Boleano que funciona bandera para pedir o no las credenciales de correo electronico del usuario
-    banderaRegistroCopiaSeg = 0;
+    {
+        // inicializamos las variables
+        // ? La etiqueta de titulo
+        contenidoEtiquetaRegistroUsuario = "Registro de Usuarios"; // contenido de la etiqueta de registro de usuarios
+        // ? Boleano que funciona bandera para pedir o no las credenciales de correo electronico del usuario
+        banderaRegistroCopiaSeg = 0;
 
-    // creamos un frame para el registro de usuarios
-    frameRegistroUsuario = new QFrame(framePrincipal);
-    // ocultamos por defecto
-    frameRegistroUsuario->hide();
-    frameRegistroUsuario->setMinimumWidth(500);
-    frameRegistroUsuario->setMinimumHeight(800);
+        // creamos un frame para el registro de usuarios
+        frameRegistroUsuario = new QFrame(framePrincipal);
+        // ocultamos por defecto
+        frameRegistroUsuario->hide();
+        frameRegistroUsuario->setMinimumWidth(500);
+        frameRegistroUsuario->setMinimumHeight(800);
 
-    // en este punto se deberia cargar un estilo para el frame registro de usuarios
-    //frameRegistroUsuario->setStyleSheet("background-color: #000000;"); // estilo para el frame
+        // en este punto se deberia cargar un estilo para el frame registro de usuarios
+        //frameRegistroUsuario->setStyleSheet("background-color: #000000;"); // estilo para el frame
 
-    // ETIQUETA DE REGISTRO DE USUARIOS
-    // creamos una etiqueta para el registro de usuarios
-    etiquetaRegistroUsuario = new QLabel{QString::fromStdString(contenidoEtiquetaRegistroUsuario), frameRegistroUsuario};
-    // establecemos la posición de la etiqueta de registro de usuarios
-    etiquetaRegistroUsuario->setGeometry(100, 50, 200, 50);
+        // ETIQUETA DE REGISTRO DE USUARIOS
+        // creamos una etiqueta para el registro de usuarios
+        etiquetaRegistroUsuario = new QLabel{QString::fromStdString(contenidoEtiquetaRegistroUsuario), frameRegistroUsuario};
+        // establecemos la posición de la etiqueta de registro de usuarios
+        etiquetaRegistroUsuario->setGeometry(100, 50, 200, 50);
 
-    // CAMPO PARA INGRESAR NOMBRE
-    // creamos un campo para ingresar el nombre
-    campoRegistroNombre = new QLineEdit(frameRegistroUsuario);
-    // establecemos la posición del campo para ingresar el nombre
-    campoRegistroNombre->setGeometry(100, 100, 200, 50);
-    // establecemos el texto del campo para ingresar el nombre
-    campoRegistroNombre->setPlaceholderText("Nombre");
-    // mensaje al pasar el cursor sobre el campo
-    campoRegistroNombre->setToolTip("COLOCA TU NOMBRE PEQUEÑO INSECTO");
-    campoRegistroNombre->setToolTipDuration(3000); // duración de cosito emergente
+        // CAMPO PARA INGRESAR NOMBRE
+        // creamos un campo para ingresar el nombre
+        campoRegistroNombre = new QLineEdit(frameRegistroUsuario);
+        // establecemos la posición del campo para ingresar el nombre
+        campoRegistroNombre->setGeometry(100, 100, 200, 50);
+        // establecemos el texto del campo para ingresar el nombre
+        campoRegistroNombre->setPlaceholderText("Nombre");
+        // mensaje al pasar el cursor sobre el campo
+        campoRegistroNombre->setToolTip("COLOCA TU NOMBRE PEQUEÑO INSECTO");
+        campoRegistroNombre->setToolTipDuration(3000); // duración de cosito emergente
 
-    // CAMPO PARA INGRESAR APODO (USERNAME)
-    // creamos un campo para ingresar el apodo
-    campoRegistroNombreUs = new QLineEdit(frameRegistroUsuario);
-    // establecemos la posición del campo para ingresar el apodo
-    campoRegistroNombreUs->setGeometry(100, 150, 200, 50);
-    // establecemos el texto del campo para ingresar el apodo
-    campoRegistroNombreUs->setPlaceholderText("Como le gustaria que lo llamemos?");
+        // CAMPO PARA INGRESAR APODO (USERNAME)
+        // creamos un campo para ingresar el apodo
+        campoRegistroNombreUs = new QLineEdit(frameRegistroUsuario);
+        // establecemos la posición del campo para ingresar el apodo
+        campoRegistroNombreUs->setGeometry(100, 150, 200, 50);
+        // establecemos el texto del campo para ingresar el apodo
+        campoRegistroNombreUs->setPlaceholderText("Como le gustaria que lo llamemos?");
 
-    // CAMPO PARA INGRESAR CONTRASEÑA
-    // creamos un campo para ingresar la contraseña
-    campoRegistroContra = new QLineEdit(frameRegistroUsuario);
-    // establecemos la posición del campo para ingresar la contraseña
-    campoRegistroContra->setGeometry(100, 200, 200, 50);
-    // establecemos el texto del campo para ingresar la contraseña
-    campoRegistroContra->setPlaceholderText("Contra");
-    // establecemos que el campo sea de tipo contraseña
-    campoRegistroContra->setEchoMode(QLineEdit::Password);
+        // CAMPO PARA INGRESAR CONTRASEÑA
+        // creamos un campo para ingresar la contraseña
+        campoRegistroContra = new QLineEdit(frameRegistroUsuario);
+        // establecemos la posición del campo para ingresar la contraseña
+        campoRegistroContra->setGeometry(100, 200, 200, 50);
+        // establecemos el texto del campo para ingresar la contraseña
+        campoRegistroContra->setPlaceholderText("Contra");
+        // establecemos que el campo sea de tipo contraseña
+        campoRegistroContra->setEchoMode(QLineEdit::Password);
 
-    // CAMPO PARA CONFIRMAR CONTRASEÑA
-    // creamos un campo para confirmar la contraseña
-    campoRegistroContraConf = new QLineEdit(frameRegistroUsuario);
-    // establecemos la posición del campo para confirmar la contraseña
-    campoRegistroContraConf->setGeometry(100, 250, 200, 50);
-    // establecemos el texto del campo para confirmar la contraseña
-    campoRegistroContraConf->setPlaceholderText("Confirmar Contra");
-    // establecemos que el campo sea de tipo contraseña y que muestre la opción de mostrar la contraseña
-    campoRegistroContraConf->setEchoMode(QLineEdit::Password);
-
-
-
-
-    // BOTÓN PARA SELECCIONAR SI DESEA REALIZAR COPIA DE SEGURIDAD
-    // creamos un botón para seleccionar si desea realizar copia de seguridad
-    botonRegistroCopiaSeguridad = new QPushButton(frameRegistroUsuario);
-    // establecemos la posición del botón para seleccionar si desea realizar copia de seguridad
-    botonRegistroCopiaSeguridad->setGeometry(300, 350, 400, 50);
-    // establecemos el texto del botón para seleccionar si desea realizar copia de seguridad
-    botonRegistroCopiaSeguridad->setText("Da click para activar copia de seguridad");
-    // Mensaje cuando pasamos el cursor sobre el boton
+        // CAMPO PARA CONFIRMAR CONTRASEÑA
+        // creamos un campo para confirmar la contraseña
+        campoRegistroContraConf = new QLineEdit(frameRegistroUsuario);
+        // establecemos la posición del campo para confirmar la contraseña
+        campoRegistroContraConf->setGeometry(100, 250, 200, 50);
+        // establecemos el texto del campo para confirmar la contraseña
+        campoRegistroContraConf->setPlaceholderText("Confirmar Contra");
+        // establecemos que el campo sea de tipo contraseña y que muestre la opción de mostrar la contraseña
+        campoRegistroContraConf->setEchoMode(QLineEdit::Password);
 
 
-    // SELECTOR FRECUENCIA COPIA DE SEGURIDAD
-    // creamos un selector para la copia de seguridad
-    selectorRegistroFrecuenciaCopiaSeguridad = new QComboBox(frameRegistroUsuario);
-    // establecemos la posición del selector para la copia de seguridad
-    selectorRegistroFrecuenciaCopiaSeguridad->setGeometry(100, 350, 200, 50);
-    // establecemos el texto del selector para la copia de seguridad
-    selectorRegistroFrecuenciaCopiaSeguridad->addItem("A diario");
-    selectorRegistroFrecuenciaCopiaSeguridad->addItem("Cada 3 días");
-    selectorRegistroFrecuenciaCopiaSeguridad->addItem("Cada semana");
-    selectorRegistroFrecuenciaCopiaSeguridad->addItem("Cada mes");
-    selectorRegistroFrecuenciaCopiaSeguridad->addItem("Nunca");
-    // ocultamos por defecto
-    selectorRegistroFrecuenciaCopiaSeguridad->hide();
-
-    // CAMPO PARA INGRESAR CORREO ELECTRÓNICO (PARA COPIA DE SEGURIDAD)
-    // creamos un campo para ingresar el correo electrónico
-    campoRegistroCorreoCopiaSeguridad = new QLineEdit(frameRegistroUsuario);
-    // establecemos la posición del campo para ingresar el correo electrónico
-    campoRegistroCorreoCopiaSeguridad->setGeometry(100, 400, 200, 50);
-    // establecemos el texto del campo para ingresar el correo electrónico
-    campoRegistroCorreoCopiaSeguridad->setPlaceholderText("Correo Electrónico");
-    // ocultamos por defecto
-    campoRegistroCorreoCopiaSeguridad->hide();
-
-    // CAMPO PARA INGRESAR CONTRASEÑA DE CORREO ELECTRÓNICO (PARA COPIA DE SEGURIDAD)
-    // creamos un campo para ingresar la contraseña del correo electrónico
-    campoRegistroContraCopiaSeguridad = new QLineEdit(frameRegistroUsuario);
-    // establecemos la posición del campo para ingresar la contraseña del correo electrónico
-    campoRegistroContraCopiaSeguridad->setGeometry(100, 450, 200, 50);
-    // establecemos el texto del campo para ingresar la contraseña del correo electrónico
-    campoRegistroContraCopiaSeguridad->setPlaceholderText("Contra del Correo Electrónico");
-    // establecemos que el campo sea de tipo contraseña
-    campoRegistroContraCopiaSeguridad->setEchoMode(QLineEdit::Password);
-    // ocultamos por defecto
-    campoRegistroContraCopiaSeguridad->hide();
-
-    // CAMPO PARA CONFIRMAR CONTRASEÑA DE CORREO ELECTRÓNICO (PARA COPIA DE SEGURIDAD)
-    // creamos un campo para confirmar la contraseña del correo electrónico
-    campoRegistroContraCopiaSeguridadConf = new QLineEdit(frameRegistroUsuario);
-    // establecemos la posición del campo para confirmar la contraseña del correo electrónico
-    campoRegistroContraCopiaSeguridadConf->setGeometry(100, 500, 200, 50);
-    // establecemos el texto del campo para confirmar la contraseña del correo electrónico
-    campoRegistroContraCopiaSeguridadConf->setPlaceholderText("Confirmar Contra del Correo Electrónico");
-    // establecemos que el campo sea de tipo contraseña
-    campoRegistroContraCopiaSeguridadConf->setEchoMode(QLineEdit::Password);
-    // ocultamos por defecto
-    campoRegistroContraCopiaSeguridadConf->hide();
-
-    // BOTÓN PARA INGRESAR FOTO DE PERFIL (avatar)
-    // creamos un botón para añadir la foto de perfil
-    botonRegistroFotoPerfil = new QPushButton(frameRegistroUsuario);
-    // establecemos la posición del botón para añadir la foto de perfil
-    botonRegistroFotoPerfil->setGeometry(100, 550, 200, 50);
-    // establecemos el texto del botón para añadir la foto de perfil
-    botonRegistroFotoPerfil->setText("Añadir Foto de Perfil");
 
 
-    // SELECTOR PARA LA EDAD
-    // creamos un selector para la edad
-    selectorRegistroEdad = new QComboBox(frameRegistroUsuario);
-    // establecemos la posición del selector para la edad
-    selectorRegistroEdad->setGeometry(100, 650, 200, 50);
-    // establecemos el texto del selector para la edad
-    selectorRegistroEdad->addItem("Menos de 18 años");
-    selectorRegistroEdad->addItem("18 - 24 años");
-    selectorRegistroEdad->addItem("25 - 34 años");
-    selectorRegistroEdad->addItem("35 - 44 años");
-    selectorRegistroEdad->addItem("45 - 54 años");
-    selectorRegistroEdad->addItem("55 - 64 años");
-    selectorRegistroEdad->addItem("65 - 74 años");
-    selectorRegistroEdad->addItem("75 años o más");
+        // BOTÓN PARA SELECCIONAR SI DESEA REALIZAR COPIA DE SEGURIDAD
+        // creamos un botón para seleccionar si desea realizar copia de seguridad
+        botonRegistroCopiaSeguridad = new QPushButton(frameRegistroUsuario);
+        // establecemos la posición del botón para seleccionar si desea realizar copia de seguridad
+        botonRegistroCopiaSeguridad->setGeometry(300, 350, 400, 50);
+        // establecemos el texto del botón para seleccionar si desea realizar copia de seguridad
+        botonRegistroCopiaSeguridad->setText("Da click para activar copia de seguridad");
+        // Mensaje cuando pasamos el cursor sobre el boton
 
-    // Campo para añadir pregunta de recuperación
-    // creamos un campo para añadir la pregunta de recuperación
-    campoRegistroPreguntaRecuperacion = new QLineEdit(frameRegistroUsuario);
-    // establecemos la posición del campo para añadir la pregunta de recuperación
-    campoRegistroPreguntaRecuperacion->setGeometry(300, 700, 200, 50);
-    // establecemos el texto del campo para añadir la pregunta de recuperación
-    campoRegistroPreguntaRecuperacion->setPlaceholderText("Pregunta de Recuperación");
 
-    // Campo para añadir respuesta de recuperación
-    // creamos un campo para añadir la respuesta de recuperación
-    campoRegistroRespuestaRecuperacion = new QLineEdit(frameRegistroUsuario);
-    // establecemos la posición del campo para añadir la respuesta de recuperación
-    campoRegistroRespuestaRecuperacion->setGeometry(300, 750, 200, 50);
-    // establecemos el texto del campo para añadir la respuesta de recuperación
-    campoRegistroRespuestaRecuperacion->setPlaceholderText("Respuesta de Recuperación");
+        // SELECTOR FRECUENCIA COPIA DE SEGURIDAD
+        // creamos un selector para la copia de seguridad
+        selectorRegistroFrecuenciaCopiaSeguridad = new QComboBox(frameRegistroUsuario);
+        // establecemos la posición del selector para la copia de seguridad
+        selectorRegistroFrecuenciaCopiaSeguridad->setGeometry(100, 350, 200, 50);
+        // establecemos el texto del selector para la copia de seguridad
+        selectorRegistroFrecuenciaCopiaSeguridad->addItem("A diario");
+        selectorRegistroFrecuenciaCopiaSeguridad->addItem("Cada 3 días");
+        selectorRegistroFrecuenciaCopiaSeguridad->addItem("Cada semana");
+        selectorRegistroFrecuenciaCopiaSeguridad->addItem("Cada mes");
+        selectorRegistroFrecuenciaCopiaSeguridad->addItem("Nunca");
+        // ocultamos por defecto
+        selectorRegistroFrecuenciaCopiaSeguridad->hide();
 
-    // BOTÓN PARA REGISTRARSE
-    // creamos un botón para registrarse
-    botonRegistrarUsuario = new QPushButton(frameRegistroUsuario);
-    // establecemos la posición del botón para registrarse
-    botonRegistrarUsuario->setGeometry(100, 700, 200, 50);
-    // establecemos el texto del botón para registrarse
-    botonRegistrarUsuario->setText("Registrarse");
+        // CAMPO PARA INGRESAR CORREO ELECTRÓNICO (PARA COPIA DE SEGURIDAD)
+        // creamos un campo para ingresar el correo electrónico
+        campoRegistroCorreoCopiaSeguridad = new QLineEdit(frameRegistroUsuario);
+        // establecemos la posición del campo para ingresar el correo electrónico
+        campoRegistroCorreoCopiaSeguridad->setGeometry(100, 400, 200, 50);
+        // establecemos el texto del campo para ingresar el correo electrónico
+        campoRegistroCorreoCopiaSeguridad->setPlaceholderText("Correo Electrónico");
+        // ocultamos por defecto
+        campoRegistroCorreoCopiaSeguridad->hide();
 
-    // BOTÓN PARA CANCELAR
-    // creamos un botón para cancelar
-    botonRegistroCancelar = new QPushButton(frameRegistroUsuario);
-    // establecemos la posición del botón para cancelar
-    botonRegistroCancelar->setGeometry(100, 750, 200, 50);
-    // establecemos el texto del botón para cancelar
-    botonRegistroCancelar->setText("Cancelar");
+        // CAMPO PARA INGRESAR CONTRASEÑA DE CORREO ELECTRÓNICO (PARA COPIA DE SEGURIDAD)
+        // creamos un campo para ingresar la contraseña del correo electrónico
+        campoRegistroContraCopiaSeguridad = new QLineEdit(frameRegistroUsuario);
+        // establecemos la posición del campo para ingresar la contraseña del correo electrónico
+        campoRegistroContraCopiaSeguridad->setGeometry(100, 450, 200, 50);
+        // establecemos el texto del campo para ingresar la contraseña del correo electrónico
+        campoRegistroContraCopiaSeguridad->setPlaceholderText("Contra del Correo Electrónico");
+        // establecemos que el campo sea de tipo contraseña
+        campoRegistroContraCopiaSeguridad->setEchoMode(QLineEdit::Password);
+        // ocultamos por defecto
+        campoRegistroContraCopiaSeguridad->hide();
+
+        // CAMPO PARA CONFIRMAR CONTRASEÑA DE CORREO ELECTRÓNICO (PARA COPIA DE SEGURIDAD)
+        // creamos un campo para confirmar la contraseña del correo electrónico
+        campoRegistroContraCopiaSeguridadConf = new QLineEdit(frameRegistroUsuario);
+        // establecemos la posición del campo para confirmar la contraseña del correo electrónico
+        campoRegistroContraCopiaSeguridadConf->setGeometry(100, 500, 200, 50);
+        // establecemos el texto del campo para confirmar la contraseña del correo electrónico
+        campoRegistroContraCopiaSeguridadConf->setPlaceholderText("Confirmar Contra del Correo Electrónico");
+        // establecemos que el campo sea de tipo contraseña
+        campoRegistroContraCopiaSeguridadConf->setEchoMode(QLineEdit::Password);
+        // ocultamos por defecto
+        campoRegistroContraCopiaSeguridadConf->hide();
+
+        // BOTÓN PARA INGRESAR FOTO DE PERFIL (avatar)
+        // creamos un botón para añadir la foto de perfil
+        botonRegistroFotoPerfil = new QPushButton(frameRegistroUsuario);
+        // establecemos la posición del botón para añadir la foto de perfil
+        botonRegistroFotoPerfil->setGeometry(100, 550, 200, 50);
+        // establecemos el texto del botón para añadir la foto de perfil
+        botonRegistroFotoPerfil->setText("Añadir Foto de Perfil");
+
+
+        // SELECTOR PARA LA EDAD
+        // creamos un selector para la edad
+        selectorRegistroEdad = new QComboBox(frameRegistroUsuario);
+        // establecemos la posición del selector para la edad
+        selectorRegistroEdad->setGeometry(100, 650, 200, 50);
+        // establecemos el texto del selector para la edad
+        selectorRegistroEdad->addItem("Menos de 18 años");
+        selectorRegistroEdad->addItem("18 - 24 años");
+        selectorRegistroEdad->addItem("25 - 34 años");
+        selectorRegistroEdad->addItem("35 - 44 años");
+        selectorRegistroEdad->addItem("45 - 54 años");
+        selectorRegistroEdad->addItem("55 - 64 años");
+        selectorRegistroEdad->addItem("65 - 74 años");
+        selectorRegistroEdad->addItem("75 años o más");
+
+        // Campo para añadir pregunta de recuperación
+        // creamos un campo para añadir la pregunta de recuperación
+        campoRegistroPreguntaRecuperacion = new QLineEdit(frameRegistroUsuario);
+        // establecemos la posición del campo para añadir la pregunta de recuperación
+        campoRegistroPreguntaRecuperacion->setGeometry(300, 700, 200, 50);
+        // establecemos el texto del campo para añadir la pregunta de recuperación
+        campoRegistroPreguntaRecuperacion->setPlaceholderText("Pregunta de Recuperación");
+
+        // Campo para añadir respuesta de recuperación
+        // creamos un campo para añadir la respuesta de recuperación
+        campoRegistroRespuestaRecuperacion = new QLineEdit(frameRegistroUsuario);
+        // establecemos la posición del campo para añadir la respuesta de recuperación
+        campoRegistroRespuestaRecuperacion->setGeometry(300, 750, 200, 50);
+        // establecemos el texto del campo para añadir la respuesta de recuperación
+        campoRegistroRespuestaRecuperacion->setPlaceholderText("Respuesta de Recuperación");
+
+        // BOTÓN PARA REGISTRARSE
+        // creamos un botón para registrarse
+        botonRegistrarUsuario = new QPushButton(frameRegistroUsuario);
+        // establecemos la posición del botón para registrarse
+        botonRegistrarUsuario->setGeometry(100, 700, 200, 50);
+        // establecemos el texto del botón para registrarse
+        botonRegistrarUsuario->setText("Registrarse");
+
+        // BOTÓN PARA CANCELAR
+        // creamos un botón para cancelar
+        botonRegistroCancelar = new QPushButton(frameRegistroUsuario);
+        // establecemos la posición del botón para cancelar
+        botonRegistroCancelar->setGeometry(100, 750, 200, 50);
+        // establecemos el texto del botón para cancelar
+        botonRegistroCancelar->setText("Cancelar");
+    }
 
     // ----------------------------------------------------------------------------
     // Recuperar Contra NO COMPLETADO
@@ -331,56 +334,58 @@ MainWindow::MainWindow(QWidget *parent)
      * un botón para cancelar
      * mostrara un mensaje emergente con la contraseña
      */
-    reCoPreguntaContra = "Hola"; // ? pregunta de recuperación de la contraseña
-    frameRecuperarContra = new QFrame(framePrincipal);
-    // ocultamos por defecto
-    frameRecuperarContra->hide();
-    frameRecuperarContra->setMinimumWidth(500);
-    frameRecuperarContra->setMinimumHeight(800);
+    {
+        reCoPreguntaContra = "Hola"; // ? pregunta de recuperación de la contraseña
+        frameRecuperarContra = new QFrame(framePrincipal);
+        // ocultamos por defecto
+        frameRecuperarContra->hide();
+        frameRecuperarContra->setMinimumWidth(500);
+        frameRecuperarContra->setMinimumHeight(800);
 
-    // en este punto se deberia cargar un estilo para el frame recuperar contraseña
-    //frameRecuperarContra->setStyleSheet("background-color: #000000;"); // estilo para el frame
+        // en este punto se deberia cargar un estilo para el frame recuperar contraseña
+        //frameRecuperarContra->setStyleSheet("background-color: #000000;"); // estilo para el frame
 
-    // SELECTOR DE USUARIO
-    // creamos un selector de usuario
-    reCoSelectorUsuario = new QComboBox(frameRecuperarContra);
-    // establecemos la posición del selector
-    reCoSelectorUsuario->setGeometry(100, 100, 200, 50);
+        // SELECTOR DE USUARIO
+        // creamos un selector de usuario
+        reCoSelectorUsuario = new QComboBox(frameRecuperarContra);
+        // establecemos la posición del selector
+        reCoSelectorUsuario->setGeometry(100, 100, 200, 50);
 
-    // PREGUNTA DE RECUPERACIÓN
-    // creamos una etiqueta para la pregunta de recuperación
-    reCoPreguntaRecuperacion = new QLabel{QString::fromStdString(reCoPreguntaContra), frameRecuperarContra};
-    // establecemos la posición de la etiqueta de la pregunta de recuperación
-    reCoPreguntaRecuperacion->setGeometry(400, 150, 1200, 300);
-    // colocamos salto de linea automatico
-    reCoPreguntaRecuperacion->setWordWrap(true);
+        // PREGUNTA DE RECUPERACIÓN
+        // creamos una etiqueta para la pregunta de recuperación
+        reCoPreguntaRecuperacion = new QLabel{QString::fromStdString(reCoPreguntaContra), frameRecuperarContra};
+        // establecemos la posición de la etiqueta de la pregunta de recuperación
+        reCoPreguntaRecuperacion->setGeometry(400, 150, 1200, 300);
+        // colocamos salto de linea automatico
+        reCoPreguntaRecuperacion->setWordWrap(true);
 
-    // CAMPO PARA RESPONDER PREGUNTA DE RECUPERACIÓN
-    // creamos un campo para responder la pregunta de recuperación
-    reCoCampoRespuesta = new QLineEdit(frameRecuperarContra);
-    // establecemos la posición del campo para responder la pregunta de recuperación
-    reCoCampoRespuesta->setGeometry(100, 200, 200, 50);
-    // establecemos el texto del campo para responder la pregunta de recuperación
-    reCoCampoRespuesta->setPlaceholderText("Respuesta de Recuperación");
-
-
-    // BOTÓN PARA RECUPERAR CONTRASEÑA
-    // creamos un botón para recuperar la contraseña
-    reCoBotonConfirmar = new QPushButton(frameRecuperarContra);
-    // establecemos la posición del botón para recuperar la contraseña
-    reCoBotonConfirmar->setGeometry(100, 250, 200, 50);
-    // establecemos el texto del botón para recuperar la contraseña
-    reCoBotonConfirmar->setText("Recuperar Contraseña");
-
-    // BOTÓN PARA CANCELAR
-    // creamos un botón para cancelar
-    reCoBotonCancelar = new QPushButton(frameRecuperarContra);
-    // establecemos la posición del botón para cancelar
-    reCoBotonCancelar->setGeometry(100, 300, 200, 50);
-    // establecemos el texto del botón para cancelar
-    reCoBotonCancelar->setText("Cancelar");
+        // CAMPO PARA RESPONDER PREGUNTA DE RECUPERACIÓN
+        // creamos un campo para responder la pregunta de recuperación
+        reCoCampoRespuesta = new QLineEdit(frameRecuperarContra);
+        // establecemos la posición del campo para responder la pregunta de recuperación
+        reCoCampoRespuesta->setGeometry(100, 200, 200, 50);
+        // establecemos el texto del campo para responder la pregunta de recuperación
+        reCoCampoRespuesta->setPlaceholderText("Respuesta de Recuperación");
 
 
+        // BOTÓN PARA RECUPERAR CONTRASEÑA
+        // creamos un botón para recuperar la contraseña
+        reCoBotonConfirmar = new QPushButton(frameRecuperarContra);
+        // establecemos la posición del botón para recuperar la contraseña
+        reCoBotonConfirmar->setGeometry(100, 250, 200, 50);
+        // establecemos el texto del botón para recuperar la contraseña
+        reCoBotonConfirmar->setText("Recuperar Contraseña");
+
+        // BOTÓN PARA CANCELAR
+        // creamos un botón para cancelar
+        reCoBotonCancelar = new QPushButton(frameRecuperarContra);
+        // establecemos la posición del botón para cancelar
+        reCoBotonCancelar->setGeometry(100, 300, 200, 50);
+        // establecemos el texto del botón para cancelar
+        reCoBotonCancelar->setText("Cancelar");
+
+
+    }
 
 
 
@@ -391,74 +396,65 @@ MainWindow::MainWindow(QWidget *parent)
      * una pantalla con la lista de entrada de journaling
      * ... (continuar)
      */
+    {
+        // creamos un frame para el journaling
+        frameJournaling = new QFrame();
+        // ocultamos por defecto
+        frameJournaling->hide();
+        frameJournaling->adjustSize(); // ? ajustamos el tamaño del frame
 
-    // creamos un frame para el journaling
-    frameJournaling = new QFrame();
-    // ocultamos por defecto
-    frameJournaling->hide();
-    //frameJournaling->setMinimumWidth(400);
-    //frameJournaling->setMaximumWidth(2000);
-    //frameJournaling->setMinimumHeight(400);
-    //frameJournaling->setMaximumHeight(2000);
-    frameJournaling->adjustSize(); // ? ajustamos el tamaño del frame
-
-    // Iconos para la barra de navegación del journaling
-    jourIconoActivarListaEntradas = new QIcon(QString(RUTA_ICONOS.c_str()) + "activar_lista_entradas.png");
-    jourIconoEditarEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "editar_entrada.png");
-    jourIconoNuevaEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "nueva_entrada.png");
-    jourIconoEliminarEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "eliminar_entrada.png");
-    jourIconoGuardarEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "guardar_entrada.png");
+        // Iconos para la barra de navegación del journaling
+        jourIconoActivarListaEntradas = new QIcon(QString(RUTA_ICONOS.c_str()) + "activar_lista_entradas.png");
+        jourIconoEditarEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "editar_entrada.png");
+        jourIconoNuevaEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "nueva_entrada.png");
+        jourIconoEliminarEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "eliminar_entrada.png");
+        jourIconoGuardarEntrada = new QIcon(QString(RUTA_ICONOS.c_str()) + "guardar_entrada.png");
 
 
 
-    // creamos un boton de bienvenida
-    jourBotonCambiarImagenBienvenida = new QPushButton(frameJournaling);
-    // establecemos la posición del boton de bienvenida
-    //jourBotonCambiarImagenBienvenida->setGeometry(0,0,1000,1000);
-    //jourBotonCambiarImagenBienvenida->setMinimumWidth(400);
-    //jourBotonCambiarImagenBienvenida->setMaximumWidth(2000);
-    //jourBotonCambiarImagenBienvenida->setMinimumHeight(400);
-    //jourBotonCambiarImagenBienvenida->setMaximumHeight(2000);
-    jourBotonCambiarImagenBienvenida->adjustSize();
+        // creamos un boton de bienvenida
+        jourBotonCambiarImagenBienvenida = new QPushButton(frameJournaling);
+        jourBotonCambiarImagenBienvenida->adjustSize();
 
-    // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
-    // Relacionado con la Lista de Journaling
-    // Label para título de la lista de notas
-    jourLiNoTitulo = new QLabel(frameJournaling);
-    jourLiNoTitulo->setText("Lista de Notas");
-    jourLiNoTitulo->hide();
-    // Lista de notas
-    jourLiNoListaNotas = new QListWidget(frameJournaling);
-    jourLiNoListaNotas->hide();
-    // Area de scroll para la lista de notas
-    jourLiNoScrollArea = new QScrollArea(frameJournaling);
-    jourLiNoScrollArea->setWidget(jourLiNoListaNotas);
-    jourLiNoScrollArea->setWidgetResizable(true);
-    jourLiNoScrollArea->setMinimumWidth(500);
-    jourLiNoScrollArea->hide();
-    // Layout para la lista de notas
-    jourLiNoLayout = new QVBoxLayout(frameJournaling);
-    jourLiNoLayout->addWidget(jourLiNoTitulo);
-    jourLiNoLayout->addWidget(jourLiNoScrollArea, 1);
-    jourLiNoLayout->addWidget(jourBotonCambiarImagenBienvenida);
+        // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
+        // Relacionado con la Lista de Journaling
+        // Label para título de la lista de notas
+        jourLiNoTitulo = new QLabel(frameJournaling);
+        jourLiNoTitulo->setText("Lista de Notas");
+        jourLiNoTitulo->hide();
+        // Lista de notas
+        jourLiNoListaNotas = new QListWidget(frameJournaling);
+        jourLiNoListaNotas->hide();
+        // Area de scroll para la lista de notas
+        jourLiNoScrollArea = new QScrollArea(frameJournaling);
+        jourLiNoScrollArea->setWidget(jourLiNoListaNotas);
+        jourLiNoScrollArea->setWidgetResizable(true);
+        jourLiNoScrollArea->setMinimumWidth(500);
+        jourLiNoScrollArea->hide();
+        // Layout para la lista de notas
+        jourLiNoLayout = new QVBoxLayout(frameJournaling);
+        jourLiNoLayout->addWidget(jourLiNoTitulo);
+        jourLiNoLayout->addWidget(jourLiNoScrollArea, 1);
+        jourLiNoLayout->addWidget(jourBotonCambiarImagenBienvenida);
 
-    // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
-    // Relacionado con la edicion de entradas de journaling
-    // campo para el título de la entrada
-    jourReEnCampoTitulo = new QLineEdit(frameJournaling);
-    jourReEnCampoTitulo->hide();
-    jourReEnCampoTitulo->setPlaceholderText("Título de la entrada");
-    //jourReEnCampoTitulo->setMinimumSize(600, 100);
-    // campo para el texto de la entrada
-    jourReEnCampoTexto = new QTextEdit(frameJournaling);
-    jourReEnCampoTexto->hide();
-    //jourReEnCampoTexto->setMinimumSize(600, 400);
-    // layout para la entrada
-    // jourReEnLayout = new QVBoxLayout(frameJournaling);
-    // jourReEnLayout->addWidget(jourReEnCampoTexto, 1);
-    // jourReEnLayout->addWidget(jourReEnCampoTitulo);
-    jourLiNoLayout->addWidget(jourReEnCampoTitulo);
-    jourLiNoLayout->addWidget(jourReEnCampoTexto, 1);
+        // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
+        // Relacionado con la edicion de entradas de journaling
+        // campo para el título de la entrada
+        jourReEnCampoTitulo = new QLineEdit(frameJournaling);
+        jourReEnCampoTitulo->hide();
+        jourReEnCampoTitulo->setPlaceholderText("Título de la entrada");
+        //jourReEnCampoTitulo->setMinimumSize(600, 100);
+        // campo para el texto de la entrada
+        jourReEnCampoTexto = new QTextEdit(frameJournaling);
+        jourReEnCampoTexto->hide();
+        //jourReEnCampoTexto->setMinimumSize(600, 400);
+        // layout para la entrada
+        // jourReEnLayout = new QVBoxLayout(frameJournaling);
+        // jourReEnLayout->addWidget(jourReEnCampoTexto, 1);
+        // jourReEnLayout->addWidget(jourReEnCampoTitulo);
+        jourLiNoLayout->addWidget(jourReEnCampoTitulo);
+        jourLiNoLayout->addWidget(jourReEnCampoTexto, 1);
+    }
 
 
 
@@ -482,6 +478,7 @@ MainWindow::MainWindow(QWidget *parent)
     frameBarraNavegacion = new QFrame();
     // ocultamos por defecto
     frameBarraNavegacion->hide();
+    frameBarraNavegacion->setMaximumHeight(100);
     // Tamaño de boton
     barNaTamBotones = QSize(50, 50);
     // Icono de configuración
@@ -572,41 +569,325 @@ MainWindow::MainWindow(QWidget *parent)
      */
 
     // creamos un frame para el calendario
-    frameCalendario = new QFrame(framePrincipal);
+    frameCalendarioP = new QFrame(framePrincipal);
     // ocultamos por defecto
+    frameCalendarioP->hide();
+    // establecemos editandoEvento como falso
+    editandoEvento = false;
+
+    // creamos un frame para el calendario
+    frameCalendario = new QFrame(frameCalendarioP);
+    frameCalendario->setFrameShape(QFrame::Box);
+    // Le ponemos politica de expansión
+    frameCalendario->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     frameCalendario->hide();
+
+    calLayout = new QVBoxLayout(frameCalendarioP);
+    calCalendarioBackend = new QCalendar();
 
     // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
     // Relacionado con el calendario en sí
-    // creamos un calendario
-    calCalendario = new QCalendarWidget(frameCalendario);
-    calCalendario->hide();
-    calCalendario->setMinimumSize(500, 500);
-    // añadimos un evento al calendario para el dia 10 de mayo del 2024
-    QDate fechaEvento = QDate(2024, 5, 10);
-    QTextCharFormat formatoEvento;
-    formatoEvento.setBackground(Qt::red);
-    formatoEvento.setForeground(Qt::white);
-    formatoEvento.setFontWeight(QFont::Bold);
-    calCalendario->setDateTextFormat(fechaEvento, formatoEvento);
-    // creamos un evento para el dia 12 de mayo del 2024 con el texto "Evento 2" que se mostrará en el calendario
-    QDate fechaEvento2 = QDate(2024, 5, 12);
-    QTextCharFormat formatoEvento2;
-    formatoEvento2.setBackground(Qt::blue);
-    formatoEvento2.setForeground(Qt::white);
-    formatoEvento2.setFontWeight(QFont::Bold);
-    calCalendario->setDateTextFormat(fechaEvento2, formatoEvento2);
+    calCalendario = new QGridLayout(frameCalendario);
+    // Para los días de la semana
+    //QStringList diasSemana = {"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
+    diasSemana = new QStringList{"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
+    meses = new QStringList{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+    for (int i = 0; i < 7; i++)
+    {
+        QLabel* calDiaSemana = new QLabel(frameCalendario);
+        calDiaSemana->setText((*diasSemana)[i]);
+        calCalendario->addWidget(calDiaSemana, 0, i);
+    }
+    // Creamos la cuadricula del calendario
+    for (int nfila = 1; nfila < 7; nfila++)
+    {
+        for (int ncolumna = 0; ncolumna < 7; ncolumna++)
+        {
+
+            // creamos un frame para el cuadro del calendario
+            //QFrame* calCuadro = new QFrame(frameCalendario);
+            // agregamos el cuadro a un boton
+            QPushButton* calCuadro = new QPushButton(frameCalendario);
+            QPushButton* calEmocionDia = new QPushButton(calCuadro);
+            // creamos un grid layout para el cuadro del calendario
+            QGridLayout* calCuadroLayout = new QGridLayout(calCuadro);
+            // Label para Emocion del dia
+            //QLabel* calEmocionDia = new QLabel(calCuadro);
+
+            // le damos una emocion de prueba
+            //calEmocionDia->setText("Feliz");
+            // le damos una emoción con un icono
+            //calEmocionDia->setPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "sorpresa-icono.svg"));
+            calEmocionDia->setIcon(QIcon(QString(RUTA_ICONOS.c_str()) + "sorpresa-icono.svg"));
+            calEmocionDia->setIconSize(QSize(20, 20));
+            // establecemos el tamaño del icono a 20x20
+            calEmocionDia->setFixedSize(20, 20);
+            // hacemos que el icono se ajuste al tamaño del label
+            //calEmocionDia->setScaledContents(true);
+            // lo agregamos al layout del cuadro
+            calCuadroLayout->addWidget(calEmocionDia, 0, 0);
+            // metemos un espacio entre la emoción y el número
+            calCuadroLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 1);
+            // Label para el numero del dia
+            QLabel* calNumeroDia = new QLabel(calCuadro);
+            // le damos un dia de prueba
+            calNumeroDia->setText("");
+            // lo agregamos al layout del cuadro
+            calCuadroLayout->addWidget(calNumeroDia, 0, 2);
+            // Label para la cantidad de eventos
+            QLabel* calCantidadEventos = new QLabel(calCuadro);
+            // le damos una cantidad de eventos de prueba
+            calCantidadEventos->setText("* * *");
+            // lo agregamos al layout del cuadro
+            calCuadroLayout->addWidget(calCantidadEventos, 1, 0);
 
 
+            // establecemos la forma del marco exterior
+            //calCuadro->setFrameShape(QFrame::Box);
+            // Asignamos un identificador unico a cada cuadro
+            QString idCuadro = QString::number(nfila) + QString::number(ncolumna);
+            calCuadro->setObjectName(idCuadro);
+            calEmocionDia->setObjectName("emocion" + idCuadro);
+            calNumeroDia->setObjectName("numero" + idCuadro);
+            calCantidadEventos->setObjectName("eventos" + idCuadro);
+            // agregamos el cuadro a un boton
+            //QPushButton* calBotonCuadro = new QPushButton(frameCalendario);
+            calCuadro->setObjectName("boton" + idCuadro);
+            // establecemos el layout del cuadro como el layout del boton
+            //calBotonCuadro->setLayout(calCuadroLayout);
+            // boton redimensionable
+            calCuadro->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            // Modificamos su señal de click
+            //connect(calBotonCuadro, SIGNAL(clicked()), this, SLOT(calClickDia()));
+            // agregamos el cuadro al calendario
+            calCalendario->addWidget(calCuadro, nfila, ncolumna);
+        }
+    }
+    // Añadimos el calendario al layout principal
+    calLayout->addLayout(calCalendario);
+    // CONECTAMOS LOS BOTONES DEL CALENDARIO CON SUS RESPECTIVAS FUNCIONES
+    {
+        QPushButton* calBoton = frameCalendario->findChild<QPushButton*>("boton10");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend10()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton11");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend11()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton12");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend12()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton13");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend13()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton14");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend14()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton15");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend15()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton16");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend16()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton20");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend20()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton21");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend21()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton22");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend22()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton23");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend23()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton24");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend24()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton25");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend25()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton26");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend26()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton30");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend30()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton31");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend31()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton32");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend32()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton33");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend33()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton34");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend34()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton35");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend35()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton36");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend36()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton40");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend40()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton41");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend41()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton42");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend42()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton43");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend43()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton44");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend44()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton45");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend45()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton46");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend46()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton50");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend50()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton51");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend51()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton52");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend52()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton53");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend53()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton54");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend54()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton55");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend55()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton56");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend56()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton60");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend60()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton61");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend61()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton62");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend62()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton63");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend63()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton64");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend64()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton65");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend65()));
+        calBoton = frameCalendario->findChild<QPushButton*>("boton66");
+        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend66()));
+    }
 
+    // CONECTAMOS LOS BOTONES DE EMOCIONES DEL CALENDARIO CON SUS RESPECTIVAS FUNCIONES
+    {
+        QPushButton* calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion10");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend10()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion11");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend11()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion12");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend12()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion13");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend13()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion14");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend14()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion15");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend15()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion16");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend16()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion20");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend20()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion21");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend21()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion22");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend22()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion23");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend23()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion24");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend24()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion25");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend25()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion26");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend26()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion30");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend30()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion31");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend31()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion32");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend32()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion33");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend33()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion34");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend34()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion35");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend35()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion36");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend36()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion40");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend40()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion41");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend41()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion42");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend42()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion43");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend43()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion44");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend44()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion45");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend45()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion46");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend46()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion50");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend50()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion51");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend51()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion52");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend52()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion53");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend53()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion54");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend54()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion55");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend55()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion56");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend56()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion60");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend60()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion61");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend61()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion62");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend62()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion63");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend63()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion64");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend64()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion65");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend65()));
+        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion66");
+        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend66()));
 
+    }
 
+    // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
+    // Relacionado con la pantalla de día seleccionado
+    calDiaJsonEventos = nullptr;
+    calDiaFrame = new QFrame(frameCalendarioP);
+    calDiaTitulo = new QLabel(calDiaFrame);
+    calDiaTitulo->setText("Día seleccionado");
+    calDiaTitulo->hide();
+    //calDiaTitulo->setAlignment(Qt::AlignCenter);
+    calDiaEventos = new QListWidget(calDiaFrame);
+    calDiaEventos->hide();
+    //calDiaEventos->setMinimumSize(600, 400);
+    //calDiaEventos->setSelectionMode(QAbstractItemView::SingleSelection);
+    calDiaScrollArea = new QScrollArea(calDiaFrame);
+    calDiaScrollArea->setWidget(calDiaEventos);
+    calDiaScrollArea->hide();
+    //calDiaScrollArea->setMinimumSize(600, 400);
+    //calDiaScrollArea->setWidgetResizable(true);
+    // Lo agregamos al layout
+    calDiaLayout = new QVBoxLayout(calDiaFrame);
+    calDiaLayout->addWidget(calDiaTitulo);
+    calDiaLayout->addWidget(calDiaScrollArea);
 
+    calLayoutPrincipal = new QVBoxLayout(frameCalendarioP);
+    calLayoutPrincipal->addWidget(frameCalendario);
+    calLayoutPrincipal->addWidget(calDiaFrame);
 
-    // creamos un layout para el calendario
-    calLayout = new QVBoxLayout(frameCalendario);
-    calLayout->addWidget(calCalendario);
-
+    // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
+    // Relacionado con la pantalla de nuevo evento
+    calAgregarEventoTitulo = new QLineEdit(calDiaFrame);
+    calAgregarEventoTitulo->hide();
+    calAgregarEventoTitulo->setPlaceholderText("Título del evento");
+    calAgregarEventoHora = new QTimeEdit(calDiaFrame);
+    calAgregarEventoHora->hide();
+    calAgregarEventoHora->setDisplayFormat("HH:mm");
+    calAgregarEventoDuracion = new QTimeEdit(calDiaFrame);
+    calAgregarEventoDuracion->hide();
+    calAgregarEventoDuracion->setDisplayFormat("HH:mm");
+    calAgregarEventoDescripcion = new QTextEdit(calDiaFrame);
+    calAgregarEventoDescripcion->hide();
+    calAgregarEventoDescripcion->setPlaceholderText("Descripción del evento");
+    // los agregamos al layout
+    calDiaLayout->addWidget(calAgregarEventoTitulo);
+    calDiaLayout->addWidget(calAgregarEventoHora);
+    calDiaLayout->addWidget(calAgregarEventoDuracion);
+    calDiaLayout->addWidget(calAgregarEventoDescripcion);
 
 
 
@@ -623,27 +904,8 @@ MainWindow::MainWindow(QWidget *parent)
     disposicionPrincipal->addWidget(frameRecuperarContra);
     disposicionPrincipal->addWidget(frameJournaling);
     disposicionPrincipal->addWidget(frameCalendario);
+    disposicionPrincipal->addWidget(calDiaFrame);
 
-
-
-
-
-
-
-
-
-
-
-    // creamos un calendario
-    //calendario = new QCalendarWidget(framePrincipal);
-    // creamos un frame para iniciar sesión
-    //frameInicioSesion = new QFrame(framePrincipal);
-    // creamos un frame para el registro de emociones
-    //frameRegistroEmociones = new QFrame(framePrincipal);
-    // creamos el frame para el hiperfoco
-    //frameHiperfoco = new QFrame(framePrincipal);
-    // creamos el frame para la configuración
-    //frameConfiguracion = new QFrame(framePrincipal);
 
 
 
@@ -667,55 +929,68 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // AREA PARA CONECTAR SEÑALES Y SLOTS
+    {
 
-    // SEÑALES RELACIONADAS CON EL REGISTRO DE USUARIOS
-    // conectamos la señal de cancelar registro de usuario
-    connect(botonRegistroCancelar, SIGNAL(clicked()), this, SLOT(cancelarRegistroUsuario()));
-    // conectamos la señal de registrar usuario (area de registro de usuarios) con el metodo registrarUsuario
-    connect(botonRegistrarUsuario, SIGNAL(clicked()), this, SLOT(registrarUsuario()));
-    // conectamos la señal de seleccionar si desea realizar copia de seguridad
-    connect(botonRegistroCopiaSeguridad, SIGNAL(clicked()), this, SLOT(seleccionarCopiaSeguridad()));
-    // conectamos la señal de botonRegistroFotoPerfil con el metodo seleccionarArchivo
-    connect(botonRegistroFotoPerfil, SIGNAL(clicked()), this, SLOT(seleccionarFotoPerfil()));
+        // SEÑALES RELACIONADAS CON EL REGISTRO DE USUARIOS
+        // conectamos la señal de cancelar registro de usuario
+        connect(botonRegistroCancelar, SIGNAL(clicked()), this, SLOT(cancelarRegistroUsuario()));
+        // conectamos la señal de registrar usuario (area de registro de usuarios) con el metodo registrarUsuario
+        connect(botonRegistrarUsuario, SIGNAL(clicked()), this, SLOT(registrarUsuario()));
+        // conectamos la señal de seleccionar si desea realizar copia de seguridad
+        connect(botonRegistroCopiaSeguridad, SIGNAL(clicked()), this, SLOT(seleccionarCopiaSeguridad()));
+        // conectamos la señal de botonRegistroFotoPerfil con el metodo seleccionarArchivo
+        connect(botonRegistroFotoPerfil, SIGNAL(clicked()), this, SLOT(seleccionarFotoPerfil()));
 
-    // SEÑALES RELACIONADAS CON EL INICIO DE SESIÓN
-    // conectamos la señal para activar el frame de registro de usuarios
-    connect(inSeBotonRegistrarse, SIGNAL(clicked()), this, SLOT(inSeRegistrarUsuarioNuevo()));
-    // conectamos la señal de iniciar sesión
-    connect(inSeBotonIniciarSesion, SIGNAL(clicked()), this, SLOT(inSeIniciarSesion()));
-    // conectamos la señal de recuperar contraseña
-    connect(inSeBotonRecuperarContra, SIGNAL(clicked()), this, SLOT(inSeRecuperarContra()));
+        // SEÑALES RELACIONADAS CON EL INICIO DE SESIÓN
+        // conectamos la señal para activar el frame de registro de usuarios
+        connect(inSeBotonRegistrarse, SIGNAL(clicked()), this, SLOT(inSeRegistrarUsuarioNuevo()));
+        // conectamos la señal de iniciar sesión
+        connect(inSeBotonIniciarSesion, SIGNAL(clicked()), this, SLOT(inSeIniciarSesion()));
+        // conectamos la señal de recuperar contraseña
+        connect(inSeBotonRecuperarContra, SIGNAL(clicked()), this, SLOT(inSeRecuperarContra()));
 
-    // SEÑALES RELACIONADAS CON EL RECUPERAR CONTRASEÑA
-    // conectamos la señal de qcombobox con el metodo reCoCargarDatosUsuario
-    connect(reCoSelectorUsuario, SIGNAL(currentIndexChanged(int)), this, SLOT(reCoCargarDatosUsuario()));
-    // conectamos la señal de recuperar contraseña
-    connect(reCoBotonConfirmar, SIGNAL(clicked()), this, SLOT(reCoRecuperarContra()));
-    // conectamos la señal de cancelar
-    connect(reCoBotonCancelar, SIGNAL(clicked()), this, SLOT(reCoCancelarRecuperarContra()));
+        // SEÑALES RELACIONADAS CON EL RECUPERAR CONTRASEÑA
+        // conectamos la señal de qcombobox con el metodo reCoCargarDatosUsuario
+        connect(reCoSelectorUsuario, SIGNAL(currentIndexChanged(int)), this, SLOT(reCoCargarDatosUsuario()));
+        // conectamos la señal de recuperar contraseña
+        connect(reCoBotonConfirmar, SIGNAL(clicked()), this, SLOT(reCoRecuperarContra()));
+        // conectamos la señal de cancelar
+        connect(reCoBotonCancelar, SIGNAL(clicked()), this, SLOT(reCoCancelarRecuperarContra()));
 
-    // SEÑALES RELACIONADAS CON LA BARRA DE NAVEGACIÓN
-    // conectamos la señal para activar el frame de calendario
-    connect(barNaBotonCalendario, SIGNAL(clicked()), this, SLOT(barNaMostrarCalendario()));
-    // conectamos la señal para activar el frame de journaling
-    connect(barNaBotonJournaling, SIGNAL(clicked()), this, SLOT(barNaMostrarJournaling()));
-    // conectamos la señal del boton 1 de la barra de navegación
-    connect(barNaBotonSeccionActual0, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual0Click()));
-    // conectamos la señal del boton 2 de la barra de navegación
-    connect(barNaBotonSeccionActual1, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual1Click()));
-    // conectamos la señal del boton 3 de la barra de navegación
-    connect(barNaBotonSeccionActual2, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual2Click()));
+        // SEÑALES RELACIONADAS CON LA BARRA DE NAVEGACIÓN
+        // conectamos la señal para activar el frame de calendario
+        connect(barNaBotonCalendario, SIGNAL(clicked()), this, SLOT(barNaMostrarCalendario()));
+        // conectamos la señal para activar el frame de journaling
+        connect(barNaBotonJournaling, SIGNAL(clicked()), this, SLOT(barNaMostrarJournaling()));
+        // conectamos la señal del boton 1 de la barra de navegación
+        connect(barNaBotonSeccionActual0, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual0Click()));
+        // conectamos la señal del boton 2 de la barra de navegación
+        connect(barNaBotonSeccionActual1, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual1Click()));
+        // conectamos la señal del boton 3 de la barra de navegación
+        connect(barNaBotonSeccionActual2, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual2Click()));
 
-    // SEÑALES RELACIONADAS CON EL JOURNALING
-    // conectamos la señal para cambiar la imagen de bienvenida
-    connect(jourBotonCambiarImagenBienvenida, SIGNAL(clicked()), this, SLOT(jourCambiarImagenBienvenida()));
-    // conectamos la señal de click en una entrada de journaling
-    connect(jourLiNoListaNotas, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(jourLiNoCargarEntrada()));
+        // SEÑALES RELACIONADAS CON EL JOURNALING
+        // conectamos la señal para cambiar la imagen de bienvenida
+        connect(jourBotonCambiarImagenBienvenida, SIGNAL(clicked()), this, SLOT(jourCambiarImagenBienvenida()));
+        // conectamos la señal de click en una entrada de journaling
+        connect(jourLiNoListaNotas, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(jourLiNoCargarEntrada()));
+
+        // SEÑALES RELACIONADAS CON EL CALENDARIO
+        // conectamos la señal de itemClicked de la lista de eventos del día
+        connect(calDiaEventos, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(calInterfazEvento()));
+    }
 
 
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow() {
+    // liberamos la memoria de los objetos creados
+    // delete configuraciones;
+    // delete configuracionesUsuario;
+    // delete encriptado;
+    // delete entradaSeleccionada;
+    // delete calDiaJsonEventos;
+}
 
 // ! método para verificar la existencia de los archivos y carpetas necesarios
 void MainWindow::verificacionInicial()
@@ -1475,7 +1750,7 @@ void MainWindow::jourCambiarImagenBienvenida()
     // usuario descifrado
     std::string usuario = encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]);
     std::string rutaImagenBienvenida = RUTA_USUARIOS + usuario + "/imagenBienvenida";
-    std::string rutaTemp;
+    std::string rutaTemp = "";
 
     //std::cout << "Ruta de la imagen de bienvenida: " << rutaImagenBienvenida << std::endl;
     // ? se seleccionará la imagen de bienvenida
@@ -1483,6 +1758,11 @@ void MainWindow::jourCambiarImagenBienvenida()
     // ? se mostrará un mensaje emergente que indica que la imagen de bienvenida se ha seleccionado
     // ? se obtendrá la ruta de la imagen de bienvenida
     seleccionarArchivo(rutaTemp, "Imagen (*.png *.jpg *.jpeg)", "Seleccionar Imagen de Bienvenida");
+    // si la ruta está vacía, se cancela la operación
+    if (rutaTemp.empty())
+    {
+        return;
+    }
     std::cout << "Ruta Temporal: " << rutaTemp << std::endl;
     // extraemos la extension del archivo
     std::string extension = manejadorArchivos.obtenerExtension(rutaTemp);
@@ -1569,6 +1849,8 @@ void MainWindow::jourActualizarListaEntradas()
         }
         // cargamos las notas en un arreglo
         std::vector<std::string> notas = manejadorArchivos.obtenerContenidoCarpeta(rutaEntradasJournaling, 1);
+        // las invertimos para que se muestren en orden descendente
+        std::reverse(notas.begin(), notas.end());
         // recorremos el arreglo de notas
         for (const std::string& nota : notas)
         {
@@ -1785,7 +2067,7 @@ void MainWindow::jourPanBiRedimensionarIconoBoton()
 {
     // extraemos y mostramos el tamaño del frame de journaling
     QSize size = frameJournaling->size();
-    std::cout << "Tamaño del frame de journaling: " << size.width() << " x " << size.height() << std::endl;
+    //std::cout << "Tamaño del frame de journaling: " << size.width() << " x " << size.height() << std::endl;
     jourBotonCambiarImagenBienvenida->setFixedSize(size.width() - 40, size.height() - 40);
     //jourBotonCambiarImagenBienvenida->size();
     //jourBotonCambiarImagenBienvenida->setIconSize(jourBotonCambiarImagenBienvenida->size());
@@ -1793,7 +2075,7 @@ void MainWindow::jourPanBiRedimensionarIconoBoton()
     BotonSize.setWidth(BotonSize.width());
     BotonSize.setHeight(BotonSize.height());
     jourBotonCambiarImagenBienvenida->setIconSize(BotonSize);
-    std::cout << "Tamaño final del frame de journaling: " << frameJournaling->size().width() << " x " << frameJournaling->size().height() << std::endl;
+    //std::cout << "Tamaño final del frame de journaling: " << frameJournaling->size().width() << " x " << frameJournaling->size().height() << std::endl;
 }
 
 
@@ -1930,7 +2212,32 @@ void MainWindow::barNaConfigurarBotones(const int& nBoton, const bool& activar, 
     case 4:
         boton->setIcon(*jourIconoEliminarEntrada);
         break;
+    // ? Para mostrar el mes anterior en el calendario
+    case 5:
+        boton->setText("Mes Anterior");
+        break;
+    // ? Para mostrar el mes siguiente en el calendario
+    case 6:
+        boton->setText("Mes Siguiente");
+        break;
+    // ? Para agregar un nuevo evento en el calendario
+    case 7:
+        boton->setText("Nuevo Evento");
+        break;
+    // ? Para guardar un evento en el calendario
+    case 8:
+        //boton->setText("Guardar Evento");
+        boton->setIcon(*jourIconoGuardarEntrada);
+        break;
+    // ? Para mostrar la interfaz de eventos del calendario en modo edición
+    case 9:
+        //boton->setText("Editar Evento");
+        boton->setIcon(*jourIconoEditarEntrada);
+        break;
+    // ? En el caso default no se asigna ningun icono
     default:
+        boton->setIcon(QIcon());
+        boton->setText("");
         break;
 
     }
@@ -1962,32 +2269,54 @@ void MainWindow::barNaEjecutorFunciones(const int& nFuncion)
         // ? Para activar la lista de entradas de journaling (estando en la pantalla de bienvenida)
     case 0:
         std::cout << "JourActivarListaEntradas" << std::endl;
-        //connect(boton, SIGNAL(clicked()), this, SLOT(jourActivarListaEntradas()));
         jourActivarListaEntradas();
         break;
     // ? Para crear una nueva entrada en journaling
     case 1:
         std::cout << "JourLiNoNuevaEntrada" << std::endl;
-        //connect(boton, SIGNAL(clicked()), this, SLOT(jourLiNoNuevaEntrada()));
         jourLiNoNuevaEntrada();
         break;
     // ? Para guardar una entrada en journaling
     case 2:
         std::cout << "JourGuardarEntrada" << std::endl;
-        //connect(boton, SIGNAL(clicked()), this, SLOT(jourGuardarEntrada()));
         jourGuardarEntrada();
         break;
     // ? Para activar editar entrada en journaling en modo escritura
     case 3:
         std::cout << "JourActivarEditarEntrada" << std::endl;
-        //connect(boton, SIGNAL(clicked()), this, SLOT(jourActivarEditarEntrada()));
         jourActivarEditarEntrada();
         break;
     // ? Para eliminar una entrada en journaling
     case 4:
         std::cout << "JourEliminarEntrada" << std::endl;
-        //connect(boton, SIGNAL(clicked()), this, SLOT(jourEliminarEntrada()));
         jourEliminarEntrada();
+        break;
+        // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+        // ----------------------------CALENDARIO-------------------------------------
+    // ? Para mostrar el mes anterior en el calendario
+    case 5:
+        std::cout << "CalMesAnterior" << std::endl;
+        calMesAnterior();
+        break;
+    // ? Para mostrar el mes siguiente en el calendario
+    case 6:
+        std::cout << "CalMesSiguiente" << std::endl;
+        calMesSiguiente();
+        break;
+    // ? Para agregar un nuevo evento en el calendario
+    case 7:
+        std::cout << "CalAgregarEvento" << std::endl;
+        calInterfazEvento(2);
+        break;
+    // ? Para guardar un evento en el calendario
+    case 8:
+        std::cout << "CalGuardarEvento" << std::endl;
+        calGuardarEvento();
+        break;
+    // ? Para mostrar la interfaz de eventos del calendario en modo edición
+    case 9:
+        std::cout << "CalEditarEvento modo edición" << std::endl;
+        calInterfazEvento(1);
         break;
     default:
         break;
@@ -2045,7 +2374,7 @@ void MainWindow::activarInterfazCalendario()
 {
     // desactivamos todos los frames
 
-    frameCalendario->show();
+    frameCalendarioP->show();
     std::cout << "Activando interfaz de calendario" << std::endl;
     // ? se desactiva todo lo relacionado con el calendario
     // aun no se ha implementado
@@ -2059,7 +2388,9 @@ void MainWindow::activarInterfazCalendario()
 // ? Sin cambios primera versión
 void MainWindow::desactivarInterfazCalendario()
 {
+    frameCalendarioP->hide();
     frameCalendario->hide();
+    calDiaFrame->hide();
 }
 
 // ! método para mostrar el calendario
@@ -2068,10 +2399,768 @@ void MainWindow::desactivarInterfazCalendario()
 // ? Sin cambios primera versión
 void MainWindow::calActivarCalendario()
 {
-    calCalendario->show();
+    // ? se Desactiva la interfaz de calendario antes de activarla para asegurar su correcto funcionamiento
+    calDesactivarCalendario();
+    //calCalendario->show();
+    frameCalendario->show();
+    calCargarDatosCalendario();
+    // ? se activa el boton 0 y 1 de la barra de navegación
+    barNaConfigurarBotones(0, true, 5, "Mes Anterior");
+    barNaConfigurarBotones(1, true, 6, "Mes Siguiente");
+
+
+}
+
+// ! método para ocultar el calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calDesactivarCalendario()
+{
+    frameCalendario->hide();
+    // ? se desactiva el boton 0 y 1 de la barra de navegación
+    barNaConfigurarBotones(0, false, -1, "");
+    barNaConfigurarBotones(1, false, -1, "");
+    if (editandoEvento)
+    {
+        std::cout << "Se guardará el evento" << std::endl;
+        editandoEvento = false;
+        // guardamos el evento
+        calGuardarEvento();
+    }
 }
 
 
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// Relacionados el funcionamiento del calendario
+
+// ! metodo que muestra el mes anterior en el calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calMesAnterior()
+{
+    // ? se cargará el mes anterior en el calendario
+    // ? se mostrará un mensaje emergente que indica que se ha cargado el mes anterior
+    calCargarDatosCalendario(calMes - 1, calAnio);
+    if (calMes < 1)
+    {
+        calCargarDatosCalendario(12, calAnio - 1);
+    }
+}
+
+// ! método que muestra el mes siguiente en el calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calMesSiguiente()
+{
+    // ? se cargará el mes siguiente en el calendario
+    // ? se mostrará un mensaje emergente que indica que se ha cargado el mes siguiente
+    calCargarDatosCalendario(calMes + 1, calAnio);
+    if (calMes > 12)
+    {
+        calCargarDatosCalendario(1, calAnio + 1);
+    }
+}
+
+// ! método para cargar los datos del calendario en el mes y año especificados
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calCargarDatosCalendario(int mes, int anio)
+{
+    // primero limpiamos el calendario
+    calLimpiarCalendario();
+    // Si el mes y el anio son -1 quiere decir que se cargará el mes y el año actual
+    if (mes == -1 && anio == -1)
+    {
+        // Obtenemos el mes y el año actual
+        calMes = QDate::currentDate().month();
+        calAnio = QDate::currentDate().year();
+    }
+    else
+    {
+        // Si el mes y el año son distintos de -1, se cargará el mes y el año especificados
+        calMes = mes;
+        calAnio = anio;
+    }
+    // ? Usaremos la información del mes y año para cargar los datos del calendario
+    // ? extraemos el primer dia del mes del calCalendarioBakend
+    calCalendarioBackend->dayOfWeek(QDate(calAnio, calMes, 1));
+    // ? extraemos el número de días del mes
+    int calDiasMes = QDate(calAnio, calMes, 1).daysInMonth();
+    //std::cout << "Dias del mes: " << calDiasMes << std::endl;
+    // ? dia en el que inicia el mes
+    int calDiaInicio = calCalendarioBackend->dayOfWeek(QDate(calAnio, calMes, 1));
+    //std::cout << "Dia de inicio: " << calDiaInicio << std::endl;
+    //int semIni = calDiaInicio > 6 ? 1 : 0;
+    int semIni = 0;
+
+    //std::cout << "Dias Sem Fin: " << diasSemFin << std::endl;
+    for (int semana = semIni + 1; semana < 7; semana++)
+    {
+        for (int dia = 0; dia < 7; dia++)
+        {
+            QLabel* label = frameCalendario->findChild<QLabel*>("numero" + QString::number(semana) + QString::number(dia));
+            int diaNum = (semana - semIni - 1) * 7 + dia - calDiaInicio + 1;
+            if (diaNum > calDiasMes)
+            {
+                label->setText("");
+            }
+            else if (diaNum > 0)
+            {
+                label->setText(QString::number(diaNum));
+            }
+        }
+    }
+
+}
+
+void MainWindow::calClickDia(const int& nfila, const int& ncolumna)
+{
+    //std::cout << "Click en el dia: " << nfila << " - " << ncolumna << std::endl;
+    // ? accedemos al label del dia
+    QLabel* label = frameCalendario->findChild<QLabel*>("numero" + QString::number(nfila) + QString::number(ncolumna));
+    // extraemos el texto y lo mostramos
+    //std::cout << "Dia: " << label->text().toStdString() << std::endl;
+    // ? si el label no tiene texto implicará que no hay nada que mostrar
+    if (label->text() == "")
+    {
+        return;
+    }
+    // ? se llama al método para mostrar los eventos del dia, le pasamos el dia
+    calMostrarDiaSeleccionado(label->text().toInt());
+}
+
+void MainWindow::calClickEmoDia(const int& nfila, const int& ncolumna)
+{
+    std::cout << "Click en emocion: " << nfila << " - " << ncolumna << std::endl;
+}
+
+// ! Metodo para limpiar el calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calLimpiarCalendario()
+{
+    for (int semana = 1; semana < 7; semana++)
+    {
+        for (int dia = 0; dia < 7; dia++)
+        {
+            QLabel* label = frameCalendario->findChild<QLabel*>("numero" + QString::number(semana) + QString::number(dia));
+            label->setText("");
+            QPushButton* boton = frameCalendario->findChild<QPushButton*>("emocion" + QString::number(semana) + QString::number(dia));
+            boton->setIcon(QIcon());
+            label = frameCalendario->findChild<QLabel*>("eventos" + QString::number(semana) + QString::number(dia));
+            label->setText("");
+
+        }
+    }
+}
+
+// Metodos para el backend del calendario
+void MainWindow::calClickDiaBackend10() { calClickDia(1, 0);}
+void MainWindow::calClickDiaBackend11() { calClickDia(1, 1);}
+void MainWindow::calClickDiaBackend12() { calClickDia(1, 2);}
+void MainWindow::calClickDiaBackend13() { calClickDia(1, 3);}
+void MainWindow::calClickDiaBackend14() { calClickDia(1, 4);}
+void MainWindow::calClickDiaBackend15() { calClickDia(1, 5);}
+void MainWindow::calClickDiaBackend16() { calClickDia(1, 6);}
+void MainWindow::calClickDiaBackend20() { calClickDia(2, 0);}
+void MainWindow::calClickDiaBackend21() { calClickDia(2, 1);}
+void MainWindow::calClickDiaBackend22() { calClickDia(2, 2);}
+void MainWindow::calClickDiaBackend23() { calClickDia(2, 3);}
+void MainWindow::calClickDiaBackend24() { calClickDia(2, 4);}
+void MainWindow::calClickDiaBackend25() { calClickDia(2, 5);}
+void MainWindow::calClickDiaBackend26() { calClickDia(2, 6);}
+void MainWindow::calClickDiaBackend30() { calClickDia(3, 0);}
+void MainWindow::calClickDiaBackend31() { calClickDia(3, 1);}
+void MainWindow::calClickDiaBackend32() { calClickDia(3, 2);}
+void MainWindow::calClickDiaBackend33() { calClickDia(3, 3);}
+void MainWindow::calClickDiaBackend34() { calClickDia(3, 4);}
+void MainWindow::calClickDiaBackend35() { calClickDia(3, 5);}
+void MainWindow::calClickDiaBackend36() { calClickDia(3, 6);}
+void MainWindow::calClickDiaBackend40() { calClickDia(4, 0);}
+void MainWindow::calClickDiaBackend41() { calClickDia(4, 1);}
+void MainWindow::calClickDiaBackend42() { calClickDia(4, 2);}
+void MainWindow::calClickDiaBackend43() { calClickDia(4, 3);}
+void MainWindow::calClickDiaBackend44() { calClickDia(4, 4);}
+void MainWindow::calClickDiaBackend45() { calClickDia(4, 5);}
+void MainWindow::calClickDiaBackend46() { calClickDia(4, 6);}
+void MainWindow::calClickDiaBackend50() { calClickDia(5, 0);}
+void MainWindow::calClickDiaBackend51() { calClickDia(5, 1);}
+void MainWindow::calClickDiaBackend52() { calClickDia(5, 2);}
+void MainWindow::calClickDiaBackend53() { calClickDia(5, 3);}
+void MainWindow::calClickDiaBackend54() { calClickDia(5, 4);}
+void MainWindow::calClickDiaBackend55() { calClickDia(5, 5);}
+void MainWindow::calClickDiaBackend56() { calClickDia(5, 6);}
+void MainWindow::calClickDiaBackend60() { calClickDia(6, 0);}
+void MainWindow::calClickDiaBackend61() { calClickDia(6, 1);}
+void MainWindow::calClickDiaBackend62() { calClickDia(6, 2);}
+void MainWindow::calClickDiaBackend63() { calClickDia(6, 3);}
+void MainWindow::calClickDiaBackend64() { calClickDia(6, 4);}
+void MainWindow::calClickDiaBackend65() { calClickDia(6, 5);}
+void MainWindow::calClickDiaBackend66() { calClickDia(6, 6);}
+
+void MainWindow::calClickEmoDiaBackend10() { calClickEmoDia(1, 0);}
+void MainWindow::calClickEmoDiaBackend11() { calClickEmoDia(1, 1);}
+void MainWindow::calClickEmoDiaBackend12() { calClickEmoDia(1, 2);}
+void MainWindow::calClickEmoDiaBackend13() { calClickEmoDia(1, 3);}
+void MainWindow::calClickEmoDiaBackend14() { calClickEmoDia(1, 4);}
+void MainWindow::calClickEmoDiaBackend15() { calClickEmoDia(1, 5);}
+void MainWindow::calClickEmoDiaBackend16() { calClickEmoDia(1, 6);}
+void MainWindow::calClickEmoDiaBackend20() { calClickEmoDia(2, 0);}
+void MainWindow::calClickEmoDiaBackend21() { calClickEmoDia(2, 1);}
+void MainWindow::calClickEmoDiaBackend22() { calClickEmoDia(2, 2);}
+void MainWindow::calClickEmoDiaBackend23() { calClickEmoDia(2, 3);}
+void MainWindow::calClickEmoDiaBackend24() { calClickEmoDia(2, 4);}
+void MainWindow::calClickEmoDiaBackend25() { calClickEmoDia(2, 5);}
+void MainWindow::calClickEmoDiaBackend26() { calClickEmoDia(2, 6);}
+void MainWindow::calClickEmoDiaBackend30() { calClickEmoDia(3, 0);}
+void MainWindow::calClickEmoDiaBackend31() { calClickEmoDia(3, 1);}
+void MainWindow::calClickEmoDiaBackend32() { calClickEmoDia(3, 2);}
+void MainWindow::calClickEmoDiaBackend33() { calClickEmoDia(3, 3);}
+void MainWindow::calClickEmoDiaBackend34() { calClickEmoDia(3, 4);}
+void MainWindow::calClickEmoDiaBackend35() { calClickEmoDia(3, 5);}
+void MainWindow::calClickEmoDiaBackend36() { calClickEmoDia(3, 6);}
+void MainWindow::calClickEmoDiaBackend40() { calClickEmoDia(4, 0);}
+void MainWindow::calClickEmoDiaBackend41() { calClickEmoDia(4, 1);}
+void MainWindow::calClickEmoDiaBackend42() { calClickEmoDia(4, 2);}
+void MainWindow::calClickEmoDiaBackend43() { calClickEmoDia(4, 3);}
+void MainWindow::calClickEmoDiaBackend44() { calClickEmoDia(4, 4);}
+void MainWindow::calClickEmoDiaBackend45() { calClickEmoDia(4, 5);}
+void MainWindow::calClickEmoDiaBackend46() { calClickEmoDia(4, 6);}
+void MainWindow::calClickEmoDiaBackend50() { calClickEmoDia(5, 0);}
+void MainWindow::calClickEmoDiaBackend51() { calClickEmoDia(5, 1);}
+void MainWindow::calClickEmoDiaBackend52() { calClickEmoDia(5, 2);}
+void MainWindow::calClickEmoDiaBackend53() { calClickEmoDia(5, 3);}
+void MainWindow::calClickEmoDiaBackend54() { calClickEmoDia(5, 4);}
+void MainWindow::calClickEmoDiaBackend55() { calClickEmoDia(5, 5);}
+void MainWindow::calClickEmoDiaBackend56() { calClickEmoDia(5, 6);}
+void MainWindow::calClickEmoDiaBackend60() { calClickEmoDia(6, 0);}
+void MainWindow::calClickEmoDiaBackend61() { calClickEmoDia(6, 1);}
+void MainWindow::calClickEmoDiaBackend62() { calClickEmoDia(6, 2);}
+void MainWindow::calClickEmoDiaBackend63() { calClickEmoDia(6, 3);}
+void MainWindow::calClickEmoDiaBackend64() { calClickEmoDia(6, 4);}
+void MainWindow::calClickEmoDiaBackend65() { calClickEmoDia(6, 5);}
+void MainWindow::calClickEmoDiaBackend66() { calClickEmoDia(6, 6);}
+
+
+// ! para mostrar un dia seleccionado en el calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calMostrarDiaSeleccionado(const int& diaSeleccionado)
+{
+    // Ocultamos el interfaz de nuevo evento
+    calOcultarInterfazEvento();
+    calDia = diaSeleccionado;
+    // ? Desactivamos el calendario
+    calDesactivarCalendario();
+    calDiaFrame->show();
+    // ? Mostramos el dia seleccionado
+    calDiaTitulo->setText(QString::number(diaSeleccionado) + " de " + (*meses)[calMes - 1] + " de " + QString::number(calAnio));
+    calDiaTitulo->show();
+    calDiaEventos->show();
+    calDiaScrollArea->show();
+    // ? Cargamos los eventos del dia seleccionado
+    calCargarListaEventosDia();
+
+    // ? Configuramos los botones de la barra de navegación
+    barNaConfigurarBotones(0, true, 7, "Nuevo Evento");
+}
+
+// ! Método para ocultar la interfaz del dia seleccionado
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calOcultarDiaSeleccionado()
+{
+    calDiaFrame->hide();
+    calDiaTitulo->hide();
+    calDiaEventos->hide();
+    calDiaScrollArea->hide();
+    // ? Limpiamos los botones de la barra de navegación
+    barNaLimpiarBotonesSeccionActual();
+    // ? Activamos el calendario
+    //calActivarCalendario();
+}
+
+// ! Método para cargar los eventos del dia seleccionado
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calCargarListaEventosDia()
+{
+    // ? limpiamos la lista de eventos
+    calDiaEventos->clear();
+    // ? construimos la ruta a la carpeta de eventos del calendario
+    std::string rutaCalendario = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/calendario";
+    //    std::to_string(calAnio) + "/" + std::to_string(calMes) + "/" + std::to_string(dia);
+    // ? verificamos si existe la carpeta de calendario
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    {
+        // ? si no existe la carpeta de calendario, la creamos
+        manejadorArchivos.crearCarpeta(rutaCalendario);
+    }
+    // ? construimos la ruta a la carpeta del año
+    rutaCalendario += "/" + std::to_string(calAnio);
+    // ? verificamos si existe la carpeta del año
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    {
+        // ? si no existe la carpeta del año, la creamos
+        manejadorArchivos.crearCarpeta(rutaCalendario);
+    }
+    // ? construimos la ruta a la carpeta del mes
+    rutaCalendario += "/" + std::to_string(calMes);
+    // ? verificamos si existe la carpeta del mes
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    {
+        // ? si no existe la carpeta del mes, la creamos
+        manejadorArchivos.crearCarpeta(rutaCalendario);
+    }
+    // ? construimos la ruta a la carpeta del dia
+    rutaCalendario += "/" + std::to_string(calDia);
+    // ? verificamos si existe la carpeta del dia
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    {
+        // ? si no existe la carpeta del dia, la creamos
+        manejadorArchivos.crearCarpeta(rutaCalendario);
+    }
+    // cada carpeta del dia contendrá un archivo json con un evento
+    // ? extraemos todas las carpetas de eventos del dia
+    std::vector<std::string> eventos = manejadorArchivos.obtenerContenidoCarpeta(rutaCalendario, 1);
+    //std::vector<std::string> eventosJson;
+    for (const auto& evento: eventos)
+    {
+        // los eventos son carpetas, pero cada carpeta se llama como el momento de su creación
+        // por lo cual debemos extraer el nombre del archivo json, el nombre es el titulo del evento
+        std::string rutaTemporal = rutaCalendario + "/" + evento;
+        // creamos un json con la información del evento
+        mJson::ManejadorJson eventoJson(rutaTemporal + "/evento.json");
+        // cargamos los eventos en la lista
+        //calDiaEventos->addItem(QString::fromStdString(evento));
+        //calDiaEventos->addItem(QString::fromStdString(eventoJson["titulo"]));
+        std::string titulo = eventoJson["titulo"];
+        titulo = encriptado->desencriptar(titulo);
+        calDiaEventos->addItem(QString::fromStdString(titulo));
+        //eventosJson.push_back(evento);
+    }
+
+
+}
+
+// ! Método para crear un nuevo evento en el calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calInterfazEvento(const int& modoDeApertura)
+{
+    std::cout << "Creando nuevo evento en el calendario con modo de apertura: " << modoDeApertura << std::endl;
+    // ? ocultamos la interfaz del dia seleccionado
+    calOcultarDiaSeleccionado();
+    // ? mostramos la interfaz de nuevo evento
+    calDiaFrame->show();
+    calAgregarEventoTitulo->show();
+    calAgregarEventoTitulo->setReadOnly(false);
+    //calAgregarEventoTitulo->setText("Nuevo Evento");
+    calAgregarEventoHora->show();
+    calAgregarEventoHora->setReadOnly(false);
+    calAgregarEventoDuracion->show();
+    calAgregarEventoDuracion->setReadOnly(false);
+    calAgregarEventoDescripcion->show();
+    calAgregarEventoDescripcion->setReadOnly(false);
+    // ? si el modo de apertura es 2, se mostrará la interfaz en modo nuevo evento
+    // ? si el modo de apertura es 1, se mostrará la interfaz en modo editar evento
+    // ? si el modo de apertura es 0, se mostrará la interfaz en modo solo lectura
+    if (modoDeApertura == 2)
+    {
+
+        // ? creamos un nuevo evento
+        calInterfazEventoNuevo();
+        editandoEvento = true;
+        // ? configuramos los botones de la barra de navegación
+        barNaConfigurarBotones(0, true, 8, "Guardar Evento");
+    }
+    else if (modoDeApertura == 1)
+    {
+        // ? cargamos los datos del evento en la interfaz
+        calInterfazEventoCargarDatos();
+        editandoEvento = true;
+        // ? configuramos los botones de la barra de navegación
+        barNaConfigurarBotones(0, true, 8, "Guardar Evento");
+    }
+    else if (modoDeApertura == 0)
+    {
+        // ? cargamos los datos del evento en la interfaz
+        calInterfazEventoCargarDatos();
+        // ? bloqueamos los campos de texto
+        calAgregarEventoTitulo->setReadOnly(true);
+        calAgregarEventoHora->setReadOnly(true);
+        calAgregarEventoDuracion->setReadOnly(true);
+        calAgregarEventoDescripcion->setReadOnly(true);
+        // ? configuramos los botones de la barra de navegación
+        barNaConfigurarBotones(0, true, 9, "Editar Evento");
+        barNaConfigurarBotones(1, true, -1, "Eliminar Evento"); // -1 por que aun no se ha implementado
+
+    }
+
+
+
+}
+
+// ! Método para crear un nuevo evento e inicializar su json
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calInterfazEventoNuevo()
+{
+    // ? El json del evento estara constituido por los siguientes campos
+    /* titulo
+     * hora
+     * duracion
+     * descripcion
+     * horaDeCreacion <-- este es el más importante ya que se usara para nombrar la carpeta del evento
+     */
+    std::string rutaEvento = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/calendario/";
+    // verificamos si existe la carpeta de calendario
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEvento))
+    {
+        // si no existe la carpeta de calendario, la creamos
+        manejadorArchivos.crearCarpeta(rutaEvento);
+        // esto es rarísimo, pero por si acaso
+    }
+    // construimos la ruta a la carpeta del año
+    rutaEvento += std::to_string(calAnio) + "/";
+    // verificamos si existe la carpeta del año
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEvento))
+    {
+        // si no existe la carpeta del año, la creamos
+        manejadorArchivos.crearCarpeta(rutaEvento);
+    }
+    // construimos la ruta a la carpeta del mes
+    rutaEvento += std::to_string(calMes) + "/";
+    // verificamos si existe la carpeta del mes
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEvento))
+    {
+        // si no existe la carpeta del mes, la creamos
+        manejadorArchivos.crearCarpeta(rutaEvento);
+    }
+    // construimos la ruta a la carpeta del dia
+    rutaEvento += std::to_string(calDia) + "/";
+    // verificamos si existe la carpeta del dia
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEvento))
+    {
+        // si no existe la carpeta del dia, la creamos
+        manejadorArchivos.crearCarpeta(rutaEvento);
+    }
+    // ? Para este punto ya tenemos la ruta a la carpeta que contiene los eventos del dia
+    // extraemos la hora actual (hora, minutos, segundos) y la usamos para nombrar la carpeta del evento
+    std::time_t tiempo = std::time(nullptr);
+    std::tm* tiempoLocal = std::localtime(&tiempo);
+    std::string horaDeCreacion = std::to_string(tiempoLocal->tm_hour) + std::to_string(tiempoLocal->tm_min) + std::to_string(tiempoLocal->tm_sec);
+    // construimos la ruta al archivo del evento
+    rutaEvento += horaDeCreacion + "/";
+    // verificamos si existe la carpeta del evento
+    if (manejadorArchivos.verificarExistenciaDeCarpeta(rutaEvento))
+    {
+        // si existe la carpeta del evento, mostramos un mensaje de error
+        QMessageBox::critical(this, "Error", "Ya existe un evento con la misma hora de creación"
+                              ", intente nuevamente"
+                            );
+        // activamos la interfaz de día seleccionado
+        calMostrarDiaSeleccionado(calDia);
+
+    }
+    manejadorArchivos.crearCarpeta(rutaEvento);
+    // agregamos "evento.json" al final de la ruta del evento
+    rutaEvento += "evento.json";
+    // creamos un json para el evento
+    calDiaJsonEventos = new mJson::ManejadorJson(rutaEvento, true);
+    // inicializamos los campos del evento
+    //(*calDiaJsonEventos)["titulo"] = "";
+    //(*calDiaJsonEventos)["hora"] = "";
+    //(*calDiaJsonEventos)["duracion"] = "";
+    //(*calDiaJsonEventos)["descripcion"] = "";
+    (*calDiaJsonEventos)["horaDeCreacion"] = horaDeCreacion;
+}
+
+// ! Método para cargar un evento en la interfaz de evento, para editar o mostrar
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calInterfazEventoCargarDatos()
+{
+    // ? este evento se carga a partir de la lista de eventos del dia seleccionado
+    // ? extraemos el nombre del evento seleccionado
+    std::string nombreEvento = calDiaEventos->currentItem()->text().toStdString();
+    std::cout << "Cargando evento: " << nombreEvento << std::endl;
+    // ? verificamos si el evento seleccionado tiene contenido
+    if (nombreEvento == "")
+    {
+        return;
+    }
+    // ? verificamos si calDiaJsonEventos es diferente de nullptr
+    if (calDiaJsonEventos != nullptr)
+    {
+        // ? si es diferente de nullptr, implica que ya se cargó el json de eventos
+        // ? guardamos el json de eventos
+        calDiaJsonEventos->guardar();
+        // ? creamos un puntero a un json
+        mJson::ManejadorJson* calDiaJsonEventosAux = calDiaJsonEventos;
+        // ? eliminamos el json auxiliar
+        delete calDiaJsonEventosAux;
+        // ? asignamos nullptr al json de eventos
+        calDiaJsonEventos = nullptr;
+    }
+    // ? construimos la ruta a la carpeta de eventos del calendario
+    std::string rutaCalendario = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/calendario";
+    // ? verificamos si existe la carpeta de calendario
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    {
+        // ? si no existe la carpeta de calendario, la creamos
+        manejadorArchivos.crearCarpeta(rutaCalendario);
+    }
+    // ? construimos la ruta a la carpeta del año
+    rutaCalendario += "/" + std::to_string(calAnio);
+    // ? verificamos si existe la carpeta del año
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    {
+        // ? si no existe la carpeta del año, la creamos
+        manejadorArchivos.crearCarpeta(rutaCalendario);
+    }
+    // ? construimos la ruta a la carpeta del mes
+    rutaCalendario += "/" + std::to_string(calMes);
+    // ? verificamos si existe la carpeta del mes
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    {
+        // ? si no existe la carpeta del mes, la creamos
+        manejadorArchivos.crearCarpeta(rutaCalendario);
+    }
+    // ? construimos la ruta a la carpeta del dia
+    rutaCalendario += "/" + std::to_string(calDia);
+    // ? verificamos si existe la carpeta del dia
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    {
+        // ? si no existe la carpeta del dia, la creamos
+        manejadorArchivos.crearCarpeta(rutaCalendario);
+    }
+
+    // ? construimos la ruta al archivo del evento
+    std::string rutaEvento;
+    // ? No podemos colocar simplemente el nombre del evento, debido a que la carpeta del
+    // evento se llama con la hora de creación, por lo cual debemos extraer el nombre del
+    // archivo json del evento y compararlo con el nombre del evento seleccionado para
+    // obtener la ruta correcta
+    std::vector<std::string> eventos = manejadorArchivos.obtenerContenidoCarpeta(rutaCalendario, 1);
+    for (const auto& evento: eventos)
+    {
+        // los eventos son carpetas, pero cada carpeta se llama como el momento de su creación
+        // por lo cual debemos extraer el nombre del archivo json, el nombre es el titulo del evento
+        std::string rutaTemporal = rutaCalendario + "/" + evento;
+        // creamos un json con la información del evento
+        mJson::ManejadorJson eventoJson(rutaTemporal + "/evento.json");
+        // si el titulo del evento es igual al nombre del evento seleccionado
+        std::string titulo = eventoJson["titulo"];
+        titulo = encriptado->desencriptar(titulo);
+        if (titulo == nombreEvento)
+        {
+            // extraemos la hora de creación
+            rutaEvento = rutaTemporal;
+            break;
+        }
+    }
+
+    // ? verificamos si existe el archivo del evento
+    bool existeEvento = true; // si no existe el archivo evento evitaremos que salte un segundo mensaje
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEvento))
+    {
+        // ? si no existe el archivo del evento, mostramos un mensaje de error
+        QMessageBox::critical(this, "Error", "No se ha encontrado el evento seleccionado"
+                              ", crearemos el evento en su lugar"
+                            );
+        manejadorArchivos.crearCarpeta(rutaEvento);
+        existeEvento = false;
+    }
+    // ? agregamos "evento.json" al final de la ruta del evento
+    rutaEvento += "/evento.json";
+    // ? verificamos si existe el archivo del evento
+    if (!manejadorArchivos.verificarExistenciaDeArchivo(rutaEvento))
+    {
+        // ? si no existe el archivo del evento, mostramos un mensaje de error
+        if (existeEvento)
+        {
+            QMessageBox::critical(this, "Error", "No se ha encontrado el evento seleccionado"
+                                  ", crearemos el evento en su lugar"
+                                );
+        }
+        // ? si no existe el archivo del evento, lo creamos
+        calDiaJsonEventos = new mJson::ManejadorJson(rutaEvento, true);
+    }
+    // ? cargamos el json del evento
+    calDiaJsonEventos = new mJson::ManejadorJson(rutaEvento);
+    // ? cargamos los datos del evento en la interfaz
+    {
+        // ? falta desencritar los datos del json por el momento no estan encriptados
+        std::string titulo = (*calDiaJsonEventos)["titulo"];
+        titulo = encriptado->desencriptar(titulo);
+        calAgregarEventoTitulo->setText(QString::fromStdString(titulo));
+        std::string hora = (*calDiaJsonEventos)["hora"];
+        hora = encriptado->desencriptar(hora);
+        // si hora no esta vacia
+        if (hora != "")
+        {
+            calAgregarEventoHora->setTime(QTime(std::stoi(hora.substr(0, 2)), std::stoi(hora.substr(3, 2))));
+        }else{
+            calAgregarEventoHora->setTime(QTime(0, 0));
+        }
+        //calAgregarEventoHora->setTime(QTime(std::stoi(hora.substr(0, 2)), std::stoi(hora.substr(3, 2))));
+        std::string duracion = (*calDiaJsonEventos)["duracion"];
+        duracion = encriptado->desencriptar(duracion);
+        // si duracion no esta vacia
+        if (duracion != "")
+        {
+            calAgregarEventoDuracion->setTime(QTime(std::stoi(duracion.substr(0, 2)), std::stoi(duracion.substr(3, 2))));
+        }else{
+            calAgregarEventoDuracion->setTime(QTime(0, 0));
+        }
+        //calAgregarEventoDuracion->setTime(QTime(std::stoi(duracion.substr(0, 2)), std::stoi(duracion.substr(3, 2))));
+        std::string descripcion = (*calDiaJsonEventos)["descripcion"];
+        descripcion = encriptado->desencriptar(descripcion);
+        // ? cargamos la descripción como HTML
+        calAgregarEventoDescripcion->setHtml(QString::fromStdString(descripcion));
+    }
+}
+
+// ! Método para ocultar la interfaz de evento
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calOcultarInterfazEvento()
+{
+    calDiaFrame->hide();
+    calAgregarEventoTitulo->hide();
+    calAgregarEventoTitulo->clear();
+    calAgregarEventoHora->hide();
+    calAgregarEventoHora->clear();
+    calAgregarEventoDuracion->hide();
+    calAgregarEventoDuracion->clear();
+    calAgregarEventoDescripcion->hide();
+    calAgregarEventoDescripcion->clear();
+    // ? limpiamos los botones de la barra de navegación
+    barNaLimpiarBotonesSeccionActual();
+}
+
+// ! Método para guardar un evento en el calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calGuardarEvento()
+{
+
+    // ? verificamos que se haya ingresado un título para el evento (este titulo será el nombre de la carpeta)
+    if (calAgregarEventoTitulo->text() == "")
+    {
+        QMessageBox::critical(this, "Error", "No se ha ingresado un título para el evento");
+        return;
+    }
+    // ? verificamos que se haya ingresado una hora para el evento
+    if (calAgregarEventoHora->text() == "")
+    {
+        QMessageBox::critical(this, "Error", "No se ha ingresado una hora para el evento");
+        return;
+    }
+    // // ? verificamos si calDiaJsonEventos es diferente de nullptr
+    // if (calDiaJsonEventos != nullptr)
+    // {
+    //     // ? si es diferente de nullptr, implica que ya se cargó el json de eventos
+    //     // ? guardamos el json de eventos
+    //     calDiaJsonEventos->guardar();
+    //     // ? creamos un puntero a un json
+    //     mJson::ManejadorJson* calDiaJsonEventosAux = calDiaJsonEventos;
+    //     // ? eliminamos el json auxiliar
+    //     delete calDiaJsonEventosAux;
+    //     // ? asignamos nullptr al json de eventos
+    //     calDiaJsonEventos = nullptr;
+    // }
+    // ? construimos la ruta a la carpeta de eventos del calendario
+    // std::string rutaCalendario = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/calendario";
+    // // ? verificamos si existe la carpeta de calendario
+    // if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    // {
+    //     // ? si no existe la carpeta de calendario, la creamos
+    //     manejadorArchivos.crearCarpeta(rutaCalendario);
+    // }
+    // // ? construimos la ruta a la carpeta del año
+    // rutaCalendario += "/" + std::to_string(calAnio);
+    // // ? verificamos si existe la carpeta del año
+    // if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    // {
+    //     // ? si no existe la carpeta del año, la creamos
+    //     manejadorArchivos.crearCarpeta(rutaCalendario);
+    // }
+    // // ? construimos la ruta a la carpeta del mes
+    // rutaCalendario += "/" + std::to_string(calMes);
+    // // ? verificamos si existe la carpeta del mes
+    // if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    // {
+    //     // ? si no existe la carpeta del mes, la creamos
+    //     manejadorArchivos.crearCarpeta(rutaCalendario);
+    // }
+    // // ? construimos la ruta a la carpeta del dia
+    // rutaCalendario += "/" + std::to_string(calDia);
+    // // ? verificamos si existe la carpeta del dia
+    // if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
+    // {
+    //     // ? si no existe la carpeta del dia, la creamos
+    //     manejadorArchivos.crearCarpeta(rutaCalendario);
+    // }
+    // // ? construimos la ruta al archivo del evento
+    // std::string rutaEvento = rutaCalendario + "/" + calAgregarEventoTitulo->text().toStdString();
+    // // ? verificamos si existe un archivo con el mismo nombre
+    // if (manejadorArchivos.verificarExistenciaDeCarpeta(rutaEvento))
+    // {
+    //     // ? si existe un archivo con el mismo nombre, mostramos un mensaje de error
+    //     QMessageBox::critical(this, "Error", "Ya existe un evento con el mismo nombre en este dia");
+    //     return;
+    // }
+    // // ? verificamos si existe la carpeta del evento
+    // if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEvento))
+    // {
+    //     // ? si no existe la carpeta del evento, la creamos
+    //     manejadorArchivos.crearCarpeta(rutaEvento);
+    //     //primeraVez = true;
+    // }
+    // // ? agregamos "evento.json" al final de la ruta del evento
+    // rutaEvento += "/evento.json";
+    // // ? verificamos si existe el archivo del evento
+    // if (!manejadorArchivos.verificarExistenciaDeArchivo(rutaEvento))
+    // {
+    //     // ? si no existe el archivo del evento, lo creamos
+    //     manejadorArchivos.crearArchivo(rutaEvento, "");
+    // }
+    // // ? creamos un json para el evento
+    // calDiaJsonEventos = new mJson::ManejadorJson(rutaEvento);
+    // ? guardamos los datos del evento
+    //(*calDiaJsonEventos)["titulo"] = calAgregarEventoTitulo->text().toStdString();
+    std::string titulo = calAgregarEventoTitulo->text().toStdString();
+    (*calDiaJsonEventos)["titulo"] = encriptado->encriptar(titulo);
+    //(*calDiaJsonEventos)["hora"] = calAgregarEventoHora->text().toStdString();
+    std::string hora = calAgregarEventoHora->time().toString().toStdString();
+    (*calDiaJsonEventos)["hora"] = encriptado->encriptar(hora);
+    //(*calDiaJsonEventos)["duracion"] = calAgregarEventoDuracion->text().toStdString();
+    std::string duracion = calAgregarEventoDuracion->time().toString().toStdString();
+    (*calDiaJsonEventos)["duracion"] = encriptado->encriptar(duracion);
+    //(*calDiaJsonEventos)["descripcion"] = calAgregarEventoDescripcion->toHtml().toStdString();
+    std::string descripcion = calAgregarEventoDescripcion->toHtml().toStdString();
+    (*calDiaJsonEventos)["descripcion"] = encriptado->encriptar(descripcion);
+    // ? guardamos el json de eventos
+    calDiaJsonEventos->guardar();
+
+
+}
 
 // ////////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------------------------

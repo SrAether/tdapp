@@ -17,6 +17,9 @@
 #include <QHBoxLayout> // ? para crear layouts horizontales
 #include <QVBoxLayout> // ? para crear layouts verticales
 #include <QTextEdit> // ? para crear areas de texto
+#include <QGridLayout> // ? para crear layouts de cuadricula (CALENDARIO)
+#include <QCalendar> // ? para crear calendarios backend
+#include <QTimeEdit> // ? para crear campos de tiempo
 
 // ! experimental
 #include <QCalendarWidget> // incluimos el calendario
@@ -52,7 +55,7 @@ class MainWindow : public QWidget
     // Frame que contiene todos los elementos de la ventana
     QFrame *framePrincipal; // frame principal
     // Frame para el calendario
-    QFrame *frameCalendario; // frame para el calendario
+    QFrame *frameCalendarioP; // frame para el calendario
     // Frame para iniciar sesión
     QFrame *frameInicioSesion; // frame para iniciar sesión
     // Frame para el registro de emociones
@@ -209,10 +212,48 @@ class MainWindow : public QWidget
     // -----------------------------------------
     // COSAS DENTRO DE FRAME CALENDARIO (cal)
     // Calendario
-    QCalendarWidget *calCalendario; // calendario
+    //QCalendarWidget *calCalendario; // calendario
     // Layout para el calendario
     QVBoxLayout *calLayout; // layout para el calendario
-
+    // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    // COSAS DENTRO DE FRAME CALENDARIO (cal) - Grid de calendario
+    // Variables utiles para el calendario
+    int calMes; // mes actual
+    int calAnio; // año actual
+    int calDia; // dia actual
+    bool editandoEvento; // si se esta editando un evento
+    QStringList *diasSemana; // lista de los días de la semana
+    QStringList *meses; // lista de los meses
+    QVBoxLayout *calLayoutPrincipal; // layout principal
+    QFrame *frameCalendario; // frame para el calendario
+    QCalendar *calCalendarioBackend; // calendario backend
+    // Grid de calendario
+    QGridLayout *calCalendario; // grid de calendario
+    // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    // COSAS DE Pantalla dia seleccionado
+    // manejador de archivo para dia seleccionado
+    mJson::ManejadorJson *calDiaJsonEventos; // ! objeto de la clase manejadorJson que contiene los eventos del dia seleccionado
+    // Frame para el dia seleccionado
+    QFrame *calDiaFrame; // frame para el dia seleccionado
+    // Label de titulo para los eventos del dia
+    QLabel *calDiaTitulo; // titulo para los eventos del dia
+    // Lista de eventos del dia
+    QListWidget *calDiaEventos; // lista de eventos del dia
+    // Area de scroll para la lista de eventos del dia
+    QScrollArea *calDiaScrollArea; // area de scroll para la lista de eventos del dia
+    // Layout para la lista de eventos del dia
+    QVBoxLayout *calDiaLayout; // layout para la lista de eventos del dia
+    // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    // COSAS DE Pantalla agregar evento
+    // campo de texto para el titulo del evento
+    QLineEdit *calAgregarEventoTitulo; // campo para el titulo del evento
+    // campo de texto para la hora del evento
+    //QLineEdit *calAgregarEventoHora; // campo para la hora del evento
+    QTimeEdit *calAgregarEventoHora; // campo para la hora del evento
+    // campo de texto para la duración del evento
+    QTimeEdit *calAgregarEventoDuracion; // campo para la duración del evento
+    // campo de texto para la descripción del evento
+    QTextEdit *calAgregarEventoDescripcion; // campo para la descripción del evento
 
 
     // Métodos privados de la ventana
@@ -302,6 +343,110 @@ private slots:
     void activarInterfazCalendario(); // ! muestra la interfaz del calendario
     void desactivarInterfazCalendario(); // ! oculta la interfaz del calendario
     void calActivarCalendario(); // ! activa el calendario
+    void calDesactivarCalendario(); // ! desactiva el calendario
+
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    // Relacionados el funcionamiento del calendario
+    void calMesAnterior(); // ! muestra el mes anterior en el calendario
+    void calMesSiguiente(); // ! muestra el mes siguiente en el calendario
+    void calCargarDatosCalendario(int mes = -1, int anio = -1); // ! carga los datos del calendario, es el metodo principal
+    void calClickDia(const int& nfila, const int& ncolumna); // ! metodo que se llama al hacer click en un dia del calendario
+    void calLimpiarCalendario(); // ! limpia el calendario
+    void calClickDiaBackend10(); // ! metodo que se llama al hacer click en el boton 1-0 del calendario
+    void calClickDiaBackend11(); // ! metodo que se llama al hacer click en el boton 1-1 del calendario
+    void calClickDiaBackend12(); // ! metodo que se llama al hacer click en el boton 1-2 del calendario
+    void calClickDiaBackend13(); // ! metodo que se llama al hacer click en el boton 1-3 del calendario
+    void calClickDiaBackend14(); // ! metodo que se llama al hacer click en el boton 1-4 del calendario
+    void calClickDiaBackend15(); // ! metodo que se llama al hacer click en el boton 1-5 del calendario
+    void calClickDiaBackend16(); // ! metodo que se llama al hacer click en el boton 1-6 del calendario
+    void calClickDiaBackend20(); // ! metodo que se llama al hacer click en el boton 2-0 del calendario
+    void calClickDiaBackend21(); // ! metodo que se llama al hacer click en el boton 2-1 del calendario
+    void calClickDiaBackend22(); // ! metodo que se llama al hacer click en el boton 2-2 del calendario
+    void calClickDiaBackend23(); // ! metodo que se llama al hacer click en el boton 2-3 del calendario
+    void calClickDiaBackend24(); // ! metodo que se llama al hacer click en el boton 2-4 del calendario
+    void calClickDiaBackend25(); // ! metodo que se llama al hacer click en el boton 2-5 del calendario
+    void calClickDiaBackend26(); // ! metodo que se llama al hacer click en el boton 2-6 del calendario
+    void calClickDiaBackend30(); // ! metodo que se llama al hacer click en el boton 3-0 del calendario
+    void calClickDiaBackend31(); // ! metodo que se llama al hacer click en el boton 3-1 del calendario
+    void calClickDiaBackend32(); // ! metodo que se llama al hacer click en el boton 3-2 del calendario
+    void calClickDiaBackend33(); // ! metodo que se llama al hacer click en el boton 3-3 del calendario
+    void calClickDiaBackend34(); // ! metodo que se llama al hacer click en el boton 3-4 del calendario
+    void calClickDiaBackend35(); // ! metodo que se llama al hacer click en el boton 3-5 del calendario
+    void calClickDiaBackend36(); // ! metodo que se llama al hacer click en el boton 3-6 del calendario
+    void calClickDiaBackend40(); // ! metodo que se llama al hacer click en el boton 4-0 del calendario
+    void calClickDiaBackend41(); // ! metodo que se llama al hacer click en el boton 4-1 del calendario
+    void calClickDiaBackend42(); // ! metodo que se llama al hacer click en el boton 4-2 del calendario
+    void calClickDiaBackend43(); // ! metodo que se llama al hacer click en el boton 4-3 del calendario
+    void calClickDiaBackend44(); // ! metodo que se llama al hacer click en el boton 4-4 del calendario
+    void calClickDiaBackend45(); // ! metodo que se llama al hacer click en el boton 4-5 del calendario
+    void calClickDiaBackend46(); // ! metodo que se llama al hacer click en el boton 4-6 del calendario
+    void calClickDiaBackend50(); // ! metodo que se llama al hacer click en el boton 5-0 del calendario
+    void calClickDiaBackend51(); // ! metodo que se llama al hacer click en el boton 5-1 del calendario
+    void calClickDiaBackend52(); // ! metodo que se llama al hacer click en el boton 5-2 del calendario
+    void calClickDiaBackend53(); // ! metodo que se llama al hacer click en el boton 5-3 del calendario
+    void calClickDiaBackend54(); // ! metodo que se llama al hacer click en el boton 5-4 del calendario
+    void calClickDiaBackend55(); // ! metodo que se llama al hacer click en el boton 5-5 del calendario
+    void calClickDiaBackend56(); // ! metodo que se llama al hacer click en el boton 5-6 del calendario
+    void calClickDiaBackend60(); // ! metodo que se llama al hacer click en el boton 6-0 del calendario
+    void calClickDiaBackend61(); // ! metodo que se llama al hacer click en el boton 6-1 del calendario
+    void calClickDiaBackend62(); // ! metodo que se llama al hacer click en el boton 6-2 del calendario
+    void calClickDiaBackend63(); // ! metodo que se llama al hacer click en el boton 6-3 del calendario
+    void calClickDiaBackend64(); // ! metodo que se llama al hacer click en el boton 6-4 del calendario
+    void calClickDiaBackend65(); // ! metodo que se llama al hacer click en el boton 6-5 del calendario
+    void calClickDiaBackend66(); // ! metodo que se llama al hacer click en el boton 6-6 del calendario
+    void calClickEmoDia(const int& nfila, const int& ncolumna); // ! metodo que se llama al hacer click en el boton de emociones de un dia del calendario
+    void calClickEmoDiaBackend10(); // ! metodo que se llama al hacer click en el boton de emociones 1-0 del calendario
+    void calClickEmoDiaBackend11(); // ! metodo que se llama al hacer click en el boton de emociones 1-1 del calendario
+    void calClickEmoDiaBackend12(); // ! metodo que se llama al hacer click en el boton de emociones 1-2 del calendario
+    void calClickEmoDiaBackend13(); // ! metodo que se llama al hacer click en el boton de emociones 1-3 del calendario
+    void calClickEmoDiaBackend14(); // ! metodo que se llama al hacer click en el boton de emociones 1-4 del calendario
+    void calClickEmoDiaBackend15(); // ! metodo que se llama al hacer click en el boton de emociones 1-5 del calendario
+    void calClickEmoDiaBackend16(); // ! metodo que se llama al hacer click en el boton de emociones 1-6 del calendario
+    void calClickEmoDiaBackend20(); // ! metodo que se llama al hacer click en el boton de emociones 2-0 del calendario
+    void calClickEmoDiaBackend21(); // ! metodo que se llama al hacer click en el boton de emociones 2-1 del calendario
+    void calClickEmoDiaBackend22(); // ! metodo que se llama al hacer click en el boton de emociones 2-2 del calendario
+    void calClickEmoDiaBackend23(); // ! metodo que se llama al hacer click en el boton de emociones 2-3 del calendario
+    void calClickEmoDiaBackend24(); // ! metodo que se llama al hacer click en el boton de emociones 2-4 del calendario
+    void calClickEmoDiaBackend25(); // ! metodo que se llama al hacer click en el boton de emociones 2-5 del calendario
+    void calClickEmoDiaBackend26(); // ! metodo que se llama al hacer click en el boton de emociones 2-6 del calendario
+    void calClickEmoDiaBackend30(); // ! metodo que se llama al hacer click en el boton de emociones 3-0 del calendario
+    void calClickEmoDiaBackend31(); // ! metodo que se llama al hacer click en el boton de emociones 3-1 del calendario
+    void calClickEmoDiaBackend32(); // ! metodo que se llama al hacer click en el boton de emociones 3-2 del calendario
+    void calClickEmoDiaBackend33(); // ! metodo que se llama al hacer click en el boton de emociones 3-3 del calendario
+    void calClickEmoDiaBackend34(); // ! metodo que se llama al hacer click en el boton de emociones 3-4 del calendario
+    void calClickEmoDiaBackend35(); // ! metodo que se llama al hacer click en el boton de emociones 3-5 del calendario
+    void calClickEmoDiaBackend36(); // ! metodo que se llama al hacer click en el boton de emociones 3-6 del calendario
+    void calClickEmoDiaBackend40(); // ! metodo que se llama al hacer click en el boton de emociones 4-0 del calendario
+    void calClickEmoDiaBackend41(); // ! metodo que se llama al hacer click en el boton de emociones 4-1 del calendario
+    void calClickEmoDiaBackend42(); // ! metodo que se llama al hacer click en el boton de emociones 4-2 del calendario
+    void calClickEmoDiaBackend43(); // ! metodo que se llama al hacer click en el boton de emociones 4-3 del calendario
+    void calClickEmoDiaBackend44(); // ! metodo que se llama al hacer click en el boton de emociones 4-4 del calendario
+    void calClickEmoDiaBackend45(); // ! metodo que se llama al hacer click en el boton de emociones 4-5 del calendario
+    void calClickEmoDiaBackend46(); // ! metodo que se llama al hacer click en el boton de emociones 4-6 del calendario
+    void calClickEmoDiaBackend50(); // ! metodo que se llama al hacer click en el boton de emociones 5-0 del calendario
+    void calClickEmoDiaBackend51(); // ! metodo que se llama al hacer click en el boton de emociones 5-1 del calendario
+    void calClickEmoDiaBackend52(); // ! metodo que se llama al hacer click en el boton de emociones 5-2 del calendario
+    void calClickEmoDiaBackend53(); // ! metodo que se llama al hacer click en el boton de emociones 5-3 del calendario
+    void calClickEmoDiaBackend54(); // ! metodo que se llama al hacer click en el boton de emociones 5-4 del calendario
+    void calClickEmoDiaBackend55(); // ! metodo que se llama al hacer click en el boton de emociones 5-5 del calendario
+    void calClickEmoDiaBackend56(); // ! metodo que se llama al hacer click en el boton de emociones 5-6 del calendario
+    void calClickEmoDiaBackend60(); // ! metodo que se llama al hacer click en el boton de emociones 6-0 del calendario
+    void calClickEmoDiaBackend61(); // ! metodo que se llama al hacer click en el boton de emociones 6-1 del calendario
+    void calClickEmoDiaBackend62(); // ! metodo que se llama al hacer click en el boton de emociones 6-2 del calendario
+    void calClickEmoDiaBackend63(); // ! metodo que se llama al hacer click en el boton de emociones 6-3 del calendario
+    void calClickEmoDiaBackend64(); // ! metodo que se llama al hacer click en el boton de emociones 6-4 del calendario
+    void calClickEmoDiaBackend65(); // ! metodo que se llama al hacer click en el boton de emociones 6-5 del calendario
+    void calClickEmoDiaBackend66(); // ! metodo que se llama al hacer click en el boton de emociones 6-6 del calendario
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    // Relacionados la interfaz de dia seleccionado
+    void calMostrarDiaSeleccionado(const int& dia); // ! muestra la interfaz para agregar un evento al calendario
+    void calOcultarDiaSeleccionado(); // ! oculta la interfaz para agregar un evento al calendario
+    void calCargarListaEventosDia(); // ! carga los eventos del dia seleccionado
+    void calInterfazEvento(const int& apertura = 0); // ! muestra la interfaz para agregar un evento al calendario
+    void calInterfazEventoNuevo(); // ! genera un json para un evento nuevo
+    void calInterfazEventoCargarDatos(); // ! carga los datos de un evento
+    void calOcultarInterfazEvento(); // ! oculta la interfaz para agregar un evento al calendario
+    void calGuardarEvento(); // ! guarda un evento del calendario
 
     // // DEPENDENCIAS DE LA INTERFAZ CALENDARIO
     // void mostrarRegistroEmociones(time_t fecha); // ! muestra la interfaz con la grafica de emociones
