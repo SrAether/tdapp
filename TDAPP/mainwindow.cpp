@@ -62,9 +62,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     // verificamos la existencia de los archivos y carpetas necesarios
     verificacionInicial();
+    // cargamos la fuente
+    this->setFont(fuente);
 
     // creamos el frame principal
     framePrincipal = new QFrame(this);
+    //framePrincipal->setStyleSheet("background-color: #000000;"); // estilo para el frame
     // establecemos el tamaño del frame principal
     //framePrincipal->setGeometry(0, 0, 1920, 1080);
 
@@ -79,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     {
         // creamos un frame para iniciar sesión
         frameInicioSesion = new QFrame(framePrincipal);
+        frameInicioSesion->setStyleSheet("background-color: #000000;");
         // ocultamos por defecto
         frameInicioSesion->hide();
         frameInicioSesion->setMinimumWidth(500);
@@ -587,12 +591,31 @@ MainWindow::MainWindow(QWidget *parent)
     calCalendarioBackend = new QCalendar();
 
     // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
+    calCalendarioLayout = new QHBoxLayout(frameCalendario);
+    calCalendarioLayoutVertical = new QVBoxLayout(frameCalendario);
     // Relacionado con el calendario en sí
     calCalendario = new QGridLayout(frameCalendario);
+    // label para el año
+    calAnioLabel = new QLabel(frameCalendario);
+    // le metemos un tamaño de fuente grande
+    QFont fuenteAnio = calAnioLabel->font();
+    fuenteAnio.setPointSize(25);
+    calAnioLabel->setFont(fuenteAnio);
+    // label para el icono del mes
+    calIconoMes = new QLabel(frameCalendario);
+    calCalendarioLayoutVertical->addWidget(calAnioLabel);
+    // metemos un espaciador
+    calCalendarioLayoutVertical->addStretch();
+    calCalendarioLayoutVertical->addWidget(calIconoMes);
+    //calIconoMes->hide();
+    //calIconoMes->setText("hola");
+    calCalendarioLayout->addLayout(calCalendarioLayoutVertical);
+    calCalendarioLayout->addLayout(calCalendario);
     // Para los días de la semana
     //QStringList diasSemana = {"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
     diasSemana = new QStringList{"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
     meses = new QStringList{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+    calIconosMeses = new std::vector<std::string>{"Enero_blanco.png", "Febrero_blanco.png", "Marzo_blanco.png", "Abril_blanco.png", "Mayo_blanco.png", "Junio_blanco.png", "Julio_blanco.png", "Agosto_blanco.png", "Septiembre_blanco.png", "Octubre_blanco.png", "Noviembre_blanco.png", "Diciembre_blanco.png"};
     for (int i = 0; i < 7; i++)
     {
         QLabel* calDiaSemana = new QLabel(frameCalendario);
@@ -853,10 +876,17 @@ MainWindow::MainWindow(QWidget *parent)
     //calDiaTitulo->setAlignment(Qt::AlignCenter);
     calDiaEventos = new QListWidget(calDiaFrame);
     calDiaEventos->hide();
+    // hacemos que el tamaño mínimo sea de 600x400
+    //calDiaEventos->setMinimumSize(600, 400);
+    calDiaEventos->setMinimumWidth(300);
+    calDiaEventos->setStyleSheet("color: rgba(0,0,0,0);");
+    // lo hacemos redimensionable
+    calDiaEventos->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     //calDiaEventos->setMinimumSize(600, 400);
     //calDiaEventos->setSelectionMode(QAbstractItemView::SingleSelection);
     calDiaScrollArea = new QScrollArea(calDiaFrame);
     calDiaScrollArea->setWidget(calDiaEventos);
+    calDiaScrollArea->setWidgetResizable(true);
     calDiaScrollArea->hide();
     //calDiaScrollArea->setMinimumSize(600, 400);
     //calDiaScrollArea->setWidgetResizable(true);
@@ -883,10 +913,14 @@ MainWindow::MainWindow(QWidget *parent)
     calAgregarEventoDescripcion = new QTextEdit(calDiaFrame);
     calAgregarEventoDescripcion->hide();
     calAgregarEventoDescripcion->setPlaceholderText("Descripción del evento");
+    calAgregarEventoCotenedorTiempo = new QHBoxLayout(calDiaFrame);
+    calAgregarEventoCotenedorTiempo->addWidget(calAgregarEventoHora);
+    calAgregarEventoCotenedorTiempo->addWidget(calAgregarEventoDuracion);
     // los agregamos al layout
     calDiaLayout->addWidget(calAgregarEventoTitulo);
-    calDiaLayout->addWidget(calAgregarEventoHora);
-    calDiaLayout->addWidget(calAgregarEventoDuracion);
+    //calDiaLayout->addWidget(calAgregarEventoHora);
+    //calDiaLayout->addWidget(calAgregarEventoDuracion);
+    calDiaLayout->addLayout(calAgregarEventoCotenedorTiempo);
     calDiaLayout->addWidget(calAgregarEventoDescripcion);
 
 
@@ -1045,8 +1079,9 @@ void MainWindow::verificacionInicial()
 
         std::cout << "Cargando configuraciones" << std::endl;
         configuraciones = new mJson::ManejadorJson(RUTA_CONFIGURACIONES);
-        // se carga la fuente
+        // se carga la fuente con tamaño 20
         fuente.setFamily(QString::fromStdString((*configuraciones)["fuente"]));
+        fuente.setPointSize(20);
     }
 
 
@@ -2068,7 +2103,7 @@ void MainWindow::jourPanBiRedimensionarIconoBoton()
     // extraemos y mostramos el tamaño del frame de journaling
     QSize size = frameJournaling->size();
     //std::cout << "Tamaño del frame de journaling: " << size.width() << " x " << size.height() << std::endl;
-    jourBotonCambiarImagenBienvenida->setFixedSize(size.width() - 40, size.height() - 40);
+    jourBotonCambiarImagenBienvenida->setFixedSize(size.width() - 20, size.height() - 40);
     //jourBotonCambiarImagenBienvenida->size();
     //jourBotonCambiarImagenBienvenida->setIconSize(jourBotonCambiarImagenBienvenida->size());
     QSize BotonSize = jourBotonCambiarImagenBienvenida->size();
@@ -2234,6 +2269,11 @@ void MainWindow::barNaConfigurarBotones(const int& nBoton, const bool& activar, 
         //boton->setText("Editar Evento");
         boton->setIcon(*jourIconoEditarEntrada);
         break;
+    // ? Para eliminar un evento en el calendario
+    case 10:
+        //boton->setText("Eliminar Evento");
+        boton->setIcon(*jourIconoEliminarEntrada);
+        break;
     // ? En el caso default no se asigna ningun icono
     default:
         boton->setIcon(QIcon());
@@ -2318,6 +2358,11 @@ void MainWindow::barNaEjecutorFunciones(const int& nFuncion)
         std::cout << "CalEditarEvento modo edición" << std::endl;
         calInterfazEvento(1);
         break;
+    // ? Para eliminar un evento en el calendario
+    case 10:
+        std::cout << "CalEliminarEvento" << std::endl;
+        calEliminarEvento();
+        break;
     default:
         break;
 
@@ -2391,6 +2436,8 @@ void MainWindow::desactivarInterfazCalendario()
     frameCalendarioP->hide();
     frameCalendario->hide();
     calDiaFrame->hide();
+    calDesactivarCalendario();
+
 }
 
 // ! método para mostrar el calendario
@@ -2430,6 +2477,29 @@ void MainWindow::calDesactivarCalendario()
     }
 }
 
+// ! método para cargar eventos en el calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+int MainWindow::calObtenerNumeroEventosDia(const int& anio, const int& mes, const int& dia)
+{
+    int numeroEventos = 0;
+    // construimos la ruta de la carpeta de eventos
+    std::string rutaEventos = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/calendario/" + std::to_string(anio) + "/" + std::to_string(mes) + "/" + std::to_string(dia);
+    // verificamos si existe la carpeta de eventos
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEventos))
+    {
+        // si no existe la carpeta de eventos, retornamos 0
+        return 0;
+    }
+    // obtenemos los eventos de la carpeta
+    std::vector<std::string> eventos = manejadorArchivos.obtenerContenidoCarpeta(rutaEventos, 1);
+    // obtenemos el numero de eventos
+    numeroEventos = eventos.size();
+
+    return numeroEventos;
+}
+
 
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -2443,11 +2513,15 @@ void MainWindow::calMesAnterior()
 {
     // ? se cargará el mes anterior en el calendario
     // ? se mostrará un mensaje emergente que indica que se ha cargado el mes anterior
-    calCargarDatosCalendario(calMes - 1, calAnio);
-    if (calMes < 1)
+    if (calMes == 1)
     {
         calCargarDatosCalendario(12, calAnio - 1);
     }
+    else
+    {
+        calCargarDatosCalendario(calMes - 1, calAnio);
+    }
+
 }
 
 // ! método que muestra el mes siguiente en el calendario
@@ -2458,10 +2532,13 @@ void MainWindow::calMesSiguiente()
 {
     // ? se cargará el mes siguiente en el calendario
     // ? se mostrará un mensaje emergente que indica que se ha cargado el mes siguiente
-    calCargarDatosCalendario(calMes + 1, calAnio);
-    if (calMes > 12)
+    if (calMes == 12)
     {
         calCargarDatosCalendario(1, calAnio + 1);
+    }
+    else
+    {
+        calCargarDatosCalendario(calMes + 1, calAnio);
     }
 }
 
@@ -2473,6 +2550,8 @@ void MainWindow::calCargarDatosCalendario(int mes, int anio)
 {
     // primero limpiamos el calendario
     calLimpiarCalendario();
+
+
     // Si el mes y el anio son -1 quiere decir que se cargará el mes y el año actual
     if (mes == -1 && anio == -1)
     {
@@ -2486,6 +2565,17 @@ void MainWindow::calCargarDatosCalendario(int mes, int anio)
         calMes = mes;
         calAnio = anio;
     }
+
+    //std::cout << "mes: " << (*calIconosMeses)[calMes - 1] << std::endl;
+    //calIconoMes->setPixmap()
+    std::string rutaIconoMes = RUTA_ICONOS + (*calIconosMeses)[calMes - 1];
+    //QPixmap iconoMes(QString::fromStdString(rutaIconoMes));
+    //calIconoMes->setPixmap(iconoMes);
+    calIconoMes->setPixmap(QPixmap(QString::fromStdString(rutaIconoMes)));
+    calAnioLabel->setText(QString::number(calAnio));
+    calIconoMes->setScaledContents(true);
+    // le damos un tamaño maximo
+    calIconoMes->setMaximumSize(100, 500);
     // ? Usaremos la información del mes y año para cargar los datos del calendario
     // ? extraemos el primer dia del mes del calCalendarioBakend
     calCalendarioBackend->dayOfWeek(QDate(calAnio, calMes, 1));
@@ -2512,6 +2602,27 @@ void MainWindow::calCargarDatosCalendario(int mes, int anio)
             else if (diaNum > 0)
             {
                 label->setText(QString::number(diaNum));
+                // obtenemos el numero de eventos del dia
+                int numeroEventos = calObtenerNumeroEventosDia(calAnio, calMes, diaNum);
+                // si el numero de eventos es mayor a 0
+                if (numeroEventos > 0)
+                {
+                    // mostramos el label de eventos
+                    QLabel* labelEventos = frameCalendario->findChild<QLabel*>("eventos" + QString::number(semana) + QString::number(dia));
+                    std::string textoEventos = "<html><p>";
+                    if (numeroEventos >= 1) textoEventos += "🔵 "; // no es a lo wey es un simbolo solo que el editor no lo puede interpretar
+                    if (numeroEventos >= 2) textoEventos += "🔵 ";
+                    if (numeroEventos == 3) textoEventos += "🔵 ";
+                    else if (numeroEventos > 3) textoEventos += " ⭕";
+                    textoEventos += "</p></html>";
+                    //labelEventos->setText(QString::fromStdString(textoEventos));
+                    //labelEventos->setTextFormat()
+                    // le indicamos al label que le vamos a pasar un texto en formato html
+                    //labelEventos->setTextFormat(Qt::RichText);
+                    // le pasamos el texto
+                    labelEventos->setText(QString::fromStdString(textoEventos));
+                    //labelEventos->setText(QString(QChar(0x1F6D1)));
+                }
             }
         }
     }
@@ -2745,8 +2856,46 @@ void MainWindow::calCargarListaEventosDia()
         //calDiaEventos->addItem(QString::fromStdString(eventoJson["titulo"]));
         std::string titulo = eventoJson["titulo"];
         titulo = encriptado->desencriptar(titulo);
-        calDiaEventos->addItem(QString::fromStdString(titulo));
+        std::string hora = eventoJson["hora"];
+        hora = encriptado->desencriptar(hora);
+        //calDiaEventos->addItem(QString::fromStdString(titulo));
         //eventosJson.push_back(evento);
+
+        // EXPERIMENTAL
+        // creamos un widget
+        QWidget* widget = new QWidget();
+        widget->setStyleSheet("background-color: #f0f0f0;"
+                              "border: 1px solid black;"
+                              //"border-radius: 5px;"
+                              "padding: 2px;"
+                              "margin: 2px;");
+        // creamos un layout
+        QHBoxLayout* layout = new QHBoxLayout(widget);
+        // creamos un label
+        QLabel* labelTitulo = new QLabel(widget);
+        labelTitulo->setText(QString::fromStdString(titulo));
+        // le asignamos un nombre al titulo para poder buscarlo
+        labelTitulo->setObjectName("titulo");
+        labelTitulo->setStyleSheet("color: black;");
+        // creamos otro label para la hora
+        QLabel* labelHora = new QLabel(widget);
+        labelHora->setText(QString::fromStdString(hora));
+        // le damos un tamaño maximo
+        labelHora->setMaximumWidth(80);
+        // le metemos un estilo
+        labelHora->setStyleSheet("background-color: green; border: 1px solid black; border-radius: 5px; padding: 2px; margin: 2px; color: black;");
+        // agregamos los labels al layout
+        layout->addWidget(labelHora);
+        layout->addWidget(labelTitulo);
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setText(QString::fromStdString(titulo));
+        //item->setStyleSheet("color: rgba(0,0,0,0);");
+        // // hacemos que el item no muestre el texto
+        // item->setHidden(true);
+        item->setSizeHint(widget->sizeHint());
+        calDiaEventos->addItem(item);
+        calDiaEventos->setItemWidget(item, widget);
+
     }
 
 
@@ -2803,7 +2952,7 @@ void MainWindow::calInterfazEvento(const int& modoDeApertura)
         calAgregarEventoDescripcion->setReadOnly(true);
         // ? configuramos los botones de la barra de navegación
         barNaConfigurarBotones(0, true, 9, "Editar Evento");
-        barNaConfigurarBotones(1, true, -1, "Eliminar Evento"); // -1 por que aun no se ha implementado
+        barNaConfigurarBotones(1, true, 10, "Eliminar Evento"); // -1 por que aun no se ha implementado
 
     }
 
@@ -3072,75 +3221,7 @@ void MainWindow::calGuardarEvento()
         QMessageBox::critical(this, "Error", "No se ha ingresado una hora para el evento");
         return;
     }
-    // // ? verificamos si calDiaJsonEventos es diferente de nullptr
-    // if (calDiaJsonEventos != nullptr)
-    // {
-    //     // ? si es diferente de nullptr, implica que ya se cargó el json de eventos
-    //     // ? guardamos el json de eventos
-    //     calDiaJsonEventos->guardar();
-    //     // ? creamos un puntero a un json
-    //     mJson::ManejadorJson* calDiaJsonEventosAux = calDiaJsonEventos;
-    //     // ? eliminamos el json auxiliar
-    //     delete calDiaJsonEventosAux;
-    //     // ? asignamos nullptr al json de eventos
-    //     calDiaJsonEventos = nullptr;
-    // }
-    // ? construimos la ruta a la carpeta de eventos del calendario
-    // std::string rutaCalendario = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/calendario";
-    // // ? verificamos si existe la carpeta de calendario
-    // if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
-    // {
-    //     // ? si no existe la carpeta de calendario, la creamos
-    //     manejadorArchivos.crearCarpeta(rutaCalendario);
-    // }
-    // // ? construimos la ruta a la carpeta del año
-    // rutaCalendario += "/" + std::to_string(calAnio);
-    // // ? verificamos si existe la carpeta del año
-    // if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
-    // {
-    //     // ? si no existe la carpeta del año, la creamos
-    //     manejadorArchivos.crearCarpeta(rutaCalendario);
-    // }
-    // // ? construimos la ruta a la carpeta del mes
-    // rutaCalendario += "/" + std::to_string(calMes);
-    // // ? verificamos si existe la carpeta del mes
-    // if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
-    // {
-    //     // ? si no existe la carpeta del mes, la creamos
-    //     manejadorArchivos.crearCarpeta(rutaCalendario);
-    // }
-    // // ? construimos la ruta a la carpeta del dia
-    // rutaCalendario += "/" + std::to_string(calDia);
-    // // ? verificamos si existe la carpeta del dia
-    // if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaCalendario))
-    // {
-    //     // ? si no existe la carpeta del dia, la creamos
-    //     manejadorArchivos.crearCarpeta(rutaCalendario);
-    // }
-    // // ? construimos la ruta al archivo del evento
-    // std::string rutaEvento = rutaCalendario + "/" + calAgregarEventoTitulo->text().toStdString();
-    // // ? verificamos si existe un archivo con el mismo nombre
-    // if (manejadorArchivos.verificarExistenciaDeCarpeta(rutaEvento))
-    // {
-    //     // ? si existe un archivo con el mismo nombre, mostramos un mensaje de error
-    //     QMessageBox::critical(this, "Error", "Ya existe un evento con el mismo nombre en este dia");
-    //     return;
-    // }
-    // // ? verificamos si existe la carpeta del evento
-    // if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEvento))
-    // {
-    //     // ? si no existe la carpeta del evento, la creamos
-    //     manejadorArchivos.crearCarpeta(rutaEvento);
-    //     //primeraVez = true;
-    // }
-    // // ? agregamos "evento.json" al final de la ruta del evento
-    // rutaEvento += "/evento.json";
-    // // ? verificamos si existe el archivo del evento
-    // if (!manejadorArchivos.verificarExistenciaDeArchivo(rutaEvento))
-    // {
-    //     // ? si no existe el archivo del evento, lo creamos
-    //     manejadorArchivos.crearArchivo(rutaEvento, "");
-    // }
+
     // // ? creamos un json para el evento
     // calDiaJsonEventos = new mJson::ManejadorJson(rutaEvento);
     // ? guardamos los datos del evento
@@ -3162,6 +3243,42 @@ void MainWindow::calGuardarEvento()
 
 }
 
+// ! Método para eliminar un evento en el calendario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::calEliminarEvento()
+{
+    // verificamos si hay un evento cargado en el json
+    if (calDiaJsonEventos != nullptr)
+    {
+        // guardamos el json
+        calDiaJsonEventos->guardar();
+        // extraemos el nombre de la carpeta del evento
+        std::string nombreEvento = (*calDiaJsonEventos)["horaDeCreacion"];
+        //std::cout << "Eliminando evento: " << nombreEvento << std::endl;
+        // construimos la ruta a la carpeta de eventos del calendario
+        std::string rutaCalendario = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/calendario" + "/" + std::to_string(calAnio) + "/" + std::to_string(calMes) + "/" + std::to_string(calDia) + "/" + nombreEvento;
+        // mostramos un mensaje de confirmación
+        QMessageBox::StandardButton respuesta = QMessageBox::question(this, "Eliminar Evento", "¿Estás seguro de que deseas eliminar el evento seleccionado?", QMessageBox::Yes | QMessageBox::No);
+        if (respuesta == QMessageBox::Yes)
+        {
+            // eliminamos el archivo json del evento
+            mJson::ManejadorJson* aux = calDiaJsonEventos;
+            delete aux;
+            calDiaJsonEventos = nullptr;
+            // eliminamos la carpeta del evento
+            manejadorArchivos.eliminarCarpeta(rutaCalendario);
+            // mostramos un mensaje de éxito
+            //QMessageBox::information(this, "Evento Eliminado", "El evento ha sido eliminado con éxito");
+            // ocultamos la interfaz de evento
+            calOcultarInterfazEvento();
+            // mostramos la interfaz del dia seleccionado
+            calMostrarDiaSeleccionado(calDia);
+        }
+    }
+}
+
 // ////////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------------------------
 // ! RELACIONADOS CON LA INTERFAZ GRÁFICA
@@ -3171,5 +3288,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
     //frame->setFixedSize(this->size());
     jourPanBiRedimensionarIconoBoton();
+    //calDiaFrame->setFixedSize(this->size());
+    //std::cout << "calDiaFrame: " << calDiaFrame->size().width() << " " << calDiaFrame->size().height() << std::endl;
 
 }

@@ -222,11 +222,20 @@ class MainWindow : public QWidget
     int calAnio; // año actual
     int calDia; // dia actual
     bool editandoEvento; // si se esta editando un evento
+    std::vector<std::string> *calIconosMeses; // iconos para los meses
     QStringList *diasSemana; // lista de los días de la semana
     QStringList *meses; // lista de los meses
     QVBoxLayout *calLayoutPrincipal; // layout principal
     QFrame *frameCalendario; // frame para el calendario
     QCalendar *calCalendarioBackend; // calendario backend
+    // layout horizontal para el calendario
+    QHBoxLayout *calCalendarioLayout; // layout horizontal para el calendario
+    // layout vertical para el calendario
+    QVBoxLayout *calCalendarioLayoutVertical; // layout vertical para el calendario
+    // label para el icono del mes
+    QLabel *calIconoMes; // label para el icono del mes
+    // label para el el año
+    QLabel *calAnioLabel; // label para el año
     // Grid de calendario
     QGridLayout *calCalendario; // grid de calendario
     // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -254,6 +263,7 @@ class MainWindow : public QWidget
     QTimeEdit *calAgregarEventoDuracion; // campo para la duración del evento
     // campo de texto para la descripción del evento
     QTextEdit *calAgregarEventoDescripcion; // campo para la descripción del evento
+    QHBoxLayout *calAgregarEventoCotenedorTiempo; // contenedor para la hora y duración del evento
 
 
     // Métodos privados de la ventana
@@ -347,6 +357,7 @@ private slots:
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     // Relacionados el funcionamiento del calendario
+    int calObtenerNumeroEventosDia(const int& anio, const int& mes, const int& dia); // ! obtiene el número de eventos de un día
     void calMesAnterior(); // ! muestra el mes anterior en el calendario
     void calMesSiguiente(); // ! muestra el mes siguiente en el calendario
     void calCargarDatosCalendario(int mes = -1, int anio = -1); // ! carga los datos del calendario, es el metodo principal
@@ -447,6 +458,7 @@ private slots:
     void calInterfazEventoCargarDatos(); // ! carga los datos de un evento
     void calOcultarInterfazEvento(); // ! oculta la interfaz para agregar un evento al calendario
     void calGuardarEvento(); // ! guarda un evento del calendario
+    void calEliminarEvento(); // ! elimina un evento del calendario
 
     // // DEPENDENCIAS DE LA INTERFAZ CALENDARIO
     // void mostrarRegistroEmociones(time_t fecha); // ! muestra la interfaz con la grafica de emociones
