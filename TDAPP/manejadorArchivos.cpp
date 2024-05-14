@@ -76,7 +76,7 @@ bool mArchivos::manejadorArchivos::modificarArchivo(const std::string &nombre, c
 // *Método para leer un archivo
 std::string mArchivos::manejadorArchivos::leerArchivo(const std::string &nombre)
 {
-    std::ifstream archivo(nombre);
+    std::ifstream archivo(nombre, std::ios::binary);
     if (!archivo.is_open())
     {
         throw std::runtime_error("Err:TDAPP02, No se encontró el archivo");

@@ -1807,10 +1807,12 @@ void MainWindow::jourCambiarImagenBienvenida()
     std::string extensionImEx = manejadorArchivos.buscarExtensionArchivo(RUTA_USUARIOS + usuario + "/", "imagenBienvenida");
     std::cout << "Extension ImEx: " << extensionImEx << std::endl;
     // si la imagen de bienvenida ya existe la extension no será vacía
+    bool Existe = false;
     if (!extensionImEx.empty())
     {
         // si ya existe una imagen de bienvenida, la renombramos a imagenBienvenidaAnterior
         manejadorArchivos.moverArchivo(RUTA_USUARIOS + usuario + "/imagenBienvenidaAnterior" + extensionImEx, rutaImagenBienvenida + extensionImEx);
+        Existe = true;
     }
     // copiamos la imagen a la carpeta del usuario
     try {
@@ -1824,7 +1826,11 @@ void MainWindow::jourCambiarImagenBienvenida()
     // mostramos la imagen en el boton
     jourBotonCambiarImagenBienvenida->setIcon(QIcon(QPixmap(QString::fromStdString(rutaImagenBienvenida + extension))));
     // eliminamos la imagen anterior
-    manejadorArchivos.eliminarArchivo(rutaImagenBienvenida + "Anterior" + extensionImEx);
+    if (Existe)
+    {
+        manejadorArchivos.eliminarArchivo(rutaImagenBienvenida + "Anterior" + extensionImEx);
+    }
+    //
 }
 
 // ! método para activar la lista de entradas de journaling
