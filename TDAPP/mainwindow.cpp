@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include <string>
+#include "estilos.h" //Archivo que carga los estilos al mainwindow.cpp
+
 
 // para debug de terminal
 //#include <map>
@@ -55,6 +57,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowIconText("TDApp");
     // Icono de la ventana
     // this->setWindowIcon(QIcon(":/images/icono.png"));
+
+    //Ejemplo para cargar el estilo
+    this->setStyleSheet(StylesQSS1);
 
     // ? SE CREA EL OBJETO DE ENCRIPTADO
     encriptado = new EncriptadoV2::Encriptado(CONTRASEÑA_ENCRIPTADO);
