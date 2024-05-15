@@ -85,7 +85,8 @@ class MainWindow : public QWidget
     QPushButton *inSeBotonRegistrarse; // boton para registrar usuario
     // Botón para recuperar contraseña
     QPushButton *inSeBotonRecuperarContra; // boton para recuperar contraseña
-
+    //Layout Vertical
+    QVBoxLayout *iSesionLayout;
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME REGISTRO USUARIO
@@ -136,8 +137,13 @@ class MainWindow : public QWidget
     QWidget *rUWidget; // widget para meter el layout de registro de usuario
     // Layout principal
     QVBoxLayout *rUPrincipal; // layout principal
-
+    // Layout etiqueta
+    QHBoxLayout *rUHLayout_1;
+    //Layout botones finales
+    QHBoxLayout *rUHLayout_2;
     // -----------------------------------------
+
+
     // COSAS DENTRO DE FRAME Recuperar Contra (reCo)
     // variables
     std::string reCoPreguntaContra; // pregunta para recuperar contraseña
@@ -151,6 +157,8 @@ class MainWindow : public QWidget
     QPushButton *reCoBotonConfirmar; // boton para recuperar contraseña
     // boton para cancelar recuperar contraseña
     QPushButton *reCoBotonCancelar; // boton para cancelar recuperar contraseña
+    //Layout
+    QVBoxLayout *reCoLayout;
 
 
     // -----------------------------------------
