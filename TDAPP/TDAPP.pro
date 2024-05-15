@@ -10,6 +10,7 @@ CONFIG += c++17 -fpermissive
 
 SOURCES += \
     encriptado.cpp \
+    estilos.cpp \
     main.cpp \
     mainwindow.cpp \
     manejadorArchivos.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     encriptado.h \
+    estilos.h \
     mainwindow.h \
     manejadorArchivos.h \
     manejadorJson.h
@@ -27,7 +29,8 @@ CONFIG += lrelease
 CONFIG += embed_translations
 
 # Incluir la biblioteca OpenSSL para encriptar y desencriptar
-LIBS += -lssl -lcrypto
+LIBS += -LC:/OpenSSL-Win64/lib/VC/x64/MD -lssl -lcrypto
+INCLUDEPATH += C:/OpenSSL-Win64/include
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
