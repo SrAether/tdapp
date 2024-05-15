@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     {
         // creamos un frame para iniciar sesión
         frameInicioSesion = new QFrame(framePrincipal);
-        frameInicioSesion->setStyleSheet("background-color: #000000;");
+        //frameInicioSesion->setStyleSheet("background-color: #000000;");
         // ocultamos por defecto
         frameInicioSesion->hide();
         frameInicioSesion->setMinimumWidth(500);
@@ -160,22 +160,23 @@ MainWindow::MainWindow(QWidget *parent)
         // ocultamos por defecto
         frameRegistroUsuario->hide();
         frameRegistroUsuario->setMinimumWidth(500);
-        frameRegistroUsuario->setMinimumHeight(800);
+        frameRegistroUsuario->setMinimumHeight(500);
 
+        // creamos un widget para el registro de usuarios
+        rUWidget = new QWidget();
         // en este punto se deberia cargar un estilo para el frame registro de usuarios
         //frameRegistroUsuario->setStyleSheet("background-color: #000000;"); // estilo para el frame
 
         // ETIQUETA DE REGISTRO DE USUARIOS
         // creamos una etiqueta para el registro de usuarios
-        etiquetaRegistroUsuario = new QLabel{QString::fromStdString(contenidoEtiquetaRegistroUsuario), frameRegistroUsuario};
+        etiquetaRegistroUsuario = new QLabel{QString::fromStdString(contenidoEtiquetaRegistroUsuario), rUWidget};
+        etiquetaRegistroUsuario->setMaximumHeight(30);
         // establecemos la posición de la etiqueta de registro de usuarios
-        etiquetaRegistroUsuario->setGeometry(100, 50, 200, 50);
+        //etiquetaRegistroUsuario->setGeometry(100, 50, 200, 50);
 
         // CAMPO PARA INGRESAR NOMBRE
         // creamos un campo para ingresar el nombre
-        campoRegistroNombre = new QLineEdit(frameRegistroUsuario);
-        // establecemos la posición del campo para ingresar el nombre
-        campoRegistroNombre->setGeometry(100, 100, 200, 50);
+        campoRegistroNombre = new QLineEdit(rUWidget);
         // establecemos el texto del campo para ingresar el nombre
         campoRegistroNombre->setPlaceholderText("Nombre");
         // mensaje al pasar el cursor sobre el campo
@@ -184,17 +185,13 @@ MainWindow::MainWindow(QWidget *parent)
 
         // CAMPO PARA INGRESAR APODO (USERNAME)
         // creamos un campo para ingresar el apodo
-        campoRegistroNombreUs = new QLineEdit(frameRegistroUsuario);
-        // establecemos la posición del campo para ingresar el apodo
-        campoRegistroNombreUs->setGeometry(100, 150, 200, 50);
+        campoRegistroNombreUs = new QLineEdit(rUWidget);
         // establecemos el texto del campo para ingresar el apodo
         campoRegistroNombreUs->setPlaceholderText("Como le gustaria que lo llamemos?");
 
         // CAMPO PARA INGRESAR CONTRASEÑA
         // creamos un campo para ingresar la contraseña
-        campoRegistroContra = new QLineEdit(frameRegistroUsuario);
-        // establecemos la posición del campo para ingresar la contraseña
-        campoRegistroContra->setGeometry(100, 200, 200, 50);
+        campoRegistroContra = new QLineEdit(rUWidget);
         // establecemos el texto del campo para ingresar la contraseña
         campoRegistroContra->setPlaceholderText("Contra");
         // establecemos que el campo sea de tipo contraseña
@@ -202,9 +199,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         // CAMPO PARA CONFIRMAR CONTRASEÑA
         // creamos un campo para confirmar la contraseña
-        campoRegistroContraConf = new QLineEdit(frameRegistroUsuario);
-        // establecemos la posición del campo para confirmar la contraseña
-        campoRegistroContraConf->setGeometry(100, 250, 200, 50);
+        campoRegistroContraConf = new QLineEdit(rUWidget);
         // establecemos el texto del campo para confirmar la contraseña
         campoRegistroContraConf->setPlaceholderText("Confirmar Contra");
         // establecemos que el campo sea de tipo contraseña y que muestre la opción de mostrar la contraseña
@@ -215,9 +210,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         // BOTÓN PARA SELECCIONAR SI DESEA REALIZAR COPIA DE SEGURIDAD
         // creamos un botón para seleccionar si desea realizar copia de seguridad
-        botonRegistroCopiaSeguridad = new QPushButton(frameRegistroUsuario);
-        // establecemos la posición del botón para seleccionar si desea realizar copia de seguridad
-        botonRegistroCopiaSeguridad->setGeometry(300, 350, 400, 50);
+        botonRegistroCopiaSeguridad = new QPushButton(rUWidget);
         // establecemos el texto del botón para seleccionar si desea realizar copia de seguridad
         botonRegistroCopiaSeguridad->setText("Da click para activar copia de seguridad");
         // Mensaje cuando pasamos el cursor sobre el boton
@@ -225,9 +218,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         // SELECTOR FRECUENCIA COPIA DE SEGURIDAD
         // creamos un selector para la copia de seguridad
-        selectorRegistroFrecuenciaCopiaSeguridad = new QComboBox(frameRegistroUsuario);
-        // establecemos la posición del selector para la copia de seguridad
-        selectorRegistroFrecuenciaCopiaSeguridad->setGeometry(100, 350, 200, 50);
+        selectorRegistroFrecuenciaCopiaSeguridad = new QComboBox(rUWidget);
         // establecemos el texto del selector para la copia de seguridad
         selectorRegistroFrecuenciaCopiaSeguridad->addItem("A diario");
         selectorRegistroFrecuenciaCopiaSeguridad->addItem("Cada 3 días");
@@ -239,9 +230,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         // CAMPO PARA INGRESAR CORREO ELECTRÓNICO (PARA COPIA DE SEGURIDAD)
         // creamos un campo para ingresar el correo electrónico
-        campoRegistroCorreoCopiaSeguridad = new QLineEdit(frameRegistroUsuario);
-        // establecemos la posición del campo para ingresar el correo electrónico
-        campoRegistroCorreoCopiaSeguridad->setGeometry(100, 400, 200, 50);
+        campoRegistroCorreoCopiaSeguridad = new QLineEdit(rUWidget);
         // establecemos el texto del campo para ingresar el correo electrónico
         campoRegistroCorreoCopiaSeguridad->setPlaceholderText("Correo Electrónico");
         // ocultamos por defecto
@@ -249,9 +238,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         // CAMPO PARA INGRESAR CONTRASEÑA DE CORREO ELECTRÓNICO (PARA COPIA DE SEGURIDAD)
         // creamos un campo para ingresar la contraseña del correo electrónico
-        campoRegistroContraCopiaSeguridad = new QLineEdit(frameRegistroUsuario);
-        // establecemos la posición del campo para ingresar la contraseña del correo electrónico
-        campoRegistroContraCopiaSeguridad->setGeometry(100, 450, 200, 50);
+        campoRegistroContraCopiaSeguridad = new QLineEdit(rUWidget);
         // establecemos el texto del campo para ingresar la contraseña del correo electrónico
         campoRegistroContraCopiaSeguridad->setPlaceholderText("Contra del Correo Electrónico");
         // establecemos que el campo sea de tipo contraseña
@@ -261,9 +248,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         // CAMPO PARA CONFIRMAR CONTRASEÑA DE CORREO ELECTRÓNICO (PARA COPIA DE SEGURIDAD)
         // creamos un campo para confirmar la contraseña del correo electrónico
-        campoRegistroContraCopiaSeguridadConf = new QLineEdit(frameRegistroUsuario);
-        // establecemos la posición del campo para confirmar la contraseña del correo electrónico
-        campoRegistroContraCopiaSeguridadConf->setGeometry(100, 500, 200, 50);
+        campoRegistroContraCopiaSeguridadConf = new QLineEdit(rUWidget);
         // establecemos el texto del campo para confirmar la contraseña del correo electrónico
         campoRegistroContraCopiaSeguridadConf->setPlaceholderText("Confirmar Contra del Correo Electrónico");
         // establecemos que el campo sea de tipo contraseña
@@ -273,18 +258,14 @@ MainWindow::MainWindow(QWidget *parent)
 
         // BOTÓN PARA INGRESAR FOTO DE PERFIL (avatar)
         // creamos un botón para añadir la foto de perfil
-        botonRegistroFotoPerfil = new QPushButton(frameRegistroUsuario);
-        // establecemos la posición del botón para añadir la foto de perfil
-        botonRegistroFotoPerfil->setGeometry(100, 550, 200, 50);
+        botonRegistroFotoPerfil = new QPushButton(rUWidget);
         // establecemos el texto del botón para añadir la foto de perfil
         botonRegistroFotoPerfil->setText("Añadir Foto de Perfil");
 
 
         // SELECTOR PARA LA EDAD
         // creamos un selector para la edad
-        selectorRegistroEdad = new QComboBox(frameRegistroUsuario);
-        // establecemos la posición del selector para la edad
-        selectorRegistroEdad->setGeometry(100, 650, 200, 50);
+        selectorRegistroEdad = new QComboBox(rUWidget);
         // establecemos el texto del selector para la edad
         selectorRegistroEdad->addItem("Menos de 18 años");
         selectorRegistroEdad->addItem("18 - 24 años");
@@ -297,35 +278,60 @@ MainWindow::MainWindow(QWidget *parent)
 
         // Campo para añadir pregunta de recuperación
         // creamos un campo para añadir la pregunta de recuperación
-        campoRegistroPreguntaRecuperacion = new QLineEdit(frameRegistroUsuario);
-        // establecemos la posición del campo para añadir la pregunta de recuperación
-        campoRegistroPreguntaRecuperacion->setGeometry(300, 700, 200, 50);
+        campoRegistroPreguntaRecuperacion = new QLineEdit(rUWidget);
         // establecemos el texto del campo para añadir la pregunta de recuperación
         campoRegistroPreguntaRecuperacion->setPlaceholderText("Pregunta de Recuperación");
 
         // Campo para añadir respuesta de recuperación
         // creamos un campo para añadir la respuesta de recuperación
-        campoRegistroRespuestaRecuperacion = new QLineEdit(frameRegistroUsuario);
-        // establecemos la posición del campo para añadir la respuesta de recuperación
-        campoRegistroRespuestaRecuperacion->setGeometry(300, 750, 200, 50);
+        campoRegistroRespuestaRecuperacion = new QLineEdit(rUWidget);
         // establecemos el texto del campo para añadir la respuesta de recuperación
         campoRegistroRespuestaRecuperacion->setPlaceholderText("Respuesta de Recuperación");
 
         // BOTÓN PARA REGISTRARSE
         // creamos un botón para registrarse
-        botonRegistrarUsuario = new QPushButton(frameRegistroUsuario);
-        // establecemos la posición del botón para registrarse
-        botonRegistrarUsuario->setGeometry(100, 700, 200, 50);
+        botonRegistrarUsuario = new QPushButton(rUWidget);
         // establecemos el texto del botón para registrarse
         botonRegistrarUsuario->setText("Registrarse");
 
         // BOTÓN PARA CANCELAR
         // creamos un botón para cancelar
-        botonRegistroCancelar = new QPushButton(frameRegistroUsuario);
-        // establecemos la posición del botón para cancelar
-        botonRegistroCancelar->setGeometry(100, 750, 200, 50);
+        botonRegistroCancelar = new QPushButton(rUWidget);
         // establecemos el texto del botón para cancelar
         botonRegistroCancelar->setText("Cancelar");
+
+        // Layout
+        rULayout = new QVBoxLayout(rUWidget);
+        rULayout->addWidget(etiquetaRegistroUsuario);
+        rULayout->addWidget(campoRegistroNombre);
+        rULayout->addWidget(campoRegistroNombreUs);
+        rULayout->addWidget(campoRegistroContra);
+        rULayout->addWidget(campoRegistroContraConf);
+        rULayout->addWidget(botonRegistroCopiaSeguridad);
+        rULayout->addWidget(selectorRegistroFrecuenciaCopiaSeguridad);
+        rULayout->addWidget(campoRegistroCorreoCopiaSeguridad);
+        rULayout->addWidget(campoRegistroContraCopiaSeguridad);
+        rULayout->addWidget(campoRegistroContraCopiaSeguridadConf);
+        rULayout->addWidget(botonRegistroFotoPerfil);
+        rULayout->addWidget(selectorRegistroEdad);
+        rULayout->addWidget(campoRegistroPreguntaRecuperacion);
+        rULayout->addWidget(campoRegistroRespuestaRecuperacion);
+        rULayout->addWidget(botonRegistrarUsuario);
+        rULayout->addWidget(botonRegistroCancelar);
+
+
+
+        // Scroll area
+        rUScroll = new QScrollArea(frameRegistroUsuario);
+        rUScroll->setWidget(rUWidget);
+        rUScroll->setWidgetResizable(true);
+
+        // Layout Principal
+        rUPrincipal = new QVBoxLayout(frameRegistroUsuario);
+        rUPrincipal->addWidget(rUScroll);
+
+
+
     }
 
     // ----------------------------------------------------------------------------
@@ -477,88 +483,89 @@ MainWindow::MainWindow(QWidget *parent)
      * En la sección derecha:
      * Botones dependientes de la sección actual (configuración, calendario, registro de emociones, journaling, hiperfoco)
      */
+    {
+        // Creamos un frame para la barra de navegación
+        frameBarraNavegacion = new QFrame();
+        // ocultamos por defecto
+        frameBarraNavegacion->hide();
+        frameBarraNavegacion->setMaximumHeight(100);
+        // Tamaño de boton
+        barNaTamBotones = QSize(50, 50);
+        // Icono de configuración
+        barNaIconoConfiguracion = new QIcon(QString(RUTA_ICONOS.c_str()) + "configuraciones.svg");
+        // Icono de calendario
+        barNaIconoCalendario = new QIcon(QString(RUTA_ICONOS.c_str()) + "calendario.svg");
+        // Icono de registro de emociones
+        barNaIconoRegistroEmociones = new QIcon(QString(RUTA_ICONOS.c_str()) + "registro_emociones.svg");
+        // Icono de journaling
+        barNaIconoJournaling = new QIcon(QString(RUTA_ICONOS.c_str()) + "journaling.png");
+        // Icono de hiperfoco
+        barNaIconoHiperfoco = new QIcon(QString(RUTA_ICONOS.c_str()) + "hiperfoco.png");
+        // Botón de configuración
+        barNaBotonConfiguracion = new QPushButton(frameBarraNavegacion);
+        barNaBotonConfiguracion->setIcon(*barNaIconoConfiguracion);
+        barNaBotonConfiguracion->setIconSize(barNaTamBotones);
+        barNaBotonConfiguracion->setToolTip("Configuración");
+        // Botón de calendario
+        barNaBotonCalendario = new QPushButton(frameBarraNavegacion);
+        barNaBotonCalendario->setToolTip("Calendario");
+        barNaBotonCalendario->setIcon(*barNaIconoCalendario);
+        barNaBotonCalendario->setIconSize(barNaTamBotones);
+        // Botón Registro de emociones
+        barNaBotonRegistroEmociones = new QPushButton(frameBarraNavegacion);
+        barNaBotonRegistroEmociones->setToolTip("Registro de Emociones");
+        barNaBotonRegistroEmociones->setIcon(*barNaIconoRegistroEmociones);
+        barNaBotonRegistroEmociones->setIconSize(barNaTamBotones);
+        // Botón Journaling
+        barNaBotonJournaling = new QPushButton(frameBarraNavegacion);
+        barNaBotonJournaling->setToolTip("Journaling");
+        barNaBotonJournaling->setIcon(*barNaIconoJournaling);
+        barNaBotonJournaling->setIconSize(barNaTamBotones);
+        // Botón Hiperfoco
+        barNaBotonHiperfoco = new QPushButton(frameBarraNavegacion);
+        barNaBotonHiperfoco->setToolTip("Hiperfoco");
+        barNaBotonHiperfoco->setIcon(*barNaIconoHiperfoco);
+        barNaBotonHiperfoco->setIconSize(barNaTamBotones);
+        // Botón para sección actual 0
+        barNaBotonSeccionActual0 = new QPushButton(frameBarraNavegacion);
+        barNaBotonSeccionActual0->hide();
+        barNaBotonSeccionActual0->setIconSize(barNaTamBotones);
+        // Botón para sección actual 1
+        barNaBotonSeccionActual1 = new QPushButton(frameBarraNavegacion);
+        barNaBotonSeccionActual1->hide();
+        barNaBotonSeccionActual1->setIconSize(barNaTamBotones);
+        // Botón para sección actual 2
+        barNaBotonSeccionActual2 = new QPushButton(frameBarraNavegacion);
+        barNaBotonSeccionActual2->hide();
+        barNaBotonSeccionActual2->setIconSize(barNaTamBotones);
 
-    // Creamos un frame para la barra de navegación
-    frameBarraNavegacion = new QFrame();
-    // ocultamos por defecto
-    frameBarraNavegacion->hide();
-    frameBarraNavegacion->setMaximumHeight(100);
-    // Tamaño de boton
-    barNaTamBotones = QSize(50, 50);
-    // Icono de configuración
-    barNaIconoConfiguracion = new QIcon(QString(RUTA_ICONOS.c_str()) + "configuraciones.svg");
-    // Icono de calendario
-    barNaIconoCalendario = new QIcon(QString(RUTA_ICONOS.c_str()) + "calendario.svg");
-    // Icono de registro de emociones
-    barNaIconoRegistroEmociones = new QIcon(QString(RUTA_ICONOS.c_str()) + "registro_emociones.svg");
-    // Icono de journaling
-    barNaIconoJournaling = new QIcon(QString(RUTA_ICONOS.c_str()) + "journaling.png");
-    // Icono de hiperfoco
-    barNaIconoHiperfoco = new QIcon(QString(RUTA_ICONOS.c_str()) + "hiperfoco.png");
-    // Botón de configuración
-    barNaBotonConfiguracion = new QPushButton(frameBarraNavegacion);
-    barNaBotonConfiguracion->setIcon(*barNaIconoConfiguracion);
-    barNaBotonConfiguracion->setIconSize(barNaTamBotones);
-    barNaBotonConfiguracion->setToolTip("Configuración");
-    // Botón de calendario
-    barNaBotonCalendario = new QPushButton(frameBarraNavegacion);
-    barNaBotonCalendario->setToolTip("Calendario");
-    barNaBotonCalendario->setIcon(*barNaIconoCalendario);
-    barNaBotonCalendario->setIconSize(barNaTamBotones);
-    // Botón Registro de emociones
-    barNaBotonRegistroEmociones = new QPushButton(frameBarraNavegacion);
-    barNaBotonRegistroEmociones->setToolTip("Registro de Emociones");
-    barNaBotonRegistroEmociones->setIcon(*barNaIconoRegistroEmociones);
-    barNaBotonRegistroEmociones->setIconSize(barNaTamBotones);
-    // Botón Journaling
-    barNaBotonJournaling = new QPushButton(frameBarraNavegacion);
-    barNaBotonJournaling->setToolTip("Journaling");
-    barNaBotonJournaling->setIcon(*barNaIconoJournaling);
-    barNaBotonJournaling->setIconSize(barNaTamBotones);
-    // Botón Hiperfoco
-    barNaBotonHiperfoco = new QPushButton(frameBarraNavegacion);
-    barNaBotonHiperfoco->setToolTip("Hiperfoco");
-    barNaBotonHiperfoco->setIcon(*barNaIconoHiperfoco);
-    barNaBotonHiperfoco->setIconSize(barNaTamBotones);
-    // Botón para sección actual 0
-    barNaBotonSeccionActual0 = new QPushButton(frameBarraNavegacion);
-    barNaBotonSeccionActual0->hide();
-    barNaBotonSeccionActual0->setIconSize(barNaTamBotones);
-    // Botón para sección actual 1
-    barNaBotonSeccionActual1 = new QPushButton(frameBarraNavegacion);
-    barNaBotonSeccionActual1->hide();
-    barNaBotonSeccionActual1->setIconSize(barNaTamBotones);
-    // Botón para sección actual 2
-    barNaBotonSeccionActual2 = new QPushButton(frameBarraNavegacion);
-    barNaBotonSeccionActual2->hide();
-    barNaBotonSeccionActual2->setIconSize(barNaTamBotones);
+        // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+        // ACOMODO DE LOS ELEMENTOS DE LA INTERFAZ CON LAYOUTS
 
-    // /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-    // ACOMODO DE LOS ELEMENTOS DE LA INTERFAZ CON LAYOUTS
-
-    // Sección izquierda
-    QHBoxLayout* disposicionIzquierda = new QHBoxLayout();
-    disposicionIzquierda->addWidget(barNaBotonConfiguracion);
-    // Sección centro
-    QHBoxLayout* disposicionCentro = new QHBoxLayout();
-    disposicionCentro->addWidget(barNaBotonCalendario);
-    disposicionCentro->addWidget(barNaBotonRegistroEmociones);
-    disposicionCentro->addWidget(barNaBotonJournaling);
-    disposicionCentro->addWidget(barNaBotonHiperfoco);
-    // Sección derecha
-    QHBoxLayout* disposicionDerecha = new QHBoxLayout();
-    disposicionDerecha->addWidget(barNaBotonSeccionActual0);
-    disposicionDerecha->addWidget(barNaBotonSeccionActual1);
-    disposicionDerecha->addWidget(barNaBotonSeccionActual2);
-    // Layout principal (MENU)
-    QHBoxLayout* disposicionMenu = new QHBoxLayout(frameBarraNavegacion);
-    disposicionMenu->addLayout(disposicionIzquierda);
-    // colocamos un espacio entre la sección izquierda y la sección central
-    disposicionMenu->addStretch();
-    disposicionMenu->addLayout(disposicionCentro);
-    // colocamos un espacio entre la sección central y la sección derecha
-    disposicionMenu->addStretch();
-    disposicionMenu->addLayout(disposicionDerecha);
+        // Sección izquierda
+        QHBoxLayout* disposicionIzquierda = new QHBoxLayout();
+        disposicionIzquierda->addWidget(barNaBotonConfiguracion);
+        // Sección centro
+        QHBoxLayout* disposicionCentro = new QHBoxLayout();
+        disposicionCentro->addWidget(barNaBotonCalendario);
+        disposicionCentro->addWidget(barNaBotonRegistroEmociones);
+        disposicionCentro->addWidget(barNaBotonJournaling);
+        disposicionCentro->addWidget(barNaBotonHiperfoco);
+        // Sección derecha
+        QHBoxLayout* disposicionDerecha = new QHBoxLayout();
+        disposicionDerecha->addWidget(barNaBotonSeccionActual0);
+        disposicionDerecha->addWidget(barNaBotonSeccionActual1);
+        disposicionDerecha->addWidget(barNaBotonSeccionActual2);
+        // Layout principal (MENU)
+        QHBoxLayout* disposicionMenu = new QHBoxLayout(frameBarraNavegacion);
+        disposicionMenu->addLayout(disposicionIzquierda);
+        // colocamos un espacio entre la sección izquierda y la sección central
+        disposicionMenu->addStretch();
+        disposicionMenu->addLayout(disposicionCentro);
+        // colocamos un espacio entre la sección central y la sección derecha
+        disposicionMenu->addStretch();
+        disposicionMenu->addLayout(disposicionDerecha);
+    }
 
 
 
@@ -571,359 +578,360 @@ MainWindow::MainWindow(QWidget *parent)
      * una pantalla de evento nuevo donde se pueda añadir un evento nuevo
      * una pantalla de editar evento donde se pueda editar un evento
      */
-
-    // creamos un frame para el calendario
-    frameCalendarioP = new QFrame(framePrincipal);
-    // ocultamos por defecto
-    frameCalendarioP->hide();
-    // establecemos editandoEvento como falso
-    editandoEvento = false;
-
-    // creamos un frame para el calendario
-    frameCalendario = new QFrame(frameCalendarioP);
-    frameCalendario->setFrameShape(QFrame::Box);
-    // Le ponemos politica de expansión
-    frameCalendario->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-    frameCalendario->hide();
-
-    calLayout = new QVBoxLayout(frameCalendarioP);
-    calCalendarioBackend = new QCalendar();
-
-    // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
-    calCalendarioLayout = new QHBoxLayout(frameCalendario);
-    calCalendarioLayoutVertical = new QVBoxLayout(frameCalendario);
-    // Relacionado con el calendario en sí
-    calCalendario = new QGridLayout(frameCalendario);
-    // label para el año
-    calAnioLabel = new QLabel(frameCalendario);
-    // le metemos un tamaño de fuente grande
-    QFont fuenteAnio = calAnioLabel->font();
-    fuenteAnio.setPointSize(25);
-    calAnioLabel->setFont(fuenteAnio);
-    // label para el icono del mes
-    calIconoMes = new QLabel(frameCalendario);
-    calCalendarioLayoutVertical->addWidget(calAnioLabel);
-    // metemos un espaciador
-    calCalendarioLayoutVertical->addStretch();
-    calCalendarioLayoutVertical->addWidget(calIconoMes);
-    //calIconoMes->hide();
-    //calIconoMes->setText("hola");
-    calCalendarioLayout->addLayout(calCalendarioLayoutVertical);
-    calCalendarioLayout->addLayout(calCalendario);
-    // Para los días de la semana
-    //QStringList diasSemana = {"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
-    diasSemana = new QStringList{"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
-    meses = new QStringList{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-    calIconosMeses = new std::vector<std::string>{"Enero_blanco.png", "Febrero_blanco.png", "Marzo_blanco.png", "Abril_blanco.png", "Mayo_blanco.png", "Junio_blanco.png", "Julio_blanco.png", "Agosto_blanco.png", "Septiembre_blanco.png", "Octubre_blanco.png", "Noviembre_blanco.png", "Diciembre_blanco.png"};
-    for (int i = 0; i < 7; i++)
     {
-        QLabel* calDiaSemana = new QLabel(frameCalendario);
-        calDiaSemana->setText((*diasSemana)[i]);
-        calCalendario->addWidget(calDiaSemana, 0, i);
-    }
-    // Creamos la cuadricula del calendario
-    for (int nfila = 1; nfila < 7; nfila++)
-    {
-        for (int ncolumna = 0; ncolumna < 7; ncolumna++)
+        // creamos un frame para el calendario
+        frameCalendarioP = new QFrame(framePrincipal);
+        // ocultamos por defecto
+        frameCalendarioP->hide();
+        // establecemos editandoEvento como falso
+        editandoEvento = false;
+
+        // creamos un frame para el calendario
+        frameCalendario = new QFrame(frameCalendarioP);
+        frameCalendario->setFrameShape(QFrame::Box);
+        // Le ponemos politica de expansión
+        frameCalendario->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+        frameCalendario->hide();
+
+        calLayout = new QVBoxLayout(frameCalendarioP);
+        calCalendarioBackend = new QCalendar();
+
+        // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
+        calCalendarioLayout = new QHBoxLayout(frameCalendario);
+        calCalendarioLayoutVertical = new QVBoxLayout(frameCalendario);
+        // Relacionado con el calendario en sí
+        calCalendario = new QGridLayout(frameCalendario);
+        // label para el año
+        calAnioLabel = new QLabel(frameCalendario);
+        // le metemos un tamaño de fuente grande
+        QFont fuenteAnio = calAnioLabel->font();
+        fuenteAnio.setPointSize(25);
+        calAnioLabel->setFont(fuenteAnio);
+        // label para el icono del mes
+        calIconoMes = new QLabel(frameCalendario);
+        calCalendarioLayoutVertical->addWidget(calAnioLabel);
+        // metemos un espaciador
+        calCalendarioLayoutVertical->addStretch();
+        calCalendarioLayoutVertical->addWidget(calIconoMes);
+        //calIconoMes->hide();
+        //calIconoMes->setText("hola");
+        calCalendarioLayout->addLayout(calCalendarioLayoutVertical);
+        calCalendarioLayout->addLayout(calCalendario);
+        // Para los días de la semana
+        //QStringList diasSemana = {"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
+        diasSemana = new QStringList{"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
+        meses = new QStringList{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+        calIconosMeses = new std::vector<std::string>{"Enero_blanco.png", "Febrero_blanco.png", "Marzo_blanco.png", "Abril_blanco.png", "Mayo_blanco.png", "Junio_blanco.png", "Julio_blanco.png", "Agosto_blanco.png", "Septiembre_blanco.png", "Octubre_blanco.png", "Noviembre_blanco.png", "Diciembre_blanco.png"};
+        for (int i = 0; i < 7; i++)
         {
-
-            // creamos un frame para el cuadro del calendario
-            //QFrame* calCuadro = new QFrame(frameCalendario);
-            // agregamos el cuadro a un boton
-            QPushButton* calCuadro = new QPushButton(frameCalendario);
-            QPushButton* calEmocionDia = new QPushButton(calCuadro);
-            // creamos un grid layout para el cuadro del calendario
-            QGridLayout* calCuadroLayout = new QGridLayout(calCuadro);
-            // Label para Emocion del dia
-            //QLabel* calEmocionDia = new QLabel(calCuadro);
-
-            // le damos una emocion de prueba
-            //calEmocionDia->setText("Feliz");
-            // le damos una emoción con un icono
-            //calEmocionDia->setPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "sorpresa-icono.svg"));
-            calEmocionDia->setIcon(QIcon(QString(RUTA_ICONOS.c_str()) + "sorpresa-icono.svg"));
-            calEmocionDia->setIconSize(QSize(20, 20));
-            // establecemos el tamaño del icono a 20x20
-            calEmocionDia->setFixedSize(20, 20);
-            // hacemos que el icono se ajuste al tamaño del label
-            //calEmocionDia->setScaledContents(true);
-            // lo agregamos al layout del cuadro
-            calCuadroLayout->addWidget(calEmocionDia, 0, 0);
-            // metemos un espacio entre la emoción y el número
-            calCuadroLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 1);
-            // Label para el numero del dia
-            QLabel* calNumeroDia = new QLabel(calCuadro);
-            // le damos un dia de prueba
-            calNumeroDia->setText("");
-            // lo agregamos al layout del cuadro
-            calCuadroLayout->addWidget(calNumeroDia, 0, 2);
-            // Label para la cantidad de eventos
-            QLabel* calCantidadEventos = new QLabel(calCuadro);
-            // le damos una cantidad de eventos de prueba
-            calCantidadEventos->setText("* * *");
-            // lo agregamos al layout del cuadro
-            calCuadroLayout->addWidget(calCantidadEventos, 1, 0);
-
-
-            // establecemos la forma del marco exterior
-            //calCuadro->setFrameShape(QFrame::Box);
-            // Asignamos un identificador unico a cada cuadro
-            QString idCuadro = QString::number(nfila) + QString::number(ncolumna);
-            calCuadro->setObjectName(idCuadro);
-            calEmocionDia->setObjectName("emocion" + idCuadro);
-            calNumeroDia->setObjectName("numero" + idCuadro);
-            calCantidadEventos->setObjectName("eventos" + idCuadro);
-            // agregamos el cuadro a un boton
-            //QPushButton* calBotonCuadro = new QPushButton(frameCalendario);
-            calCuadro->setObjectName("boton" + idCuadro);
-            // establecemos el layout del cuadro como el layout del boton
-            //calBotonCuadro->setLayout(calCuadroLayout);
-            // boton redimensionable
-            calCuadro->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-            // Modificamos su señal de click
-            //connect(calBotonCuadro, SIGNAL(clicked()), this, SLOT(calClickDia()));
-            // agregamos el cuadro al calendario
-            calCalendario->addWidget(calCuadro, nfila, ncolumna);
+            QLabel* calDiaSemana = new QLabel(frameCalendario);
+            calDiaSemana->setText((*diasSemana)[i]);
+            calCalendario->addWidget(calDiaSemana, 0, i);
         }
+        // Creamos la cuadricula del calendario
+        for (int nfila = 1; nfila < 7; nfila++)
+        {
+            for (int ncolumna = 0; ncolumna < 7; ncolumna++)
+            {
+
+                // creamos un frame para el cuadro del calendario
+                //QFrame* calCuadro = new QFrame(frameCalendario);
+                // agregamos el cuadro a un boton
+                QPushButton* calCuadro = new QPushButton(frameCalendario);
+                QPushButton* calEmocionDia = new QPushButton(calCuadro);
+                // creamos un grid layout para el cuadro del calendario
+                QGridLayout* calCuadroLayout = new QGridLayout(calCuadro);
+                // Label para Emocion del dia
+                //QLabel* calEmocionDia = new QLabel(calCuadro);
+
+                // le damos una emocion de prueba
+                //calEmocionDia->setText("Feliz");
+                // le damos una emoción con un icono
+                //calEmocionDia->setPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "sorpresa-icono.svg"));
+                calEmocionDia->setIcon(QIcon(QString(RUTA_ICONOS.c_str()) + "sorpresa-icono.svg"));
+                calEmocionDia->setIconSize(QSize(20, 20));
+                // establecemos el tamaño del icono a 20x20
+                calEmocionDia->setFixedSize(20, 20);
+                // hacemos que el icono se ajuste al tamaño del label
+                //calEmocionDia->setScaledContents(true);
+                // lo agregamos al layout del cuadro
+                calCuadroLayout->addWidget(calEmocionDia, 0, 0);
+                // metemos un espacio entre la emoción y el número
+                calCuadroLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 1);
+                // Label para el numero del dia
+                QLabel* calNumeroDia = new QLabel(calCuadro);
+                // le damos un dia de prueba
+                calNumeroDia->setText("");
+                // lo agregamos al layout del cuadro
+                calCuadroLayout->addWidget(calNumeroDia, 0, 2);
+                // Label para la cantidad de eventos
+                QLabel* calCantidadEventos = new QLabel(calCuadro);
+                // le damos una cantidad de eventos de prueba
+                calCantidadEventos->setText("* * *");
+                // lo agregamos al layout del cuadro
+                calCuadroLayout->addWidget(calCantidadEventos, 1, 0);
+
+
+                // establecemos la forma del marco exterior
+                //calCuadro->setFrameShape(QFrame::Box);
+                // Asignamos un identificador unico a cada cuadro
+                QString idCuadro = QString::number(nfila) + QString::number(ncolumna);
+                calCuadro->setObjectName(idCuadro);
+                calEmocionDia->setObjectName("emocion" + idCuadro);
+                calNumeroDia->setObjectName("numero" + idCuadro);
+                calCantidadEventos->setObjectName("eventos" + idCuadro);
+                // agregamos el cuadro a un boton
+                //QPushButton* calBotonCuadro = new QPushButton(frameCalendario);
+                calCuadro->setObjectName("boton" + idCuadro);
+                // establecemos el layout del cuadro como el layout del boton
+                //calBotonCuadro->setLayout(calCuadroLayout);
+                // boton redimensionable
+                calCuadro->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+                // Modificamos su señal de click
+                //connect(calBotonCuadro, SIGNAL(clicked()), this, SLOT(calClickDia()));
+                // agregamos el cuadro al calendario
+                calCalendario->addWidget(calCuadro, nfila, ncolumna);
+            }
+        }
+        // Añadimos el calendario al layout principal
+        calLayout->addLayout(calCalendario);
+        // CONECTAMOS LOS BOTONES DEL CALENDARIO CON SUS RESPECTIVAS FUNCIONES
+        {
+            QPushButton* calBoton = frameCalendario->findChild<QPushButton*>("boton10");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend10()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton11");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend11()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton12");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend12()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton13");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend13()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton14");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend14()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton15");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend15()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton16");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend16()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton20");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend20()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton21");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend21()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton22");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend22()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton23");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend23()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton24");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend24()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton25");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend25()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton26");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend26()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton30");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend30()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton31");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend31()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton32");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend32()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton33");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend33()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton34");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend34()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton35");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend35()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton36");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend36()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton40");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend40()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton41");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend41()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton42");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend42()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton43");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend43()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton44");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend44()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton45");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend45()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton46");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend46()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton50");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend50()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton51");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend51()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton52");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend52()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton53");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend53()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton54");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend54()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton55");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend55()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton56");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend56()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton60");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend60()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton61");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend61()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton62");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend62()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton63");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend63()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton64");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend64()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton65");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend65()));
+            calBoton = frameCalendario->findChild<QPushButton*>("boton66");
+            connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend66()));
+        }
+
+        // CONECTAMOS LOS BOTONES DE EMOCIONES DEL CALENDARIO CON SUS RESPECTIVAS FUNCIONES
+        {
+            QPushButton* calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion10");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend10()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion11");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend11()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion12");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend12()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion13");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend13()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion14");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend14()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion15");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend15()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion16");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend16()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion20");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend20()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion21");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend21()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion22");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend22()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion23");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend23()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion24");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend24()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion25");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend25()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion26");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend26()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion30");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend30()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion31");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend31()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion32");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend32()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion33");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend33()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion34");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend34()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion35");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend35()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion36");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend36()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion40");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend40()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion41");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend41()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion42");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend42()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion43");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend43()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion44");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend44()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion45");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend45()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion46");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend46()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion50");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend50()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion51");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend51()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion52");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend52()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion53");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend53()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion54");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend54()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion55");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend55()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion56");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend56()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion60");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend60()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion61");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend61()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion62");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend62()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion63");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend63()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion64");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend64()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion65");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend65()));
+            calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion66");
+            connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend66()));
+
+        }
+
+        // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
+        // Relacionado con la pantalla de día seleccionado
+        calDiaJsonEventos = nullptr;
+        calDiaFrame = new QFrame(frameCalendarioP);
+        calDiaTitulo = new QLabel(calDiaFrame);
+        calDiaTitulo->setText("Día seleccionado");
+        calDiaTitulo->hide();
+        //calDiaTitulo->setAlignment(Qt::AlignCenter);
+        calDiaEventos = new QListWidget(calDiaFrame);
+        calDiaEventos->hide();
+        // hacemos que el tamaño mínimo sea de 600x400
+        //calDiaEventos->setMinimumSize(600, 400);
+        calDiaEventos->setMinimumWidth(300);
+        calDiaEventos->setStyleSheet("color: rgba(0,0,0,0);");
+        // lo hacemos redimensionable
+        calDiaEventos->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        //calDiaEventos->setMinimumSize(600, 400);
+        //calDiaEventos->setSelectionMode(QAbstractItemView::SingleSelection);
+        calDiaScrollArea = new QScrollArea(calDiaFrame);
+        calDiaScrollArea->setWidget(calDiaEventos);
+        calDiaScrollArea->setWidgetResizable(true);
+        calDiaScrollArea->hide();
+        //calDiaScrollArea->setMinimumSize(600, 400);
+        //calDiaScrollArea->setWidgetResizable(true);
+        // Lo agregamos al layout
+        calDiaLayout = new QVBoxLayout(calDiaFrame);
+        calDiaLayout->addWidget(calDiaTitulo);
+        calDiaLayout->addWidget(calDiaScrollArea);
+
+        calLayoutPrincipal = new QVBoxLayout(frameCalendarioP);
+        calLayoutPrincipal->addWidget(frameCalendario);
+        calLayoutPrincipal->addWidget(calDiaFrame);
+
+        // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
+        // Relacionado con la pantalla de nuevo evento
+        calAgregarEventoTitulo = new QLineEdit(calDiaFrame);
+        calAgregarEventoTitulo->hide();
+        calAgregarEventoTitulo->setPlaceholderText("Título del evento");
+        calAgregarEventoHora = new QTimeEdit(calDiaFrame);
+        calAgregarEventoHora->hide();
+        calAgregarEventoHora->setDisplayFormat("HH:mm");
+        calAgregarEventoDuracion = new QTimeEdit(calDiaFrame);
+        calAgregarEventoDuracion->hide();
+        calAgregarEventoDuracion->setDisplayFormat("HH:mm");
+        calAgregarEventoDescripcion = new QTextEdit(calDiaFrame);
+        calAgregarEventoDescripcion->hide();
+        calAgregarEventoDescripcion->setPlaceholderText("Descripción del evento");
+        calAgregarEventoCotenedorTiempo = new QHBoxLayout(calDiaFrame);
+        calAgregarEventoCotenedorTiempo->addWidget(calAgregarEventoHora);
+        calAgregarEventoCotenedorTiempo->addWidget(calAgregarEventoDuracion);
+        // los agregamos al layout
+        calDiaLayout->addWidget(calAgregarEventoTitulo);
+        //calDiaLayout->addWidget(calAgregarEventoHora);
+        //calDiaLayout->addWidget(calAgregarEventoDuracion);
+        calDiaLayout->addLayout(calAgregarEventoCotenedorTiempo);
+        calDiaLayout->addWidget(calAgregarEventoDescripcion);
+
+
     }
-    // Añadimos el calendario al layout principal
-    calLayout->addLayout(calCalendario);
-    // CONECTAMOS LOS BOTONES DEL CALENDARIO CON SUS RESPECTIVAS FUNCIONES
-    {
-        QPushButton* calBoton = frameCalendario->findChild<QPushButton*>("boton10");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend10()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton11");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend11()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton12");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend12()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton13");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend13()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton14");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend14()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton15");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend15()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton16");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend16()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton20");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend20()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton21");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend21()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton22");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend22()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton23");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend23()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton24");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend24()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton25");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend25()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton26");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend26()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton30");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend30()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton31");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend31()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton32");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend32()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton33");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend33()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton34");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend34()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton35");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend35()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton36");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend36()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton40");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend40()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton41");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend41()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton42");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend42()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton43");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend43()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton44");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend44()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton45");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend45()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton46");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend46()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton50");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend50()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton51");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend51()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton52");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend52()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton53");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend53()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton54");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend54()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton55");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend55()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton56");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend56()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton60");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend60()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton61");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend61()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton62");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend62()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton63");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend63()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton64");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend64()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton65");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend65()));
-        calBoton = frameCalendario->findChild<QPushButton*>("boton66");
-        connect(calBoton, SIGNAL(clicked()), this, SLOT(calClickDiaBackend66()));
-    }
-
-    // CONECTAMOS LOS BOTONES DE EMOCIONES DEL CALENDARIO CON SUS RESPECTIVAS FUNCIONES
-    {
-        QPushButton* calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion10");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend10()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion11");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend11()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion12");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend12()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion13");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend13()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion14");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend14()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion15");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend15()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion16");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend16()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion20");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend20()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion21");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend21()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion22");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend22()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion23");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend23()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion24");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend24()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion25");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend25()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion26");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend26()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion30");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend30()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion31");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend31()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion32");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend32()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion33");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend33()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion34");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend34()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion35");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend35()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion36");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend36()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion40");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend40()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion41");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend41()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion42");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend42()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion43");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend43()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion44");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend44()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion45");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend45()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion46");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend46()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion50");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend50()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion51");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend51()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion52");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend52()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion53");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend53()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion54");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend54()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion55");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend55()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion56");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend56()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion60");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend60()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion61");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend61()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion62");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend62()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion63");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend63()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion64");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend64()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion65");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend65()));
-        calEmoBoton = frameCalendario->findChild<QPushButton*>("emocion66");
-        connect(calEmoBoton, SIGNAL(clicked()), this, SLOT(calClickEmoDiaBackend66()));
-
-    }
-
-    // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
-    // Relacionado con la pantalla de día seleccionado
-    calDiaJsonEventos = nullptr;
-    calDiaFrame = new QFrame(frameCalendarioP);
-    calDiaTitulo = new QLabel(calDiaFrame);
-    calDiaTitulo->setText("Día seleccionado");
-    calDiaTitulo->hide();
-    //calDiaTitulo->setAlignment(Qt::AlignCenter);
-    calDiaEventos = new QListWidget(calDiaFrame);
-    calDiaEventos->hide();
-    // hacemos que el tamaño mínimo sea de 600x400
-    //calDiaEventos->setMinimumSize(600, 400);
-    calDiaEventos->setMinimumWidth(300);
-    calDiaEventos->setStyleSheet("color: rgba(0,0,0,0);");
-    // lo hacemos redimensionable
-    calDiaEventos->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    //calDiaEventos->setMinimumSize(600, 400);
-    //calDiaEventos->setSelectionMode(QAbstractItemView::SingleSelection);
-    calDiaScrollArea = new QScrollArea(calDiaFrame);
-    calDiaScrollArea->setWidget(calDiaEventos);
-    calDiaScrollArea->setWidgetResizable(true);
-    calDiaScrollArea->hide();
-    //calDiaScrollArea->setMinimumSize(600, 400);
-    //calDiaScrollArea->setWidgetResizable(true);
-    // Lo agregamos al layout
-    calDiaLayout = new QVBoxLayout(calDiaFrame);
-    calDiaLayout->addWidget(calDiaTitulo);
-    calDiaLayout->addWidget(calDiaScrollArea);
-
-    calLayoutPrincipal = new QVBoxLayout(frameCalendarioP);
-    calLayoutPrincipal->addWidget(frameCalendario);
-    calLayoutPrincipal->addWidget(calDiaFrame);
-
-    // /=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=
-    // Relacionado con la pantalla de nuevo evento
-    calAgregarEventoTitulo = new QLineEdit(calDiaFrame);
-    calAgregarEventoTitulo->hide();
-    calAgregarEventoTitulo->setPlaceholderText("Título del evento");
-    calAgregarEventoHora = new QTimeEdit(calDiaFrame);
-    calAgregarEventoHora->hide();
-    calAgregarEventoHora->setDisplayFormat("HH:mm");
-    calAgregarEventoDuracion = new QTimeEdit(calDiaFrame);
-    calAgregarEventoDuracion->hide();
-    calAgregarEventoDuracion->setDisplayFormat("HH:mm");
-    calAgregarEventoDescripcion = new QTextEdit(calDiaFrame);
-    calAgregarEventoDescripcion->hide();
-    calAgregarEventoDescripcion->setPlaceholderText("Descripción del evento");
-    calAgregarEventoCotenedorTiempo = new QHBoxLayout(calDiaFrame);
-    calAgregarEventoCotenedorTiempo->addWidget(calAgregarEventoHora);
-    calAgregarEventoCotenedorTiempo->addWidget(calAgregarEventoDuracion);
-    // los agregamos al layout
-    calDiaLayout->addWidget(calAgregarEventoTitulo);
-    //calDiaLayout->addWidget(calAgregarEventoHora);
-    //calDiaLayout->addWidget(calAgregarEventoDuracion);
-    calDiaLayout->addLayout(calAgregarEventoCotenedorTiempo);
-    calDiaLayout->addWidget(calAgregarEventoDescripcion);
-
-
 
     // -----------------------------------------------------------------------------
     // AREA DE ACOMODO DE FRAMES
@@ -934,11 +942,12 @@ MainWindow::MainWindow(QWidget *parent)
     // hacemos que los elementos se acomoden de arriba hacía abajo desde la parte superior sin centrar
     //disposicionPrincipal->addStretch();
     disposicionPrincipal->addWidget(frameInicioSesion);
-    disposicionPrincipal->addWidget(frameRegistroUsuario);
+    disposicionPrincipal->addWidget(frameRegistroUsuario); // se oculta por que ahora lo contiene el scrollRegistroUsuario
     disposicionPrincipal->addWidget(frameRecuperarContra);
     disposicionPrincipal->addWidget(frameJournaling);
     disposicionPrincipal->addWidget(frameCalendario);
     disposicionPrincipal->addWidget(calDiaFrame);
+    //disposicionPrincipal->addWidget(scrollRegistroUsuario); // modificacion para agregar scroll al frame de registro de usuario
 
 
 
@@ -1275,6 +1284,7 @@ void MainWindow::activarInterfazRegistroUsuario()
 {
     // ? se activa el frame de registro de usuarios
     frameRegistroUsuario->show();
+    //scrollRegistroUsuario->show();
 }
 
 // ! método para desactivar el frame de registro de usuarios (interfaz de registro de usuarios)
@@ -1285,6 +1295,7 @@ void MainWindow::desactivarInterfazRegistroUsuario()
 {
     // ? se desactiva el frame de registro de usuarios
     frameRegistroUsuario->hide();
+    //scrollRegistroUsuario->hide();
 }
 
 // ! método para cancelar el registro de usuario (interfaz de registro de usuarios)

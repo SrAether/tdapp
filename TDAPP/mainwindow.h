@@ -128,6 +128,14 @@ class MainWindow : public QWidget
     QPushButton *botonRegistrarUsuario; // boton para registrar usuario
     // Botón para cancelar registro de usuario
     QPushButton *botonRegistroCancelar; // boton para cancelar registro de usuario
+    // Layout para el registro de usuario
+    QVBoxLayout *rULayout; // layout para el registro de usuario
+    // ScrollArea para el registro de usuario
+    QScrollArea *rUScroll; // area de scroll para el registro de usuario
+    // QWidget para meter el layout de registro de usuario
+    QWidget *rUWidget; // widget para meter el layout de registro de usuario
+    // Layout principal
+    QVBoxLayout *rUPrincipal; // layout principal
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME Recuperar Contra (reCo)
