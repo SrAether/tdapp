@@ -24,6 +24,7 @@
 #include <QVBoxLayout> // ? para acomodar los elementos de la interfaz VERTICALMENTE
 #include <QHBoxLayout> // ? para acomodar los elementos de la interfaz HORIZONTALMENTE
 #include <QtWidgets> // ? para usar las clases de widgets de qt
+#include <QSpacerItem>
 
 // para manejar archivos
 #include "manejadorArchivos.h"
@@ -74,11 +75,12 @@ MainWindow::MainWindow(QWidget *parent)
     framePrincipal = new QFrame(this);
     //framePrincipal->setStyleSheet("background-color: #000000;"); // estilo para el frame
     // establecemos el tamaño del frame principal
-    //framePrincipal->setGeometry(0, 0, 1920, 1080);
+    framePrincipal->setGeometry(0, 0, 1920, 1080);
 
     // -----------------------------------------------------------------------------
     // INICIO DE SESIÓN NO COMPLETADO
     /* Debe contener:
+     * Titulo de TDAPP
      * un campo para el usuario puede ser un area de texto o un selector de usuario (lista desplegable)
      * un campo para la contraseña debe ser un area de texto
      * un botón para iniciar sesión
@@ -87,16 +89,18 @@ MainWindow::MainWindow(QWidget *parent)
     {
         // creamos un frame para iniciar sesión
         frameInicioSesion = new QFrame(framePrincipal);
-        //frameInicioSesion->setStyleSheet("background-color: #000000;");
         // ocultamos por defecto
         frameInicioSesion->hide();
         frameInicioSesion->setMinimumWidth(500);
         frameInicioSesion->setMinimumHeight(600);
 
+        contenidoTitulo = "TDAPP";
 
         iSesionLayout = new QVBoxLayout(frameInicioSesion);
-        iSesionLayout -> addStretch();
+        //iSesionLayout -> addStretch();
 
+        inSeLabel = new QLabel(QString::fromStdString(contenidoTitulo), frameInicioSesion);
+        iSesionLayout -> addWidget(inSeLabel);
         // SELECTOR DE USUARIO
         // creamos un selector de usuario
         inSeSelectorUsuario = new QComboBox(frameInicioSesion);
@@ -132,7 +136,8 @@ MainWindow::MainWindow(QWidget *parent)
         inSeBotonRecuperarContra->setText("Recuperar Contraseña");
         iSesionLayout -> addWidget(inSeBotonRecuperarContra);
 
-        iSesionLayout -> addStretch();
+
+        //iSesionLayout -> addStretch();
     }
 
 
@@ -171,7 +176,6 @@ MainWindow::MainWindow(QWidget *parent)
         // ETIQUETA DE REGISTRO DE USUARIOS
         // creamos una etiqueta para el registro de usuarios
         etiquetaRegistroUsuario = new QLabel{QString::fromStdString(contenidoEtiquetaRegistroUsuario), rUWidget};
-        etiquetaRegistroUsuario->setMaximumHeight(30);
         // establecemos la posición de la etiqueta de registro de usuarios
         //etiquetaRegistroUsuario->setGeometry(100, 50, 200, 50);
 

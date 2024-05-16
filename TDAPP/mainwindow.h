@@ -20,6 +20,7 @@
 #include <QGridLayout> // ? para crear layouts de cuadricula (CALENDARIO)
 #include <QCalendar> // ? para crear calendarios backend
 #include <QTimeEdit> // ? para crear campos de tiempo
+#include <QSpacerItem>
 
 // ! experimental
 #include <QCalendarWidget> // incluimos el calendario
@@ -75,6 +76,9 @@ class MainWindow : public QWidget
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME INICIO SESION (inSe)
+    //Titulo
+    QLabel *inSeLabel;
+    std::string contenidoTitulo;
     // Selector de usuario
     QComboBox *inSeSelectorUsuario; // selector de usuario
     // campo de texto para la contraseña
@@ -87,6 +91,9 @@ class MainWindow : public QWidget
     QPushButton *inSeBotonRecuperarContra; // boton para recuperar contraseña
     //Layout Vertical
     QVBoxLayout *iSesionLayout;
+    //Spacers
+    QSpacerItem *inSeSpacer1;
+    QSpacerItem *inSeSpacer2;
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME REGISTRO USUARIO
