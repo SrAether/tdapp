@@ -97,10 +97,15 @@ MainWindow::MainWindow(QWidget *parent)
         contenidoTitulo = "TDAPP";
 
         iSesionLayout = new QVBoxLayout(frameInicioSesion);
-        //iSesionLayout -> addStretch();
+        iSesionLayout->setSpacing(0);
+        iSesionLayout -> addStretch();
 
         inSeLabel = new QLabel(QString::fromStdString(contenidoTitulo), frameInicioSesion);
-        iSesionLayout -> addWidget(inSeLabel);
+        inSeLabel -> setStyleSheet("font-size: 24px; font-family: 'Schadow BT'; max-height: 50px; background-color: transparent;");
+
+        inSeLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        iSesionLayout->addWidget(inSeLabel, 0, Qt::AlignHCenter);
+
         // SELECTOR DE USUARIO
         // creamos un selector de usuario
         inSeSelectorUsuario = new QComboBox(frameInicioSesion);
@@ -137,7 +142,7 @@ MainWindow::MainWindow(QWidget *parent)
         iSesionLayout -> addWidget(inSeBotonRecuperarContra);
 
 
-        //iSesionLayout -> addStretch();
+        iSesionLayout -> addStretch();
     }
 
 
@@ -218,6 +223,7 @@ MainWindow::MainWindow(QWidget *parent)
         botonRegistroCopiaSeguridad = new QPushButton(rUWidget);
         // establecemos el texto del botón para seleccionar si desea realizar copia de seguridad
         botonRegistroCopiaSeguridad->setText("Da click para activar copia de seguridad");
+        botonRegistroCopiaSeguridad->setMinimumWidth(400);
         // Mensaje cuando pasamos el cursor sobre el boton
 
 
@@ -377,7 +383,6 @@ MainWindow::MainWindow(QWidget *parent)
         reCoSelectorUsuario = new QComboBox(frameRecuperarContra);
 
         reCoLayout = new QVBoxLayout(frameRecuperarContra);
-        reCoLayout -> addStretch();
 
         // PREGUNTA DE RECUPERACIÓN
         // creamos una etiqueta para la pregunta de recuperación
@@ -407,7 +412,6 @@ MainWindow::MainWindow(QWidget *parent)
         reCoBotonCancelar->setText("Cancelar");
         reCoLayout -> addWidget(reCoBotonCancelar);
 
-        reCoLayout -> addStretch();
 
     }
 

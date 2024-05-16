@@ -7,7 +7,7 @@ const QString StylesQSS1 = R"(
     }
 
     QPushButton {
-        background-color: #6BE9BE; /* Color de fondo verde */
+        background-color: #ABDDB5; /* Color de fondo verde */
         color: white; /* Color del texto blanco */
         font-size: 16px; /* Tamaño de la fuente 16px */
         border-radius: 5px; /* Bordes redondeados */
@@ -35,7 +35,7 @@ const QString StylesQSS1 = R"(
     }
 
     QFrame {
-        background-color: #FFA6F8; /* Color de fondo para todos los QFrame */
+        background-color: #F1AEAA; /* Color de fondo para todos los QFrame */
         border: none;
         margin: 0px;
         padding: 0px;
@@ -45,24 +45,23 @@ const QString StylesQSS1 = R"(
         font-size: 24px;
         font-family: "Schadow BT";
         max-height: 50px;
+        background-color: #ffffff;
+        border-radius: 10px;
     }
 
     QVBoxLayout{
-        background-color: #FFA6F8;
         border: none;
         margin: 0px;
         padding: 0px;
     }
 
     QHBoxLayout{
-        background-color: #FFA6F8;
         border: none;
         margin: 0px;
         padding: 0px;
     }
 
     QScrollArea{
-        background-color: #FFA6F8;
         border: none;
         margin: 0px;
         padding: 0px;
