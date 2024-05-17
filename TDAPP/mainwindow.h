@@ -273,6 +273,36 @@ class MainWindow : public QWidget
     QTextEdit *calAgregarEventoDescripcion; // campo para la descripción del evento
     QHBoxLayout *calAgregarEventoCotenedorTiempo; // contenedor para la hora y duración del evento
 
+    // -----------------------------------------
+    // COSAS DENTRO DE FRAME Registro Emociones (reEm)
+    // variables
+    std::vector<std::vector<std::string>> reEmFrasesMotivacionales; // ! vector que contiene frases motivacionales
+    QIcon *reEmIconoEmoMiedo; // icono para miedo
+    QIcon *reEmIconoEmoTristeza; // icono para tristeza
+    QIcon *reEmIconoEmoEnojo; // icono para enojo
+    QIcon *reEmIconoEmoAlegria; // icono para alegria
+    QIcon *reEmIconoEmoSorpresa; // icono para sorpresa
+    QIcon *reEmIconoEmoDisgusto; // icono para disgusto
+    QSize *reEmTamBotones; // tamaño de los botones de emociones
+
+    // Label para título de la pantalla de registro de emociones
+    QLabel *reEmTitulo; // etiqueta para título de la pantalla de registro de emociones
+
+    // Botones para registrar emociones
+    QPushButton *reEmBotonMiedo; // boton para miedo
+    QPushButton *reEmBotonTristeza; // boton para tristeza
+    QPushButton *reEmBotonEnojo; // boton para enojo
+    QPushButton *reEmBotonAlegria; // boton para alegria
+    QPushButton *reEmBotonSorpresa; // boton para sorpresa
+    QPushButton *reEmBotonDisgusto; // boton para disgusto
+
+    // Layout para la pantalla de registro de emociones
+    QVBoxLayout *reEmLayout; // layout para la pantalla de registro de emociones
+    QHBoxLayout *reEmLayoutTitulo; // layout para los botones de la pantalla de registro de emociones
+    QGridLayout *reEmLayoutBotones; // layout para los botones de la pantalla de registro de emociones
+    // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    // COSAS DE Pantalla de frases motivacionales
+
 
     // Métodos privados de la ventana
     void verificacionInicial(); // ! verifica la existencia de los archivos y carpetas necesarios para el funcionamiento de la aplicación y trata de crearlos si no existen
@@ -330,6 +360,7 @@ private slots:
     void desactivarBarraNavegacion(); // ! oculta la barra de navegación
     void barNaMostrarCalendario(); // ! muestra la interfaz del calendario
     void barNaMostrarJournaling(); // ! muestra la interfaz de journaling
+    void barNaMostrarRegistroEmociones(); // ! muestra la interfaz de registro de emociones
     void barNaDesactivarTodosLosFrames(); // ! oculta todos los frames de la ventana
     void barNaBotonSeccionActual0Click(); // ! metodo para el boton de la seccion actual 0
     void barNaBotonSeccionActual1Click(); // ! metodo para el boton de la seccion actual 1
@@ -468,20 +499,22 @@ private slots:
     void calGuardarEvento(); // ! guarda un evento del calendario
     void calEliminarEvento(); // ! elimina un evento del calendario
 
-    // // DEPENDENCIAS DE LA INTERFAZ CALENDARIO
-    // void mostrarRegistroEmociones(time_t fecha); // ! muestra la interfaz con la grafica de emociones
-    // void ocultarRegistroEmociones(); // ! oculta la interfaz con la grafica de emociones
-    // void mostrarDiaSeleccionado(time_t fecha); // ! muestra la interfaz para agregar un evento al calendario
-    // void ocultarDiaSeleccionado(); // ! oculta la interfaz para agregar un evento al calendario
-    // void mostrarIntefazEditarEventoCalendario(int idEvent = 0); // ! muestra la interfaz para editar un evento del calendario, si es 0 es un evento nuevo
-    // void ocultarIntefazEditarEventoCalendario(); // ! oculta la interfaz para editar un evento del calendario
-    // void mostrarEventoSeleccionado(int idEvent); // ! muestra la interfaz con la información de un evento seleccionado
-    // void ocultarEventoSeleccionado(); // ! oculta la interfaz con la información de un evento seleccionado
-    // // ? boton eliminar evento seleccionado de interfazEventoSeleccionado
-    // void eliminarEventoCalendario(int idEvent); // ! elimina un evento del calendario
-    // // ? boton guardar evento usado en la interfaz de editar evento
-    // void guardarEventoCalendario(int idEvent); // ! guarda un evento del calendario
 
+    // //////////////////////////////////////////////////////////////////////////////////
+    // --------------------------- SLOTS Registro Emociones ----------------------------------
+    // Relacionados con la interfaz de registro de emociones
+    void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones
+    void desactivarInterfazRegistroEmociones(); // ! oculta la interfaz de registro de emociones
+    void reEmBotonEmocion(const int& emocion); // ! selecciona una emoción
+    void reEmClickMiedo(); // ! selecciona la emoción miedo
+    void reEmClickTristeza(); // ! selecciona la emoción tristeza
+    void reEmClickEnojo(); // ! selecciona la emoción enojo
+    void reEmClickAlegria(); // ! selecciona la emoción alegria
+    void reEmClickSorpresa(); // ! selecciona la emoción sorpresa
+    void reEmClickDisgusto(); // ! selecciona la emoción disgusto
+    void reEmActivarRegistroEmocion(); // ! activa el registro de la emoción
+    void reEmDesactivarRegistroEmocion(); // ! desactiva el registro de la emoción
+    void reEmRedimencionarCosas(); // ! redimenciona las cosas de la interfaz de registro de emociones
 
 
     //void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones

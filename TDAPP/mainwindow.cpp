@@ -397,8 +397,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     }
 
-
-
     // -----------------------------------------------------------------------------
     // JOURNALING NO COMPLETADO
     /* Debe contener:
@@ -465,9 +463,6 @@ MainWindow::MainWindow(QWidget *parent)
         jourLiNoLayout->addWidget(jourReEnCampoTitulo);
         jourLiNoLayout->addWidget(jourReEnCampoTexto, 1);
     }
-
-
-
 
     // -----------------------------------------------------------------------------
     // BARRA DE NAVEGACIÓN NO COMPLETADO
@@ -566,8 +561,6 @@ MainWindow::MainWindow(QWidget *parent)
         disposicionMenu->addStretch();
         disposicionMenu->addLayout(disposicionDerecha);
     }
-
-
 
     // -----------------------------------------------------------------------------
     // CALENDARIO NO COMPLETADO
@@ -669,6 +662,7 @@ MainWindow::MainWindow(QWidget *parent)
                 QLabel* calCantidadEventos = new QLabel(calCuadro);
                 // le damos una cantidad de eventos de prueba
                 calCantidadEventos->setText("* * *");
+                //calCantidadEventos->setMinimumWidth(200);
                 // lo agregamos al layout del cuadro
                 calCuadroLayout->addWidget(calCantidadEventos, 1, 0);
 
@@ -934,6 +928,252 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // -----------------------------------------------------------------------------
+    // AREA DE REGISTRO DE EMOCIONES
+    /* Debe contener:
+     * un botón para cada emoción
+     * un botón para cancelar
+     */
+    {
+        /* Vector de vectores de strings que contiene frases motivadoras para cada emoción
+         *
+         */
+        {
+            // 0 -> miedo
+            // 1 -> tristeza
+            // 2 -> alegria
+            // 3 -> enojo
+            // 4 -> sorpresa
+            // 5 -> disgusto
+            // Alegría
+            std::vector<std::string> frasesAlegria = {
+                "¡Qué alegría verte tan feliz! ¡Disfruta este momento al máximo!",
+                "Tu sonrisa ilumina el mundo. ¡Sigue brillando!",
+                "¡Celebra tu felicidad! Te lo mereces.",
+                "La alegría es contagiosa. ¡Compártela con los demás!",
+                "¡Qué bueno que te sientes así de bien! ¡Sigue haciendo lo que te hace feliz!",
+                "La vida es más hermosa cuando la miras con alegría. ¡Disfrútala!",
+                "Tu felicidad es un regalo para ti y para los demás. ¡Sigue irradiando esa energía positiva!",
+                "¡Qué emoción! ¡Sigue disfrutando de este momento de felicidad!",
+                "La alegría está en las pequeñas cosas. ¡Aprecia cada instante!",
+                "¡Felicidades por sentirte tan alegre! ¡Que dure mucho tiempo!",
+                "La alegría es un estado mental. ¡Elige ser feliz hoy!",
+                "Tu felicidad es inspiradora. ¡Gracias por compartirla!",
+                "¡Qué emoción! ¡Disfruta de esta sensación de alegría!",
+                "La alegría es un tesoro. ¡Cuídala y compártela!",
+                "¡Qué bien te ves cuando estás feliz! ¡Sigue así!",
+                "La alegría es la mejor medicina. ¡Ríe, baila y disfruta!",
+                "Tu felicidad es un imán para cosas buenas. ¡Sigue atrayéndolas!",
+                "¡Qué alegría verte tan radiante! ¡Eres un sol!",
+                "La alegría es un superpoder. ¡Úsalo para hacer el bien!",
+                "¡Felicidades por elegir la felicidad! ¡Es la mejor decisión!"
+            };
+
+            // Tristeza
+            std::vector<std::string> frasesTristeza = {
+                "Está bien sentirse triste. Permítete sentir y sanar a tu propio ritmo.",
+                "No estás solo en esto. Siempre hay alguien dispuesto a escucharte.",
+                "La tristeza es temporal. Recuerda que después de la tormenta siempre sale el sol.",
+                "Eres fuerte y capaz de superar cualquier obstáculo. No te rindas.",
+                "Cuídate con cariño y date el tiempo que necesites para sanar.",
+                "La tristeza puede ser una oportunidad para crecer y aprender. Abraza tus emociones.",
+                "No te juzgues por sentirte triste. Es una emoción humana y válida.",
+                "Busca apoyo en tus seres queridos. Ellos te quieren y te ayudarán a salir adelante.",
+                "Permítete sentir tu tristeza, pero no te quedes atrapado en ella. Busca la luz al final del túnel.",
+                "Eres valioso y merecedor de amor y felicidad. No dejes que la tristeza te haga olvidar eso.",
+                "La tristeza puede ser una maestra sabia. Aprende de ella y saldrás fortalecido.",
+                "No te aísles en tu tristeza. Comparte tus sentimientos con alguien de confianza.",
+                "Recuerda que eres amado y apoyado. No estás solo en este camino.",
+                "La tristeza es una parte de la vida, pero no dejes que te defina. Eres mucho más que eso.",
+                "Date permiso para llorar, gritar o hacer lo que necesites para liberar tus emociones.",
+                "Busca la belleza en las pequeñas cosas. Te ayudará a encontrar luz en la oscuridad.",
+                "Eres resiliente y tienes la fuerza para superar esto. Confía en ti mismo.",
+                "No te rindas ante la tristeza. Busca ayuda si la necesitas y recuerda que siempre hay esperanza.",
+                "La tristeza es una emoción pasajera. No dejes que te robe la alegría de vivir.",
+                "Eres capaz de sanar y encontrar la felicidad de nuevo. Ten paciencia y sé amable contigo mismo."
+            };
+
+            // Miedo
+            std::vector<std::string> frasesMiedo = {
+                "El miedo es una emoción natural. No te sientas mal por sentirlo.",
+                "Eres valiente y capaz de enfrentar tus miedos. ¡Confía en ti mismo!",
+                "Respira hondo y recuerda que eres más fuerte de lo que crees.",
+                "No dejes que el miedo te paralice. ¡Da un paso a la vez y avanza!",
+                "Enfrenta tus miedos con valentía y descubrirás la fuerza que llevas dentro.",
+                "Recuerda que no estás solo. Busca apoyo en quienes te quieren.",
+                "El miedo es una oportunidad para crecer y aprender. ¡Atrévete a superarlo!",
+                "No te rindas ante el miedo. ¡Eres capaz de lograr grandes cosas!",
+                "Visualiza el éxito y confía en que puedes superar cualquier obstáculo.",
+                "El miedo es solo una emoción. No dejes que te controle.",
+                "Transforma tu miedo en energía positiva y úsala para avanzar.",
+                "Recuerda que el miedo es temporal. ¡La valentía es eterna!",
+                "Cada paso que das para enfrentar tus miedos te hace más fuerte.",
+                "No te avergüences de tus miedos. Todos los tenemos.",
+                "Busca ayuda si la necesitas. No hay nada de malo en pedir apoyo.",
+                "El miedo es una señal de que estás saliendo de tu zona de confort. ¡Eso es bueno!",
+                "Enfócate en tus fortalezas y recuerda que eres capaz de superar cualquier desafío.",
+                "No dejes que el miedo te impida perseguir tus sueños. ¡Ve por ellos!",
+                "El miedo es una oportunidad para descubrir tu verdadero potencial. ¡Aprovéchala!",
+                "Recuerda que eres valiente y capaz de superar cualquier cosa que se te presente."
+            };
+
+            // Enojo
+            std::vector<std::string> frasesEnojo = {
+                "Está bien sentir enojo, pero no dejes que te controle. Respira hondo y busca soluciones.",
+                "Expresa tu enojo de forma saludable. Habla con alguien de confianza o escribe tus sentimientos.",
+                "No te guardes el enojo. Busca formas de liberarlo de manera constructiva.",
+                "Recuerda que el enojo es una emoción pasajera. No dejes que arruine tu día.",
+                "Identifica la causa de tu enojo y busca soluciones para resolver el problema.",
+                "No tomes decisiones impulsivas cuando estés enojado. Date tiempo para calmarte.",
+                "El enojo puede ser una señal de que algo necesita cambiar. Reflexiona sobre ello.",
+                "No descargues tu enojo en los demás. Busca formas de canalizarlo de manera positiva.",
+                "Recuerda que tienes el control de tus emociones. No dejes que el enojo te domine.",
+                "Busca actividades que te ayuden a relajarte y liberar el enojo, como el ejercicio o la meditación.",
+                "No te culpes por sentir enojo. Es una emoción humana y válida.",
+                "Aprende a reconocer las señales de que te estás enojando y busca formas de calmarte antes de que se intensifique.",
+                "El enojo puede ser una fuente de energía. Úsala para motivarte a hacer cambios positivos.",
+                "No te rindas ante el enojo. Busca ayuda si la necesitas y aprende a manejarlo de manera saludable.",
+                "Recuerda que tienes el poder de elegir cómo reaccionar ante el enojo. Elige la calma y la serenidad.",
+                "No dejes que el enojo te aleje de las personas que te importan. Comunícate abiertamente y busca soluciones juntos.",
+                "El perdón puede ser una herramienta poderosa para liberar el enojo. Perdona a los demás y a ti mismo.",
+                "Enfócate en las cosas positivas de tu vida y no dejes que el enojo te nuble la visión.",
+                "Recuerda que el enojo es una emoción, no una identidad. No te definas por él.",
+                "Eres capaz de manejar el enojo de manera constructiva. Confía en ti mismo y busca soluciones."
+            };
+            std::vector<std::string> frasesDisgusto = {
+                "Es normal sentir disgusto a veces. Reconoce tus sentimientos y permítete sentirlos.",
+                "No te juzgues por sentir disgusto. Es una emoción válida y todos la experimentamos.",
+                "Identifica la causa de tu disgusto y busca formas de alejarte de ella o resolver el problema.",
+                "Habla con alguien de confianza sobre lo que te disgusta. Compartir tus sentimientos puede ayudarte a sentirte mejor.",
+                "Recuerda que el disgusto es temporal. No dejes que te afecte a largo plazo.",
+                "Enfócate en las cosas positivas de tu vida y no dejes que el disgusto te nuble la visión.",
+                "Busca actividades que te ayuden a distraerte y a sentirte mejor, como leer, escuchar música o salir a caminar.",
+                "No te quedes atrapado en el disgusto. Busca soluciones y sigue adelante.",
+                "Recuerda que tienes el control de tus emociones. No dejes que el disgusto te domine.",
+                "Aprende a establecer límites saludables para protegerte de situaciones o personas que te disgustan.",
+                "El disgusto puede ser una señal de que algo no está bien. Presta atención a tus sentimientos y busca soluciones.",
+                "No te culpes por sentir disgusto. Es una reacción natural ante situaciones desagradables.",
+                "Busca el lado positivo de las cosas. Incluso en situaciones difíciles, siempre hay algo bueno que aprender.",
+                "No dejes que el disgusto te amargue. Busca formas de encontrar alegría y satisfacción en tu vida.",
+                "Aprende a perdonar y a dejar ir el disgusto. Guardar rencor solo te hará daño a ti mismo.",
+                "Rodéate de personas positivas y que te apoyen. Evita a aquellos que te generan disgusto.",
+                "El disgusto puede ser una oportunidad para crecer y cambiar. Aprende de la experiencia y sigue adelante.",
+                "Recuerda que tienes el poder de elegir cómo reaccionar ante el disgusto. Elige la paz y la tranquilidad.",
+                "No te dejes llevar por el disgusto. Busca soluciones y toma medidas para mejorar la situación.",
+                "Eres capaz de superar cualquier disgusto y encontrar la felicidad de nuevo. Ten fe en ti mismo."
+            };
+            std::vector<std::string> frasesSorpresa = {
+                "¡Wow! ¡Esto es increíble!",
+                "¡No puedo creerlo! ¡Qué sorpresa!",
+                "¡Guau! ¡Esto es más de lo que esperaba!",
+                "¡Esto es sorprendente! ¡Nunca lo hubiera imaginado!",
+                "¡Qué giro inesperado! ¡Esto cambia todo!",
+                "¡Me has dejado sin palabras! ¡Es asombroso!",
+                "¡Esto es realmente impresionante! ¡Felicidades!",
+                "¡Qué sorpresa tan agradable! ¡Me encanta!",
+                "¡Estoy boquiabierto! ¡Esto es increíblemente genial!",
+                "¡No me lo esperaba! ¡Qué emocionante!",
+                "¡Esto es realmente sorprendente! ¡Estoy impresionado!",
+                "¡Qué revelación! ¡Esto cambia mi perspectiva!",
+                "¡Esto es increíblemente inesperado! ¡Me encanta la sorpresa!",
+                "¡Guau! ¡Esto es mucho mejor de lo que esperaba!",
+                "¡Esto es realmente alucinante! ¡No puedo creer lo que veo!",
+                "¡Qué sorpresa tan maravillosa! ¡Estoy muy feliz por ti!",
+                "¡Esto es realmente sorprendente! ¡Nunca lo hubiera adivinado!",
+                "¡Me has dejado atónito! ¡Es increíblemente sorprendente!",
+                "¡Wow! ¡Esto es realmente espectacular!",
+                "¡Qué sorpresa tan emocionante! ¡No puedo esperar a ver qué sigue!"
+            };
+            reEmFrasesMotivacionales = {frasesMiedo, frasesTristeza, frasesAlegria, frasesEnojo, frasesSorpresa, frasesDisgusto};
+        }
+        // creamos un frame para el registro de emociones
+        frameRegistroEmociones = new QFrame(framePrincipal);
+        // ocultamos por defecto
+        frameRegistroEmociones->hide();
+        // creamos los qiconos de las emociones
+        QStringList reEmIconos = {"Miedo-icono.svg", "Tristeza-icono.svg", "Sorpresa-icono.svg", "Alegria-icono.svg", "Enojo-icono.svg", "Disgusto-icono.svg"};
+        reEmIconoEmoMiedo = new QIcon(QString(RUTA_ICONOS.c_str()) + reEmIconos[0]);
+        reEmIconoEmoTristeza = new QIcon(QString(RUTA_ICONOS.c_str()) + reEmIconos[1]);
+        reEmIconoEmoSorpresa = new QIcon(QString(RUTA_ICONOS.c_str()) + reEmIconos[2]);
+        reEmIconoEmoAlegria = new QIcon(QString(RUTA_ICONOS.c_str()) + reEmIconos[3]);
+        reEmIconoEmoEnojo = new QIcon(QString(RUTA_ICONOS.c_str()) + reEmIconos[4]);
+        reEmIconoEmoDisgusto = new QIcon(QString(RUTA_ICONOS.c_str()) + reEmIconos[5]);
+
+        reEmTitulo = new QLabel(frameRegistroEmociones); // titulo
+        //reEmTitulo->setMinimumWidth(500); // tamaño mínimo
+        //reEmTitulo->setMaximumWidth(2000); // tamaño máximo
+        reEmTitulo->setText("¿Como te sientes?");
+        //reEmTitulo->setAlignment(Qt::AlignCenter); // centrado
+        //reEmTitulo->setStyleSheet("background-color: rgba(255,0,255,255");
+        reEmTitulo->setAlignment(Qt::AlignCenter);
+        reEmTitulo->setStyleSheet(
+            "QLabel {"
+            "color: white;"
+            "font-size: 30px;"
+            "font-weight: bold;"
+            //"background-color: rgba(0,0,255,255);"
+            // hacemos que sea redimensionable
+            // "QSizePolicy: QSizePolicy::Expanding, QSizePolicy::Expanding;"
+            "}"
+        );
+        // tamaño de los botones
+        reEmTamBotones = new QSize(100, 100);
+
+        // Botones de emociones
+        reEmBotonMiedo = new QPushButton(frameRegistroEmociones);
+        reEmBotonMiedo->setIcon(*reEmIconoEmoMiedo);
+        reEmBotonMiedo->setIconSize(*reEmTamBotones);
+        reEmBotonTristeza = new QPushButton(frameRegistroEmociones);
+        reEmBotonTristeza->setIcon(*reEmIconoEmoTristeza);
+        reEmBotonTristeza->setIconSize(*reEmTamBotones);
+        reEmBotonSorpresa = new QPushButton(frameRegistroEmociones);
+        reEmBotonSorpresa->setIcon(*reEmIconoEmoSorpresa);
+        reEmBotonSorpresa->setIconSize(*reEmTamBotones);
+        reEmBotonAlegria = new QPushButton(frameRegistroEmociones);
+        reEmBotonAlegria->setIcon(*reEmIconoEmoAlegria);
+        reEmBotonAlegria->setIconSize(*reEmTamBotones);
+        reEmBotonEnojo = new QPushButton(frameRegistroEmociones);
+        reEmBotonEnojo->setIcon(*reEmIconoEmoEnojo);
+        reEmBotonEnojo->setIconSize(*reEmTamBotones);
+        reEmBotonDisgusto = new QPushButton(frameRegistroEmociones);
+        reEmBotonDisgusto->setIcon(*reEmIconoEmoDisgusto);
+        reEmBotonDisgusto->setIconSize(*reEmTamBotones);
+
+        // Grid layout para las emociones
+        reEmLayoutBotones = new QGridLayout(frameRegistroEmociones);
+        reEmLayoutBotones->addWidget(reEmBotonMiedo, 0, 0);
+        reEmLayoutBotones->addWidget(reEmBotonTristeza, 0, 1);
+        reEmLayoutBotones->addWidget(reEmBotonSorpresa, 0, 2);
+        reEmLayoutBotones->addWidget(reEmBotonAlegria, 1, 0);
+        reEmLayoutBotones->addWidget(reEmBotonEnojo, 1, 1);
+        reEmLayoutBotones->addWidget(reEmBotonDisgusto, 1, 2);
+
+        // Layout para el titulo
+        reEmLayoutTitulo = new QHBoxLayout(frameRegistroEmociones);
+        //reEmLayoutTitulo->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum)); // Spacer izquierdo
+        reEmLayoutTitulo->addStretch();
+        reEmLayoutTitulo->addWidget(reEmTitulo);
+        reEmLayoutTitulo->addStretch(); // Espacio flexible a la derecha
+
+        // Layout principal
+        reEmLayout = new QVBoxLayout(frameRegistroEmociones);
+        reEmLayout->addLayout(reEmLayoutTitulo);
+        reEmLayout->addLayout(reEmLayoutBotones);
+        //reEmRedimencionarCosas(); // redimencionamos cosas
+
+        // CONECTAMOS LOS BOTONES DE EMOCIONES CON SUS RESPECTIVAS FUNCIONES
+        {
+            connect(reEmBotonMiedo, SIGNAL(clicked()), this, SLOT(reEmClickMiedo()));
+            connect(reEmBotonTristeza, SIGNAL(clicked()), this, SLOT(reEmClickTristeza()));
+            connect(reEmBotonSorpresa, SIGNAL(clicked()), this, SLOT(reEmClickSorpresa()));
+            connect(reEmBotonAlegria, SIGNAL(clicked()), this, SLOT(reEmClickAlegria()));
+            connect(reEmBotonEnojo, SIGNAL(clicked()), this, SLOT(reEmClickEnojo()));
+            connect(reEmBotonDisgusto, SIGNAL(clicked()), this, SLOT(reEmClickDisgusto()));
+        }
+
+
+    }
+
+    // -----------------------------------------------------------------------------
     // AREA DE ACOMODO DE FRAMES
 
     QVBoxLayout* disposicionPrincipal = new QVBoxLayout(this);
@@ -947,6 +1187,7 @@ MainWindow::MainWindow(QWidget *parent)
     disposicionPrincipal->addWidget(frameJournaling);
     disposicionPrincipal->addWidget(frameCalendario);
     disposicionPrincipal->addWidget(calDiaFrame);
+    disposicionPrincipal->addWidget(frameRegistroEmociones);
     //disposicionPrincipal->addWidget(scrollRegistroUsuario); // modificacion para agregar scroll al frame de registro de usuario
 
 
@@ -1005,12 +1246,15 @@ MainWindow::MainWindow(QWidget *parent)
         connect(barNaBotonCalendario, SIGNAL(clicked()), this, SLOT(barNaMostrarCalendario()));
         // conectamos la señal para activar el frame de journaling
         connect(barNaBotonJournaling, SIGNAL(clicked()), this, SLOT(barNaMostrarJournaling()));
+        // conectamos la señal para activar el frame de registro de emociones
+        connect(barNaBotonRegistroEmociones, SIGNAL(clicked()), this, SLOT(barNaMostrarRegistroEmociones()));
         // conectamos la señal del boton 1 de la barra de navegación
         connect(barNaBotonSeccionActual0, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual0Click()));
         // conectamos la señal del boton 2 de la barra de navegación
         connect(barNaBotonSeccionActual1, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual1Click()));
         // conectamos la señal del boton 3 de la barra de navegación
         connect(barNaBotonSeccionActual2, SIGNAL(clicked()), this, SLOT(barNaBotonSeccionActual2Click()));
+
 
         // SEÑALES RELACIONADAS CON EL JOURNALING
         // conectamos la señal para cambiar la imagen de bienvenida
@@ -1921,7 +2165,39 @@ void MainWindow::jourActualizarListaEntradas()
 void MainWindow::jourLiNoNuevaEntrada()
 {
     bool ok;
-    QString nombreEntrada = QInputDialog::getText(this, "Nueva Entrada", "Nombre de la Entrada:", QLineEdit::Normal, "", &ok);
+    // creamos un cuadro de dialogo para ingresar el nombre de la nueva entrada
+    //QInputDialog dialogo (this, "Nueva Entrada", "Nombre De la entrada:", QLineEdit::Normal, "", &ok);
+    QString estilo = "QLineEdit {"
+                    "border: 2px solid #000000;"
+                    "border-radius: 10px;"
+                    "padding: 0 8px;"
+                    "background: #FFFFFF;"
+                    "color: #000000;"
+                    "font-size: 16px;"
+                    "font-weight: bold;"
+                    "}";
+    QInputDialog dialogo;
+    dialogo.setInputMode(QInputDialog::TextInput);
+    dialogo.setLabelText("Nombre de la Entrada:");
+    dialogo.setTextValue("");
+    dialogo.setOkButtonText("Aceptar");
+    dialogo.setCancelButtonText("Cancelar");
+    dialogo.setStyleSheet(estilo);
+    dialogo.setWindowTitle("Nueva Entrada");
+
+    //QString nombreEntrada = QInputDialog::getText(this, "Nueva Entrada", "Nombre de la Entrada:", QLineEdit::Normal, "", &ok);
+    // Le damos un estilo al cuadro de dialogo
+    //QString nombreEntrada = QInputDialog::getText(this, "Nueva Entrada", "Nombre de la Entrada:", QLineEdit::Normal, "", &ok);
+    QString nombreEntrada = "";
+    if (dialogo.exec())
+    {
+        nombreEntrada = dialogo.textValue();
+        ok = true;
+    }
+    else
+    {
+        ok = false;
+    }
     try {
         if (nombreEntrada.contains(NO_VALIDO_EN_ARCHIVOS))
         {
@@ -1972,6 +2248,8 @@ void MainWindow::jourLiNoCargarEntrada(const int& tipoCarga, const std::string& 
             entradaSeleccionada = new mJson::ManejadorJson(rutaEntradaJournaling + "/" + nombreEntrada + ".tdapp");
             // ? Agregamos la fecha de creación osea la fecha actual
             (*entradaSeleccionada)["fechaCreacion"] = QDateTime::currentDateTime().toString("dd/MM/yyyy hh:mm:ss").toStdString();
+            // ? Guardamos la entrada
+            entradaSeleccionada->guardar();
             break;
         // Este caso solo se cumple si se carga una entrada de la lista de entradas
         case 0 : case 1:
@@ -2019,6 +2297,8 @@ void MainWindow::jourGuardarEntrada()
     std::string texto = jourReEnCampoTexto->toHtml().toStdString();
     // Guardamos el titulo y el texto de la entrada
     (*entradaSeleccionada)["titulo"] = encriptado->encriptar(titulo);
+    (*entradaSeleccionada)["titulo"] = encriptado->encriptar(titulo);
+    (*entradaSeleccionada)["texto"] = encriptado->encriptar(texto);
     (*entradaSeleccionada)["texto"] = encriptado->encriptar(texto);
     // Guardamos la entrada
     entradaSeleccionada->guardar();
@@ -2179,6 +2459,18 @@ void MainWindow::barNaMostrarJournaling()
     activarInterfazJournaling();
 }
 
+// ! método para activar la interfaz de registro de emociones
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaMostrarRegistroEmociones()
+{
+    // ? se desactivan todas las interfaces (frames)
+    barNaDesactivarTodosLosFrames();
+    // ? se activa el frame de registro de emociones
+    activarInterfazRegistroEmociones();
+}
+
 // ! método para desactivar todos los frames
 // ! versión 1.0
 // ! modificado por Aether
@@ -2191,6 +2483,7 @@ void MainWindow::barNaDesactivarTodosLosFrames()
     desactivarInterfazRecuperarContra();
     desactivarInterfazJournaling();
     desactivarInterfazCalendario();
+    desactivarInterfazRegistroEmociones();
 }
 
 // ! método para activar o desactivar los botones de la barra de navegación
@@ -3296,6 +3589,221 @@ void MainWindow::calEliminarEvento()
     }
 }
 
+
+// ////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------------
+// ! RELACIONADOS CON LA INTERFAZ DE REGISTRO DE EMOCIONES
+
+// ! Método para mostrar la interfaz de registro de emociones
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::activarInterfazRegistroEmociones()
+{
+    frameRegistroEmociones->show();
+    reEmActivarRegistroEmocion();
+    reEmRedimencionarCosas();
+}
+
+// ! Método para ocultar la interfaz de registro de emociones
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::desactivarInterfazRegistroEmociones()
+{
+    frameRegistroEmociones->hide();
+    reEmDesactivarRegistroEmocion();
+}
+
+// ! Método para que gestiona el proceso de registro de emociones
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reEmBotonEmocion(const int& emocion)
+{
+    // 0 -> miedo
+    // 1 -> tristeza
+    // 2 -> alegria
+    // 3 -> enojo
+    // 4 -> sorpresa
+    // 5 -> disgusto
+    std::cout << "Emoción seleccionada: " << emocion << std::endl;
+    // Generamos un dialogo de confirmación
+    QString estilo = "";
+    QMessageBox dialogo;
+    dialogo.setWindowTitle("Registro de Emoción");
+    dialogo.setText("¿Estás seguro de que deseas registrar esta emoción?");
+    dialogo.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    dialogo.setDefaultButton(QMessageBox::No);
+    dialogo.setStyleSheet(estilo);
+    //dialogo.setIcon()
+    switch (emocion) {
+    case 0:
+        dialogo.setIconPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Miedo-icono.svg"));
+        break;
+    case 1:
+        dialogo.setIconPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Tristeza-icono.svg"));
+        break;
+    case 2:
+        dialogo.setIconPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Alegria-icono.svg"));
+        break;
+    case 3:
+        dialogo.setIconPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Enojo-icono.svg"));
+        break;
+    case 4:
+        dialogo.setIconPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Sorpresa-icono.svg"));
+        break;
+    case 5:
+        dialogo.setIconPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Disgusto-icono.svg"));
+        break;
+    default:
+        break;
+    }
+    // si el dialogo se niega, no se registrará la emoción
+    if (dialogo.exec() == QMessageBox::No)
+    {
+        // terminamos la función
+        std::cout << "Emoción no registrada" << std::endl;
+        return;
+    }
+    // si el dialogo se acepta, se registrará la emoción
+    // comenzamos a construir la ruta de la carpeta de emociones
+    std::string rutaEmociones = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/emociones";
+    // verificamos si existe la carpeta de emociones
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEmociones))
+    {
+        // si no existe la carpeta de emociones, la creamos
+        manejadorArchivos.crearCarpeta(rutaEmociones);
+    }
+    // extraemos la fecha actual
+    std::time_t tiempo = std::time(nullptr);
+    std::tm* tiempoLocal = std::localtime(&tiempo);
+    // extraemos el año, mes y dia
+    int anio = tiempoLocal->tm_year + 1900;
+    int mes = tiempoLocal->tm_mon + 1;
+    int dia = tiempoLocal->tm_mday;
+    //std::cout << "Fecha actual: " << dia << "/" << mes << "/" << anio << std::endl;
+    // construimos la ruta a la carpeta del año
+    rutaEmociones += "/" + std::to_string(anio);
+    // verificamos si existe la carpeta del año
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEmociones))
+    {
+        // si no existe la carpeta del año, la creamos
+        manejadorArchivos.crearCarpeta(rutaEmociones);
+    }
+    // construimos la ruta a la carpeta del mes
+    rutaEmociones += "/" + std::to_string(mes);
+    // verificamos si existe la carpeta del mes
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEmociones))
+    {
+        // si no existe la carpeta del mes, la creamos
+        manejadorArchivos.crearCarpeta(rutaEmociones);
+    }
+    // construimos la ruta a la carpeta del dia
+    rutaEmociones += "/" + std::to_string(dia);
+    // verificamos si existe la carpeta del dia
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEmociones))
+    {
+        // si no existe la carpeta del dia, la creamos
+        manejadorArchivos.crearCarpeta(rutaEmociones);
+    }
+    switch (emocion)
+    {
+        case 0:
+            // miedo
+            rutaEmociones += "/miedo";
+            break;
+        case 1:
+            // tristeza
+            rutaEmociones += "/tristeza";
+            break;
+        case 2:
+            // alegria
+            rutaEmociones += "/alegria";
+            break;
+        case 3:
+            // enojo
+            rutaEmociones += "/enojo";
+            break;
+        case 4:
+            // sorpresa
+            rutaEmociones += "/sorpresa";
+            break;
+        case 5:
+            // disgusto
+            rutaEmociones += "/disgusto";
+            break;
+        default:
+            // si la emoción no es válida, terminamos la función
+            return;
+    }
+    int contador = 1;
+    // verificamos si existe el archivo de emocion
+    if (manejadorArchivos.verificarExistenciaDeArchivo(rutaEmociones))
+    {
+        // si existe el archivo extraemos su contenido
+        std::string contenido = manejadorArchivos.leerArchivo(rutaEmociones);
+        // convertimos el contenido a entero
+        contador += std::stoi(contenido);
+        std::cout << "Contador de emociones: " << contador << std::endl;
+    }
+    // modificamos el archivo con el nuevo contador
+    manejadorArchivos.crearArchivo(rutaEmociones, std::to_string(contador));
+
+}
+
+// ! Métodos accion click en boton de emocion
+void MainWindow::reEmClickMiedo() { reEmBotonEmocion(0);}
+void MainWindow::reEmClickTristeza() { reEmBotonEmocion(1);}
+void MainWindow::reEmClickAlegria() { reEmBotonEmocion(2);}
+void MainWindow::reEmClickEnojo() { reEmBotonEmocion(3);}
+void MainWindow::reEmClickSorpresa() { reEmBotonEmocion(4);}
+void MainWindow::reEmClickDisgusto() { reEmBotonEmocion(5);}
+
+// ! Método para reactivar el registro de emociones
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reEmActivarRegistroEmocion()
+{
+    reEmTitulo->show();
+    reEmBotonMiedo->show();
+    reEmBotonTristeza->show();
+    reEmBotonAlegria->show();
+    reEmBotonEnojo->show();
+    reEmBotonSorpresa->show();
+    reEmBotonDisgusto->show();
+
+}
+
+// ! Método para desactivar el registro de emociones
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reEmDesactivarRegistroEmocion()
+{
+    reEmTitulo->hide();
+    reEmBotonMiedo->hide();
+    reEmBotonTristeza->hide();
+    reEmBotonAlegria->hide();
+    reEmBotonEnojo->hide();
+    reEmBotonSorpresa->hide();
+    reEmBotonDisgusto->hide();
+}
+
+// ! Método para redimencionar redimencionar las cosas de reEm
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reEmRedimencionarCosas()
+{
+    // OBTENEMOS EL TAMAÑO DEL FRAME DE REGISTRO DE EMOCIONES
+    int ancho = frameRegistroEmociones->width();
+    int alto = frameRegistroEmociones->height();
+    // lo asignamos a reEmTitulo
+    reEmTitulo->setFixedSize(ancho - 10, alto * 0.1);
+}
+
 // ////////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------------------------
 // ! RELACIONADOS CON LA INTERFAZ GRÁFICA
@@ -3305,6 +3813,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
     //frame->setFixedSize(this->size());
     jourPanBiRedimensionarIconoBoton();
+    reEmRedimencionarCosas();
     //calDiaFrame->setFixedSize(this->size());
     //std::cout << "calDiaFrame: " << calDiaFrame->size().width() << " " << calDiaFrame->size().height() << std::endl;
 
