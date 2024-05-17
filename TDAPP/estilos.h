@@ -3,7 +3,8 @@
 
 #include <QString>
 
-extern const QString StylesQSS1;
-extern const QString StylesQSS2;
+extern const QString Clasico;
+extern const QString Oscuro;
+extern const QString Claro;
 
 #endif // ESTILOS_H

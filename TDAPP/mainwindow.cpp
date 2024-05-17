@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
     // this->setWindowIcon(QIcon(":/images/icono.png"));
 
     //Ejemplo para cargar el estilo
-    this->setStyleSheet(StylesQSS1);
+    this->setStyleSheet(Oscuro);
 
     // ? SE CREA EL OBJETO DE ENCRIPTADO
     encriptado = new EncriptadoV2::Encriptado(CONTRASEÑA_ENCRIPTADO);
@@ -453,6 +453,37 @@ MainWindow::MainWindow(QWidget *parent)
         // Lista de notas
         jourLiNoListaNotas = new QListWidget(frameJournaling);
         jourLiNoListaNotas->hide();
+        //jourLiNoListaNotas->setStyleSheet("background-color: white; border-radius: 10px; font-family: 'Schadow BT'; font-size:28pt; border: 2px;");
+
+        //Style sheet
+//        jourLiNoListaNotas->setStyleSheet(
+//            "QListWidget {"
+//            "    background-color: white;"
+//            "    border: 2px solid #000000;"
+//            "    border-radius: 10px;"
+//            "    font-family: 'Schadow BT';"
+//            "    margin: 0px;"
+//            "    padding: 0px;"
+//            "    font-size: 20pt;"
+//            "}"
+//            "QListWidget::item {"
+//            "    padding: 10px;"
+//            "    border-bottom: 1px solid #dcdcdc;"
+//            "}"
+//            "QListWidget::item:selected {"
+//            "    background-color: #0078d7;"
+//            "    color: white;"
+//            "}"
+//            "QListWidget::item:hover {"
+//            "    background-color: #e0e0e0;"
+//            "    color: black;"
+//            "}"
+//            "QListWidget::item:disabled {"
+//            "    color: #808080;"
+//            "}"
+//            );
+
+
         // Area de scroll para la lista de notas
         jourLiNoScrollArea = new QScrollArea(frameJournaling);
         jourLiNoScrollArea->setWidget(jourLiNoListaNotas);
