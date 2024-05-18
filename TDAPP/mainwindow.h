@@ -298,12 +298,12 @@ class MainWindow : public QWidget
 
     // Layout para la pantalla de registro de emociones
     QVBoxLayout *reEmLayout; // layout para la pantalla de registro de emociones
-    QHBoxLayout *reEmLayoutTitulo; // layout para los botones de la pantalla de registro de emociones
     QGridLayout *reEmLayoutBotones; // layout para los botones de la pantalla de registro de emociones
     // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     // COSAS DE Pantalla de frases motivacionales
-
-
+    QLabel *reEmFraseMotivacional; // label para la frase motivacional
+    QLabel *reEmIconoFraseMotivacionalLabel; // label para el icono de la frase motivacional
+    QLabel *reEmHoraProximaFraseMotivacional; // label para la hora de la proxima frase motivacional
     // Métodos privados de la ventana
     void verificacionInicial(); // ! verifica la existencia de los archivos y carpetas necesarios para el funcionamiento de la aplicación y trata de crearlos si no existen
     void verificarExistenciaArchivoUsuario(); // ! verifica la existencia del archivo de usuarios y trata de crearlo si no existe
@@ -397,6 +397,7 @@ private slots:
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     // Relacionados el funcionamiento del calendario
     int calObtenerNumeroEventosDia(const int& anio, const int& mes, const int& dia); // ! obtiene el número de eventos de un día
+    int calObtenerEmocionPredominanteDia(const int& anio, const int& mes, const int& dia); // ! obtiene la emoción predominante de un día
     void calMesAnterior(); // ! muestra el mes anterior en el calendario
     void calMesSiguiente(); // ! muestra el mes siguiente en el calendario
     void calCargarDatosCalendario(int mes = -1, int anio = -1); // ! carga los datos del calendario, es el metodo principal
@@ -515,6 +516,9 @@ private slots:
     void reEmActivarRegistroEmocion(); // ! activa el registro de la emoción
     void reEmDesactivarRegistroEmocion(); // ! desactiva el registro de la emoción
     void reEmRedimencionarCosas(); // ! redimenciona las cosas de la interfaz de registro de emociones
+    void reEmActivarEmocionConfirmada(); // ! activa la ventana de espera para añadir una nueva emocion
+    void reEmDesactivarEmocionConfirmada(); // ! desactiva la ventana de espera para añadir una nueva emocion
+    void reEmCargarFraseMotivacional(const int& emocion); // ! carga una frase motivacional
 
 
     //void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones

@@ -632,6 +632,7 @@ MainWindow::MainWindow(QWidget *parent)
                 //QFrame* calCuadro = new QFrame(frameCalendario);
                 // agregamos el cuadro a un boton
                 QPushButton* calCuadro = new QPushButton(frameCalendario);
+                calCuadro->setMinimumSize(150, 100);
                 QPushButton* calEmocionDia = new QPushButton(calCuadro);
                 // creamos un grid layout para el cuadro del calendario
                 QGridLayout* calCuadroLayout = new QGridLayout(calCuadro);
@@ -643,9 +644,12 @@ MainWindow::MainWindow(QWidget *parent)
                 // le damos una emoción con un icono
                 //calEmocionDia->setPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "sorpresa-icono.svg"));
                 calEmocionDia->setIcon(QIcon(QString(RUTA_ICONOS.c_str()) + "sorpresa-icono.svg"));
-                calEmocionDia->setIconSize(QSize(20, 20));
+                calEmocionDia->setIconSize(QSize(12, 12));
                 // establecemos el tamaño del icono a 20x20
-                calEmocionDia->setFixedSize(20, 20);
+                calEmocionDia->setFixedSize(30, 30);
+                // le ponemos un estilo sin bordes
+                calEmocionDia->setFlat(true);
+                calEmocionDia->hide();
                 // hacemos que el icono se ajuste al tamaño del label
                 //calEmocionDia->setScaledContents(true);
                 // lo agregamos al layout del cuadro
@@ -662,6 +666,7 @@ MainWindow::MainWindow(QWidget *parent)
                 QLabel* calCantidadEventos = new QLabel(calCuadro);
                 // le damos una cantidad de eventos de prueba
                 calCantidadEventos->setText("* * *");
+                //calCantidadEventos->setMinimumSize(50,50);
                 //calCantidadEventos->setMinimumWidth(200);
                 // lo agregamos al layout del cuadro
                 calCuadroLayout->addWidget(calCantidadEventos, 1, 0);
@@ -1102,20 +1107,21 @@ MainWindow::MainWindow(QWidget *parent)
         //reEmTitulo->setMinimumWidth(500); // tamaño mínimo
         //reEmTitulo->setMaximumWidth(2000); // tamaño máximo
         reEmTitulo->setText("¿Como te sientes?");
-        //reEmTitulo->setAlignment(Qt::AlignCenter); // centrado
+        reEmTitulo->setMaximumHeight(100);
+        reEmTitulo->setAlignment(Qt::AlignCenter); // centrado
         //reEmTitulo->setStyleSheet("background-color: rgba(255,0,255,255");
-        reEmTitulo->setAlignment(Qt::AlignCenter);
-        reEmTitulo->setStyleSheet(
-            "QLabel {"
-            "color: white;"
-            "font-size: 30px;"
-            "font-weight: bold;"
-            //"background-color: rgba(0,0,255,255);"
-            // hacemos que sea redimensionable
-            // "QSizePolicy: QSizePolicy::Expanding, QSizePolicy::Expanding;"
-            "}"
-        );
-        // tamaño de los botones
+        // reEmTitulo->setAlignment(Qt::AlignCenter);
+        // reEmTitulo->setStyleSheet(
+        //     "QLabel {"
+        //     "color: white;"
+        //     "font-size: 30px;"
+        //     "font-weight: bold;"
+        //     //"background-color: rgba(0,0,255,255);"
+        //     // hacemos que sea redimensionable
+        //     // "QSizePolicy: QSizePolicy::Expanding, QSizePolicy::Expanding;"
+        //     "}"
+        // );
+        // // tamaño de los botones
         reEmTamBotones = new QSize(100, 100);
 
         // Botones de emociones
@@ -1138,26 +1144,12 @@ MainWindow::MainWindow(QWidget *parent)
         reEmBotonDisgusto->setIcon(*reEmIconoEmoDisgusto);
         reEmBotonDisgusto->setIconSize(*reEmTamBotones);
 
-        // Grid layout para las emociones
-        reEmLayoutBotones = new QGridLayout(frameRegistroEmociones);
-        reEmLayoutBotones->addWidget(reEmBotonMiedo, 0, 0);
-        reEmLayoutBotones->addWidget(reEmBotonTristeza, 0, 1);
-        reEmLayoutBotones->addWidget(reEmBotonSorpresa, 0, 2);
-        reEmLayoutBotones->addWidget(reEmBotonAlegria, 1, 0);
-        reEmLayoutBotones->addWidget(reEmBotonEnojo, 1, 1);
-        reEmLayoutBotones->addWidget(reEmBotonDisgusto, 1, 2);
 
-        // Layout para el titulo
-        reEmLayoutTitulo = new QHBoxLayout(frameRegistroEmociones);
-        //reEmLayoutTitulo->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum)); // Spacer izquierdo
-        reEmLayoutTitulo->addStretch();
-        reEmLayoutTitulo->addWidget(reEmTitulo);
-        reEmLayoutTitulo->addStretch(); // Espacio flexible a la derecha
 
         // Layout principal
         reEmLayout = new QVBoxLayout(frameRegistroEmociones);
-        reEmLayout->addLayout(reEmLayoutTitulo);
-        reEmLayout->addLayout(reEmLayoutBotones);
+        //reEmLayout->addLayout(reEmLayoutTitulo);
+
         //reEmRedimencionarCosas(); // redimencionamos cosas
 
         // CONECTAMOS LOS BOTONES DE EMOCIONES CON SUS RESPECTIVAS FUNCIONES
@@ -1170,6 +1162,54 @@ MainWindow::MainWindow(QWidget *parent)
             connect(reEmBotonDisgusto, SIGNAL(clicked()), this, SLOT(reEmClickDisgusto()));
         }
 
+        // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        // Label para la frase motivacional
+        reEmFraseMotivacional = new QLabel(frameRegistroEmociones);
+        reEmFraseMotivacional->hide();
+        //reEmFraseMotivacional->setAlignment(Qt::AlignCenter);
+        // Habilitar ajuste de texto
+        reEmFraseMotivacional->setWordWrap(true);
+
+        // Establecer política de ajuste en espacios entre palabras
+        reEmFraseMotivacional->setTextFormat(Qt::RichText); // Necesario para aplicar la política
+        reEmFraseMotivacional->setTextInteractionFlags(Qt::TextSelectableByMouse); // Opcional, para permitir selección de texto
+        reEmFraseMotivacional->setWordWrap(true);
+        reEmFraseMotivacional->setAlignment(Qt::AlignCenter);
+        //reEmFraseMotivacional->setMinimumSize(400,200);
+        // le metemos un estilo con fondo blanco, letras negras y tamaño de letra de 20px bordes redondeados y un espacio a la derecha de 10px
+        reEmFraseMotivacional->setStyleSheet("background-color: white; color: black; font-size: 20px; border-radius: 10px; padding-right: 10px;");
+
+        // Label para emocion seleccionada
+        reEmIconoFraseMotivacionalLabel = new QLabel(frameRegistroEmociones);
+        reEmIconoFraseMotivacionalLabel->hide();
+        reEmIconoFraseMotivacionalLabel->setScaledContents(true);
+
+        // label para proximo registro de emocion
+        reEmHoraProximaFraseMotivacional = new QLabel(frameRegistroEmociones);
+        reEmHoraProximaFraseMotivacional->hide();
+
+
+        // Grid layout para las emociones
+        reEmLayoutBotones = new QGridLayout(frameRegistroEmociones);
+
+        // Título (ocupa las 3 primeras columnas)
+        reEmLayoutBotones->addWidget(reEmTitulo, 0, 0, 1, 3);
+
+        // Ícono y frase motivacional (deben ir antes de los botones)
+        reEmLayoutBotones->addWidget(reEmIconoFraseMotivacionalLabel, 1, 0, 1, 1);  // 2 filas, 2 columnas
+        reEmLayoutBotones->addWidget(reEmFraseMotivacional, 1, 1, 1, 2);         // 2 filas, 1 columna
+        reEmLayoutBotones->addWidget(reEmHoraProximaFraseMotivacional, 2, 0, 1, 3); // 2 filas, 2 columnas
+        // Botones de emociones
+        reEmLayoutBotones->addWidget(reEmBotonMiedo, 3, 0);
+        reEmLayoutBotones->addWidget(reEmBotonTristeza, 3, 1);
+        reEmLayoutBotones->addWidget(reEmBotonSorpresa, 3, 2);
+        reEmLayoutBotones->addWidget(reEmBotonAlegria, 4, 0);
+        reEmLayoutBotones->addWidget(reEmBotonEnojo, 4, 1);
+        reEmLayoutBotones->addWidget(reEmBotonDisgusto, 4, 2);
+
+        // Espaciador (ahora en la última fila)
+        reEmLayoutBotones->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding), 5, 0, 1, 3);
+        reEmLayout->addLayout(reEmLayoutBotones);
 
     }
 
@@ -2810,6 +2850,73 @@ int MainWindow::calObtenerNumeroEventosDia(const int& anio, const int& mes, cons
     return numeroEventos;
 }
 
+// ! Método para obtener la emocion predominante de un dia
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+int MainWindow::calObtenerEmocionPredominanteDia(const int& anio, const int& mes, const int& dia)
+{
+    int emocionPredominante = -1; // -1 = Sin emocion predominante
+    // construimos la ruta de la carpeta de eventos
+    std::string rutaEventos = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/emociones/" + std::to_string(anio) + "/" + std::to_string(mes) + "/" + std::to_string(dia);
+    // verificamos si existe la carpeta de eventos
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEventos))
+    {
+        // si no existe la carpeta de eventos, retornamos -1
+        return emocionPredominante;
+    }
+    // obtenemos los eventos de la carpeta
+    std::vector<std::string> eventos = manejadorArchivos.obtenerContenidoCarpeta(rutaEventos, 0);
+    // vemos que evento tiene un numero mayor de emociones
+    int numeroEmociones = 0;
+    int numeroEvento = 0;
+    int nEvAct = 0;
+    for (const auto& evento : eventos)
+    {
+        // obtenemos el contenido del archivo del evento
+        std::string rutaEvento = rutaEventos + "/" + evento;
+        std::string contenido = manejadorArchivos.leerArchivo(rutaEvento);
+        contenido = contenido.empty() ? "0" : contenido;
+        int nEmo = std::stoi(contenido);
+        if (nEmo > numeroEmociones)
+        {
+            numeroEmociones = nEmo;
+            numeroEvento = nEvAct;
+        }
+        nEvAct++;
+    }
+    // 0 -> miedo
+    // 1 -> tristeza
+    // 2 -> felicidad
+    // 3 -> enojo
+    // 4 -> sorpresa
+    // 5 -> disgusto
+    if (eventos[numeroEvento] == "miedo")
+    {
+        emocionPredominante = 0;
+    }
+    else if (eventos[numeroEvento] == "tristeza")
+    {
+        emocionPredominante = 1;
+    }
+    else if (eventos[numeroEvento] == "alegria")
+    {
+        emocionPredominante = 2;
+    }
+    else if (eventos[numeroEvento] == "enojo")
+    {
+        emocionPredominante = 3;
+    }
+    else if (eventos[numeroEvento] == "sorpresa")
+    {
+        emocionPredominante = 4;
+    }
+    else if (eventos[numeroEvento] == "disgusto")
+    {
+        emocionPredominante = 5;
+    }
+    return emocionPredominante;
+}
 
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -2904,6 +3011,8 @@ void MainWindow::calCargarDatosCalendario(int mes, int anio)
         for (int dia = 0; dia < 7; dia++)
         {
             QLabel* label = frameCalendario->findChild<QLabel*>("numero" + QString::number(semana) + QString::number(dia));
+            QPushButton* botonEmocion = frameCalendario->findChild<QPushButton*>("emocion" + QString::number(semana) + QString::number(dia));
+            botonEmocion->hide();
             int diaNum = (semana - semIni - 1) * 7 + dia - calDiaInicio + 1;
             if (diaNum > calDiasMes)
             {
@@ -2914,6 +3023,7 @@ void MainWindow::calCargarDatosCalendario(int mes, int anio)
                 label->setText(QString::number(diaNum));
                 // obtenemos el numero de eventos del dia
                 int numeroEventos = calObtenerNumeroEventosDia(calAnio, calMes, diaNum);
+                int nEmocion = calObtenerEmocionPredominanteDia(calAnio, calMes, diaNum);
                 // si el numero de eventos es mayor a 0
                 if (numeroEventos > 0)
                 {
@@ -2932,6 +3042,61 @@ void MainWindow::calCargarDatosCalendario(int mes, int anio)
                     // le pasamos el texto
                     labelEventos->setText(QString::fromStdString(textoEventos));
                     //labelEventos->setText(QString(QChar(0x1F6D1)));
+                }
+                // si la emocion es mayor a -1
+                if (nEmocion > -1)
+                {
+                    // mostramos el label de emocion
+                    QPushButton* botonEmocion = frameCalendario->findChild<QPushButton*>("emocion" + QString::number(semana) + QString::number(dia));
+                    botonEmocion->show();
+                    // mostramos el icono de la emocion
+                    //std::string rutaIconoEmocion = RUTA_ICONOS + (*calIconosEmociones)[nEmocion];
+                    // 0 -> miedo
+                    // 1 -> tristeza
+                    // 2 -> felicidad
+                    // 3 -> enojo
+                    // 4 -> sorpresa
+                    // 5 -> disgusto
+                    //botonEmocion->setIcon(QIcon(QString::fromStdString(rutaIconoEmocion)));
+                    switch (nEmocion)
+                    {
+                        case 0:
+                            botonEmocion->setIcon(QIcon(*reEmIconoEmoMiedo));
+                            break;
+                        case 1:
+                            botonEmocion->setIcon(QIcon(*reEmIconoEmoTristeza));
+                            break;
+                        case 2:
+                            botonEmocion->setIcon(QIcon(*reEmIconoEmoAlegria));
+                            break;
+                        case 3:
+                            botonEmocion->setIcon(QIcon(*reEmIconoEmoEnojo));
+                            break;
+                        case 4:
+                            botonEmocion->setIcon(QIcon(*reEmIconoEmoSorpresa));
+                            break;
+                        case 5:
+                            botonEmocion->setIcon(QIcon(*reEmIconoEmoDisgusto));
+                            break;
+                    }
+
+                    //botonEmocion->setIconSize(QSize(50, 50));
+                    botonEmocion->setIconSize(QSize(30, 30));
+                    botonEmocion->show();
+                } else
+                {
+                    QPushButton* botonEmocion = frameCalendario->findChild<QPushButton*>("emocion" + QString::number(semana) + QString::number(dia));
+                    botonEmocion->setIcon(QIcon());
+                    botonEmocion->hide();
+                }
+                // obtenemos el dia actual
+                QDate fechaActual = QDate::currentDate();
+                // si el dia es el dia actual y el mes es el mes actual y el año es el año actual no se muestra el icono de emocion
+                if (diaNum == fechaActual.day() && calMes == fechaActual.month() && calAnio == fechaActual.year())
+                {
+                    QPushButton* botonEmocion = frameCalendario->findChild<QPushButton*>("emocion" + QString::number(semana) + QString::number(dia));
+                    botonEmocion->setIcon(QIcon());
+                    botonEmocion->hide();
                 }
             }
         }
@@ -3683,6 +3848,37 @@ void MainWindow::reEmBotonEmocion(const int& emocion)
     int mes = tiempoLocal->tm_mon + 1;
     int dia = tiempoLocal->tm_mday;
     //std::cout << "Fecha actual: " << dia << "/" << mes << "/" << anio << std::endl;
+    // extraemos la hora actual de tiempo local en formato de 12 horas
+    std::string hora = std::to_string(tiempoLocal->tm_hour) + ":" + std::to_string(tiempoLocal->tm_min);
+    std::cout << "Hora actual: " << hora << std::endl;
+
+    // extraemos la hora de la última emoción registrada
+    std::string ultimaEmocionH = (*configuracionesUsuario)["ultimaEmocionH"];
+    ultimaEmocionH = ultimaEmocionH.empty() ? "0" : ultimaEmocionH;
+    std::string ultimaEmocionM = (*configuracionesUsuario)["ultimaEmocionM"];
+    ultimaEmocionM = ultimaEmocionM.empty() ? "0" : ultimaEmocionM;
+    // extraemos la emoción registrada
+    //std::string ultimaEmocion = (*configuracionesUsuario)["ultimaEmocionRegistrada"];
+    //ultimaEmocion = ultimaEmocion.empty() ? "-1" : ultimaEmocion;
+    int horaUltimaEmocion = std::stoi(ultimaEmocionH);
+    int minutoUltimaEmocion = std::stoi(ultimaEmocionM);
+    // verificamos si la última emoción registrada fue hace más de 5 minutos
+    if (tiempoLocal->tm_hour - horaUltimaEmocion == 0 && tiempoLocal->tm_min - minutoUltimaEmocion < 5)
+    {
+        // si la última emoción registrada fue hace menos de 5 minutos, mostramos un mensaje de error
+        QMessageBox::critical(this, "Error", "Ya has registrado una emoción hace menos de 5 minutos");
+        // terminamos la función
+        return;
+    }
+
+    // guardamos la hora en el json con la configuración del usuario
+    //(*configuracionesUsuario)["ultimaEmocion"] = hora;
+    (*configuracionesUsuario)["ultimaEmocionH"] = std::to_string(tiempoLocal->tm_hour);
+    (*configuracionesUsuario)["ultimaEmocionM"] = std::to_string(tiempoLocal->tm_min);
+    (*configuracionesUsuario)["ultimaEmocionRegistrada"] = std::to_string(emocion);
+    // guardamos el json
+    configuracionesUsuario->guardar();
+
     // construimos la ruta a la carpeta del año
     rutaEmociones += "/" + std::to_string(anio);
     // verificamos si existe la carpeta del año
@@ -3749,6 +3945,10 @@ void MainWindow::reEmBotonEmocion(const int& emocion)
     }
     // modificamos el archivo con el nuevo contador
     manejadorArchivos.crearArchivo(rutaEmociones, std::to_string(contador));
+    // activamos la ventana de espera
+    reEmActivarEmocionConfirmada();
+    reEmCargarFraseMotivacional(emocion);
+
 
 }
 
@@ -3767,12 +3967,40 @@ void MainWindow::reEmClickDisgusto() { reEmBotonEmocion(5);}
 void MainWindow::reEmActivarRegistroEmocion()
 {
     reEmTitulo->show();
+    reEmTitulo->setText("¿Cómo te sientes hoy?");
     reEmBotonMiedo->show();
     reEmBotonTristeza->show();
     reEmBotonAlegria->show();
     reEmBotonEnojo->show();
     reEmBotonSorpresa->show();
     reEmBotonDisgusto->show();
+    // extraemos la hora de la última emoción registrada
+    std::string ultimaEmocionH = (*configuracionesUsuario)["ultimaEmocionH"];
+    ultimaEmocionH = ultimaEmocionH.empty() ? "0" : ultimaEmocionH;
+    std::string ultimaEmocionM = (*configuracionesUsuario)["ultimaEmocionM"];
+    ultimaEmocionM = ultimaEmocionM.empty() ? "0" : ultimaEmocionM;
+    // extraemos la emoción registrada
+    std::string ultimaEmocion = (*configuracionesUsuario)["ultimaEmocionRegistrada"];
+    ultimaEmocion = ultimaEmocion.empty() ? "-1" : ultimaEmocion;
+    // extraemos la hora actual
+    std::time_t tiempo = std::time(nullptr);
+    std::tm* tiempoLocal = std::localtime(&tiempo);
+    // extraemos la hora y minutos
+    int hora = tiempoLocal->tm_hour;
+    int minuto = tiempoLocal->tm_min;
+    // verificamos si la última emoción registrada fue hace más de 5 minutos
+    if (hora - std::stoi(ultimaEmocionH) == 0 && minuto - std::stoi(ultimaEmocionM) < 5)
+    {
+        // si la última emoción registrada fue hace menos de 5 minutos, desactivamos el registro de emociones
+        reEmDesactivarRegistroEmocion();
+        reEmActivarEmocionConfirmada();
+        reEmCargarFraseMotivacional(std::stoi(ultimaEmocion));
+    }
+    // else
+    // {
+    //     // si la última emoción registrada fue hace más de 5 minutos, activamos el registro de emociones
+    //     reEmActivarRegistroEmocion();
+    // }
 
 }
 
@@ -3789,6 +4017,8 @@ void MainWindow::reEmDesactivarRegistroEmocion()
     reEmBotonEnojo->hide();
     reEmBotonSorpresa->hide();
     reEmBotonDisgusto->hide();
+    reEmDesactivarEmocionConfirmada();
+
 }
 
 // ! Método para redimencionar redimencionar las cosas de reEm
@@ -3801,7 +4031,117 @@ void MainWindow::reEmRedimencionarCosas()
     int ancho = frameRegistroEmociones->width();
     int alto = frameRegistroEmociones->height();
     // lo asignamos a reEmTitulo
-    reEmTitulo->setFixedSize(ancho - 10, alto * 0.1);
+    //reEmTitulo->setFixedSize(ancho - 10, alto * 0.1);
+    reEmIconoFraseMotivacionalLabel->setFixedSize(ancho * 0.4, ancho * 0.4);
+
+}
+
+// ! Método para activar la ventana de espera para añadir una nueva emoción
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reEmActivarEmocionConfirmada()
+{
+    // Desactivamos todo lo relacionado con el registro de emociones
+    reEmDesactivarRegistroEmocion();
+    // Activamos la ventana de espera
+    reEmTitulo->show();
+    reEmFraseMotivacional->show();
+    reEmIconoFraseMotivacionalLabel->show();
+    reEmHoraProximaFraseMotivacional->show();
+    // extraemos la hora de la próxima frase motivacional
+    std::string hora = "";
+    //hora += (*configuracionesUsuario)["ultimaEmocionM"];
+    // le agregamos 5 minutos a la hora
+    int horaInt = std::stoi((*configuracionesUsuario)["ultimaEmocionH"]);
+    int minuto = std::stoi((*configuracionesUsuario)["ultimaEmocionM"]) + 5;
+    if (minuto >= 60)
+    {
+        minuto -= 60;
+        horaInt++;
+        hora = std::to_string(horaInt) + ":" + std::to_string(minuto);
+    }
+    else
+    {
+        hora = std::to_string(horaInt) + ":" + std::to_string(minuto);
+    }
+    reEmHoraProximaFraseMotivacional->setText("La próxima frase motivacional estará disponible a las " + QString::fromStdString(hora));
+}
+
+// ! Método para desactivar la ventana de espera para añadir una nueva emoción
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reEmDesactivarEmocionConfirmada()
+{
+    // Activamos todo lo relacionado con el registro de emociones
+    //reEmActivarRegistroEmocion();
+    // Desactivamos la ventana de espera
+    reEmTitulo->hide();
+    reEmFraseMotivacional->hide();
+    reEmIconoFraseMotivacionalLabel->hide();
+    reEmHoraProximaFraseMotivacional->hide();
+}
+
+
+// ! Método para cargar una frase motivacional
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reEmCargarFraseMotivacional(const int& emocion)
+{
+    // 0 -> miedo
+    // 1 -> tristeza
+    // 2 -> alegria
+    // 3 -> enojo
+    // 4 -> sorpresa
+    // 5 -> disgusto
+    //reEmTitulo->setText("¡Emoción registrada!");
+    // generamos un numero aleatorio de 0 a 19
+    int numeroAleatorio = rand() % 20;
+
+    // hacemos un switch para seleccionar el tipo de frase motivacional
+    switch (emocion)
+    {
+    case 0:
+        reEmTitulo->setText("¡Miedo registrado!");
+        reEmFraseMotivacional->setText(QString::fromStdString(reEmFrasesMotivacionales[0][numeroAleatorio]));
+        // Metemos un mapa de pixeles al label
+        reEmIconoFraseMotivacionalLabel->setPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Miedo-icono.svg").scaled(100, 100));
+        break;
+    case 1:
+        reEmTitulo->setText("¡Tristeza registrada!");
+        reEmFraseMotivacional->setText(QString::fromStdString(reEmFrasesMotivacionales[1][numeroAleatorio]));
+        // Metemos un mapa de pixeles al label
+        reEmIconoFraseMotivacionalLabel->setPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Tristeza-icono.svg").scaled(100, 100));
+        break;
+    case 2:
+        reEmTitulo->setText("¡Alegría registrada!");
+        reEmFraseMotivacional->setText(QString::fromStdString(reEmFrasesMotivacionales[2][numeroAleatorio]));
+        // Metemos un mapa de pixeles al label
+        reEmIconoFraseMotivacionalLabel->setPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Alegria-icono.svg").scaled(100, 100));
+        break;
+    case 3:
+        reEmTitulo->setText("¡Enojo registrado!");
+        reEmFraseMotivacional->setText(QString::fromStdString(reEmFrasesMotivacionales[3][numeroAleatorio]));
+        // Metemos un mapa de pixeles al label
+        reEmIconoFraseMotivacionalLabel->setPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Enojo-icono.svg").scaled(100, 100));
+        break;
+    case 4:
+        reEmTitulo->setText("¡Sorpresa registrada!");
+        reEmFraseMotivacional->setText(QString::fromStdString(reEmFrasesMotivacionales[4][numeroAleatorio]));
+        // Metemos un mapa de pixeles al label
+        reEmIconoFraseMotivacionalLabel->setPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Sorpresa-icono.svg").scaled(100, 100));
+        break;
+    case 5:
+        reEmTitulo->setText("¡Disgusto registrado!");
+        reEmFraseMotivacional->setText(QString::fromStdString(reEmFrasesMotivacionales[5][numeroAleatorio]));
+        // Metemos un mapa de pixeles al label
+        reEmIconoFraseMotivacionalLabel->setPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "Disgusto-icono.svg").scaled(100, 100));
+        break;
+    default:
+        break;
+    }
 }
 
 // ////////////////////////////////////////////////////////////////////////////////////////////
