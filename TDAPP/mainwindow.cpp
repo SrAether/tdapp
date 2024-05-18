@@ -1207,9 +1207,34 @@ MainWindow::MainWindow(QWidget *parent)
         reEmLayoutBotones->addWidget(reEmBotonEnojo, 4, 1);
         reEmLayoutBotones->addWidget(reEmBotonDisgusto, 4, 2);
 
+
+
+        // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        // Cosas de pantalla grafica de emociones
+        reEmGraficaSeries = new QPieSeries(frameRegistroEmociones);
+        reEmGraficaSeries->append("Miedo", 0);
+        reEmGraficaSeries->append("Tristeza", 4);
+        reEmGraficaSeries->append("Sorpresa", 2);
+        reEmGraficaSeries->append("Alegría", 1);
+        reEmGraficaSeries->append("Enojo", 0);
+        reEmGraficaSeries->append("Disgusto", 0);
+        reEmGrafica = new QChart();
+        reEmGrafica->addSeries(reEmGraficaSeries);
+        reEmGrafica->setTitle("Emociones del dia");
+        reEmGrafica->legend()->setAlignment(Qt::AlignRight);
+        reEmGraficaVista = new QChartView(reEmGrafica);
+        reEmGraficaVista->setRenderHint(QPainter::Antialiasing);
+        reEmGraficaVista->hide();
+        // hacemos que la grafica sea redimensionable
+        //reEmGraficaVista->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        // lo agregamos al layout de botones
+        reEmLayoutBotones->addWidget(reEmGraficaVista, 5, 0, 1, 3);
+
+
         // Espaciador (ahora en la última fila)
-        reEmLayoutBotones->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding), 5, 0, 1, 3);
+        reEmLayoutBotones->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding), 6, 0, 1, 3);
         reEmLayout->addLayout(reEmLayoutBotones);
+
 
     }
 
@@ -1768,7 +1793,6 @@ void MainWindow::seleccionarCopiaSeguridad()
         botonRegistroCopiaSeguridad->setText("Da click para activar copia de seguridad");
     }
 }
-
 
 // ! método para seleccionar la foto de perfil
 // ! versión 1.0
@@ -3123,6 +3147,15 @@ void MainWindow::calClickDia(const int& nfila, const int& ncolumna)
 void MainWindow::calClickEmoDia(const int& nfila, const int& ncolumna)
 {
     std::cout << "Click en emocion: " << nfila << " - " << ncolumna << std::endl;
+    // ? accedemos al label del dia
+    QLabel* label = frameCalendario->findChild<QLabel*>("numero" + QString::number(nfila) + QString::number(ncolumna));
+    // ? extraemos el texto de label
+    std::string diaS = label->text().toStdString();
+    diaS = diaS.empty() ? "0" : diaS;
+    int dia = std::stoi(diaS);
+    // dia mes y año actual
+    reEmCargarGraficaEmociones(dia, calMes, calAnio);
+
 }
 
 // ! Metodo para limpiar el calendario
@@ -3778,6 +3811,7 @@ void MainWindow::desactivarInterfazRegistroEmociones()
 {
     frameRegistroEmociones->hide();
     reEmDesactivarRegistroEmocion();
+    reEmDesactivarGraficaEmociones();
 }
 
 // ! Método para que gestiona el proceso de registro de emociones
@@ -3966,6 +4000,8 @@ void MainWindow::reEmClickDisgusto() { reEmBotonEmocion(5);}
 // ? Sin cambios primera versión
 void MainWindow::reEmActivarRegistroEmocion()
 {
+    reEmDesactivarGraficaEmociones();
+    reEmDesactivarEmocionConfirmada();
     reEmTitulo->show();
     reEmTitulo->setText("¿Cómo te sientes hoy?");
     reEmBotonMiedo->show();
@@ -4033,6 +4069,7 @@ void MainWindow::reEmRedimencionarCosas()
     // lo asignamos a reEmTitulo
     //reEmTitulo->setFixedSize(ancho - 10, alto * 0.1);
     reEmIconoFraseMotivacionalLabel->setFixedSize(ancho * 0.4, ancho * 0.4);
+    reEmGraficaVista->setFixedSize(ancho * 0.95, alto * 0.90);
 
 }
 
@@ -4142,6 +4179,115 @@ void MainWindow::reEmCargarFraseMotivacional(const int& emocion)
     default:
         break;
     }
+}
+
+// ! Método para cargar la grafica de emociones
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reEmCargarGraficaEmociones(const int& dia, const int& mes, const int& anio)
+{
+    // verificamos la existencia de la carpeta de emociones
+    std::string rutaEmociones = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]) + "/emociones" + "/" + std::to_string(anio) + "/" + std::to_string(mes) + "/" + std::to_string(dia);
+    if (!manejadorArchivos.verificarExistenciaDeCarpeta(rutaEmociones))
+    {
+        // si no existe la carpeta de emociones, mostramos un mensaje de error
+        std::cout << "No se han registrado emociones en la fecha seleccionada" << std::endl;
+        QMessageBox::critical(this, "Error", "No se han registrado emociones en la fecha seleccionada");
+        return;
+    }
+    reEmGraficaSeries->clear();
+    std::cout << "Cargando gráfica de emociones" << std::endl;
+    // ? ahora debemos extraer el contenido de cada archivo de emocion para poder cargar la gráfica
+    std::vector<std::string> emociones = manejadorArchivos.obtenerContenidoCarpeta(rutaEmociones, 0);
+    int contador = 0;
+    for (const auto& emocion: emociones)
+    {
+        std::string contenido = manejadorArchivos.leerArchivo(rutaEmociones + "/" + emocion);
+        std::cout << "Emoción: " << emocion << " Contenido: " << contenido << std::endl;
+        contenido = contenido.empty() ? "0" : contenido;
+        // convertimos el contenido a entero
+        int cantidad = std::stoi(contenido);
+        contador += cantidad;
+        // agregamos la cantidad a la gráfica
+        reEmGraficaSeries->append(QString::fromStdString(emocion), cantidad);
+
+        //reEmGraficaSeries->append(contLabel, cantidad);
+    }
+    for (auto* serie: reEmGraficaSeries->slices())
+    {
+        // extraemos el contenido de la serie
+        QString emocion = serie->label();
+        std::string contLabel = "<html>" + emocion.toStdString() + " ";
+        if (emocion == "miedo")
+        {
+            contLabel += "😱";
+
+        }
+        else if (emocion == "tristeza")
+        {
+            contLabel += "😢";
+        }
+        else if (emocion == "alegria")
+        {
+            contLabel += "😁";
+        }
+        else if (emocion == "enojo")
+        {
+            contLabel += "😡";
+        }
+        else if (emocion == "sorpresa")
+        {
+            contLabel += "😱";
+
+        }
+        else if (emocion == "disgusto")
+        {
+            //contLabel += "😖";
+            contLabel += "😒";
+
+        }
+        contLabel += "  %" + std::to_string(serie->percentage() * 100) + " ";
+        contLabel += "</html>";
+        serie->setLabel(contLabel.c_str());
+        serie->setLabelVisible();
+
+    }
+    std::cout << "Total de emociones: " << contador << std::endl;
+    // mostramos la gráfica
+    reEmGraficaVista->show();
+    reEmActivarGraficaEmociones();
+
+}
+
+// ! Método para mostrar la grafica de emociones
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reEmActivarGraficaEmociones()
+{
+    // USAMOS EL METODO DE LA BARRA DE NAVIGACION PARA DESACTIVAR TODAS LAS INTERFACES
+    barNaDesactivarTodosLosFrames();
+    // activamos la interfaz de registro de emociones
+    activarInterfazRegistroEmociones();
+    // ocultamos las otras 2 interfaces
+    //reEmActivarRegistroEmocion();
+    reEmDesactivarRegistroEmocion();
+    reEmDesactivarEmocionConfirmada();
+    // mostramos la gráfica de emociones
+    reEmGraficaVista->show();
+}
+
+// ! Método para ocultar la grafica de emociones
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::reEmDesactivarGraficaEmociones()
+{
+    // ocultamos la gráfica de emociones
+    reEmGraficaVista->hide();
+    // mostramos la interfaz de registro de emociones
+    //activarInterfazRegistroEmociones();
 }
 
 // ////////////////////////////////////////////////////////////////////////////////////////////

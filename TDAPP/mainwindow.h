@@ -20,6 +20,8 @@
 #include <QGridLayout> // ? para crear layouts de cuadricula (CALENDARIO)
 #include <QCalendar> // ? para crear calendarios backend
 #include <QTimeEdit> // ? para crear campos de tiempo
+#include <QtCharts> // ? para crear graficas
+#include <QPieSlice> // ? para crear rebanadas de la grafica
 
 // ! experimental
 #include <QCalendarWidget> // incluimos el calendario
@@ -304,6 +306,12 @@ class MainWindow : public QWidget
     QLabel *reEmFraseMotivacional; // label para la frase motivacional
     QLabel *reEmIconoFraseMotivacionalLabel; // label para el icono de la frase motivacional
     QLabel *reEmHoraProximaFraseMotivacional; // label para la hora de la proxima frase motivacional
+    // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    // COSAS DE Pantalla de grafica de emociones
+    QPieSeries *reEmGraficaSeries; // series de la grafica de emociones
+    QChart *reEmGrafica; // grafica de emociones
+    QChartView *reEmGraficaVista; // vista de la grafica de emociones
+
     // Métodos privados de la ventana
     void verificacionInicial(); // ! verifica la existencia de los archivos y carpetas necesarios para el funcionamiento de la aplicación y trata de crearlos si no existen
     void verificarExistenciaArchivoUsuario(); // ! verifica la existencia del archivo de usuarios y trata de crearlo si no existe
@@ -519,30 +527,10 @@ private slots:
     void reEmActivarEmocionConfirmada(); // ! activa la ventana de espera para añadir una nueva emocion
     void reEmDesactivarEmocionConfirmada(); // ! desactiva la ventana de espera para añadir una nueva emocion
     void reEmCargarFraseMotivacional(const int& emocion); // ! carga una frase motivacional
+    void reEmCargarGraficaEmociones(const int& dia = 0, const int& mes = 0, const int& anio = 0); // ! carga la gráfica de emociones
+    void reEmActivarGraficaEmociones(); // ! activa la gráfica de emociones
+    void reEmDesactivarGraficaEmociones(); // ! desactiva la gráfica de emociones
 
-
-    //void activarInterfazRegistroEmociones(); // ! muestra la interfaz de registro de emociones
-    //void desactivarInterfazRegistroEmociones(); // ! oculta la interfaz de registro de emociones
-    // void activarInterfazHiperfoco(); // ! muestra la interfaz de hiperfoco
-    // void desactivarInterfazHiperfoco(); // ! oculta la interfaz de hiperfoco
-    // void activarInterfazConfiguracion(); // ! muestra la interfaz de configuración
-    // void desactivarInterfazConfiguracion(); // ! oculta la interfaz de configuración
-    // void activarInterfazCalendario(); // ! muestra la interfaz del calendario
-    // void desactivarInterfazCalendario(); // ! oculta la interfaz del calendario
-    // void activarInterfazJournaling(); // ! muestra la interfaz de journaling
-    // void desactivarInterfazJournaling(); // ! oculta la interfaz de
-
-
-
-
-
-    // // DEPENDENCIAS DE LA INTERFAZ REGISTRO DE EMOCIONES
-    // void mostrarAreaRegistroEmociones(); // ! muestra la interfaz de registro de emociones
-    // void ocultarAreaRegistroEmociones(); // ! oculta la interfaz de registro de emociones
-    // void mostrarMConfEmociones(); // ! muestra la interfaz de confirmación de emociones
-    // void ocultarMConfEmociones(); // ! oculta la interfaz de confirmación de emociones
-    // void mostrarEmoConfir(); // ! muestra la interfaz de emoción confirmada
-    // void ocultarEmoConfir(); // ! oculta la interfaz de emoción confirmada
 
     // // DEPENDENCIAS DE LA INTERFAZ HIPERFOCO
     // void mostrarAreaHiperfoco(); // ! muestra la interfaz de hiperfoco
