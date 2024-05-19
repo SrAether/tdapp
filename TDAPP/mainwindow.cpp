@@ -2028,6 +2028,10 @@ void MainWindow::inSeRecuperarContra()
 void MainWindow::inSeCargarImagenPerfil(int index)
 {
     std::string usuario = inSeSelectorUsuario->itemText(index).toStdString();
+    if (usuario.empty())
+    {
+        return;
+    }
     std::cout << "Cargando imagen de perfil: " << usuario << std::endl;
     // ? se carga la foto de perfil del usuario
     // ? se obtiene el nombre del usuario
