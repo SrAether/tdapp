@@ -22,6 +22,7 @@
 #include <QTimeEdit> // ? para crear campos de tiempo
 #include <QtCharts> // ? para crear graficas
 #include <QPieSlice> // ? para crear rebanadas de la grafica
+#include <QSpinBox> //? para crear inputs con botones de arriba/abajo
 
 // ! experimental
 #include <QCalendarWidget> // incluimos el calendario
@@ -335,6 +336,42 @@ class MainWindow : public QWidget
     QVBoxLayout *ajusPrincipal; // layout principal
 
 
+    // -----------------------------------------
+    // COSAS DENTRO DE FRAME HIPERFOCO (hipe)
+    //Iconos
+    QIcon *hipeIconoHiperfocoActivado;
+    QIcon *hipeIconoHiperfocoDesactivado;
+    QIcon *hipeIconoBotonVerMetodos;
+    // variables
+    QVBoxLayout *hipeLayoutPrincipal;
+    QHBoxLayout *hipeLayoutH1; //para el titulo
+    QHBoxLayout *hipeLayoutH2; //para establecer el tiempo de duracion
+    QHBoxLayout *hipeLayoutH3; //para el boton
+    //H1
+    QLabel *hipeTituloPrincipal;
+    //H2
+    QLabel *hipeTextoDuracion;
+    QLabel *hipeTextoHoras;
+    QLabel *hipeTextoMinutos;
+    QLabel *hipeTextoTiempoEstablecido;
+    QSpinBox *hipeHorasSpinBox;
+    QSpinBox *hipeMinutosSpinBox;
+    QTimer *timer;
+    //H3
+    QPushButton *hipeBotonDeHiperfoco;
+    //Interfaz de Metodos
+    QLabel *hipeTituloListaMetodos;
+    QListWidget *hipeListaDeMetodos;
+    QListWidgetItem *hipeItemPomodoro;
+    QListWidgetItem *hipeItem5Segundos;
+    QListWidgetItem *hipeItemMindfulness;
+    //Interfaces individuales de cada metodo
+    QLabel *hipeTituloPomodoro;
+    QLabel *hipeTextoPomodoro;
+    QLabel *hipeTituloTitulo5Segundos;
+    QLabel *hipeTextoTitulo5Segundos;
+    QLabel *hipeTituloMindfulness;
+    QLabel *hipeTextoMindfulness;
 
     // Métodos privados de la ventana
     void verificacionInicial(); // ! verifica la existencia de los archivos y carpetas necesarios para el funcionamiento de la aplicación y trata de crearlos si no existen
@@ -394,6 +431,7 @@ private slots:
     void barNaCerrarSesion(); // ! cierra la sesión del usuario
     void barNaMostrarCalendario(); // ! muestra la interfaz del calendario
     void barNaMostrarJournaling(); // ! muestra la interfaz de journaling
+    void barNaMostrarHiperfoco(); // ! muestra la interfaz de hiperfoco
     void barNaMostrarRegistroEmociones(); // ! muestra la interfaz de registro de emociones
     void barNaDesactivarTodosLosFrames(); // ! oculta todos los frames de la ventana
     void barNaBotonSeccionActual0Click(); // ! metodo para el boton de la seccion actual 0
@@ -568,25 +606,18 @@ private slots:
     void ajusClickCambiarFotoPerfil(); // ! cambia la foto de perfil del usuario
     void ajusClickEliminarCuenta(); // ! elimina la cuenta del usuario
 
-
-    // // DEPENDENCIAS DE LA INTERFAZ HIPERFOCO
-    // void mostrarAreaHiperfoco(); // ! muestra la interfaz de hiperfoco
-    // void ocultarAreaHiperfoco(); // ! oculta la interfaz de hiperfoco
-    // void mostrarInterfazListaMetodosHiperfoco(); // ! muestra la interfaz de lista de métodos de hiperfoco
-    // void ocultarInterfazListaMetodosHiperfoco(); // ! oculta la interfaz de lista de métodos de hiperfoco
-    // void mostrarMetodoHiperfoco(); // ! muestra la interfaz de método de hiperfoco (para un método específico)
-    // void ocultarMetodoHiperfoco(); // ! oculta la interfaz de método de hiperfoco (para un método específico)
-    // // ? boton establecer hiperfoco de mostrarAreaHiperfoco
-    // void establecerHiperfoco(); // ! establece el hiperfoco
-    // // ? lista de horas de mostrarAreaHiperfoco
-    // void seleccionarHoraHiperfoco(); // ! selecciona la cantidad de horas del hiperfoco (temporizador)
-    // // ? lista de minutos de mostrarAreaHiperfoco
-    // void seleccionarMinutosHiperfoco(); // ! selecciona la cantidad de minutos del hiperfoco (temporizador)
-    // // ? boton mostrar lista de métodos de mostrarAreaHiperfoco
-    // void mostrarListaMetodosHiperfoco(); // ! muestra la lista de métodos de hiperfoco
-    // // ? seleccionar método de gestión de mostrarInterfazListaMetodosHiperfoco
-    // void seleccionarMetodoHiperfoco(); // ! selecciona el método de gestión de tiempo (hiperfoco)
-
+    // //////////////////////////////////////////////////////////////////////////////////
+    //--------------------------- SLOTS HIPERFOCO ---------------------------------
+    void activarInterfazHiperfoco();  //activamos la interfaz
+    void desactivarInterfazHiperfoco(); //desactivamos la interfaz
+    void hipeBotonHiperfocoActivado();  //que sucede cuando se activa el boton
+    void hipeBotonHiperfocoDesactivado();         //que sucede cuando se desactiva el boton
+    void hipeBotonVerMetodos();
+    void hipeMostrarComponentesPorDefecto();
+    void hipeManejadorDeListadeItems(QListWidgetItem *item);
+    void hipeInfoTecnicaPomodoro();
+    void hipeInfoTecnica5segundos();
+    void hipeInfoMindfulness();
 
 signals:
 
