@@ -61,13 +61,115 @@ MainWindow::MainWindow(QWidget *parent)
     encriptado = new EncriptadoV2::Encriptado(CONTRASEÑA_ENCRIPTADO);
 
 
+    // vector de temas de la aplicación
+    // tema por defecto
+    temas.push_back(""); // osea que se aplica el tema del sistema
+    // tema oscuro
+    temas.push_back(
+                    "/* Estilos generales */"
+                    "QWidget {"
+                            "background-color: #222222;" /* Fondo gris oscuro */
+                            "color: #ffffff;" /* Texto blanco */
+                            "font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
+                            "font-size: 12pt;"
+                        "}"
+
+                        "/* Botones */"
+                        "QPushButton {"
+                            "background-color: #0056b3;" /* Azul oscuro */
+                            "color: white;"
+                            "border: none;"
+                            "padding: 8px 16px;"
+                            "border-radius: 4px;"
+                        "}"
+                        "QPushButton:hover {"
+                            "background-color: #007bff;" /* Azul más claro al pasar el ratón */
+                        "}"
+
+                        "/* Etiquetas */"
+                        "QLabel {"
+                            "color: #e0e0e0;" /* Gris claro para legibilidad */
+                        "}"
+
+                        "/* Campos de texto */"
+                        "QLineEdit, QTextEdit {"
+                            "background-color: #333333;" /* Fondo gris oscuro */
+                            "color: #ffffff;"
+                            "border: 1px solid #555555;" /* Borde gris más oscuro */
+                            "padding: 6px;"
+                            "border-radius: 3px;"
+                        "}"
+
+                        "/* Tablas */"
+                        "QTableView {"
+                            "alternate-background-color: #282828;" /* Filas alternadas oscuras */
+                            "selection-background-color: #3949AB;" /* Selección azul oscuro */
+                            "gridline-color: #555555;" /* Líneas de división oscuras */
+                        "}"
+                        "QHeaderView::section {"
+                            "background-color: #333333;" /* Encabezados gris oscuro */
+                            "color: #ffffff;"
+                            "padding: 4px;"
+                            "border: 1px solid #555555;"
+                        "}"
+
+                        "/* Otros widgets */"
+                        "QComboBox, QSpinBox, QDoubleSpinBox {"
+                            "background-color: #333333;"
+                            "color: #ffffff;"
+                            "border: 1px solid #555555;"
+                            "padding: 5px;"
+                            "border-radius: 3px;"
+                        "}"
+                        "QProgressBar {"
+                            "border: 1px solid #555555;"
+                            "text-align: center;"
+                            "color: #ffffff;"
+                        "}"
+                        "QProgressBar::chunk {"
+                            "background-color: #007bff;" /* Mantiene el azul para la barra */
+                        "}"
+
+                        "/* Scrollbars */"
+                        "QScrollBar:vertical {"
+                            "background: #282828;" /* Fondo oscuro */
+                            "width: 15px;"
+                            "margin: 0px 0px 0px 0px;"
+                        "}"
+                        "QScrollBar::handle:vertical {"
+                            "background: #555555;" /* Gris oscuro para el deslizador */
+                            "min-height: 20px;"
+                        "}"
+                        "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
+                            "background: none;"
+                            "height: 0px;"
+                        "}"
+                    );
+
     // verificamos la existencia de los archivos y carpetas necesarios
     verificacionInicial();
+
+
+
     // cargamos la fuente
     this->setFont(fuente);
     // hacemos que la ventana sea de 720 redimensionable
     this->setMinimumSize(1240, 800);
+    // establecemos el estilo de la aplicación
 
+    //this->setStyleSheet(temas[0].c_str());
+    //this->setStyleSheet(temas[stoi((*configuraciones)["tema"].empty() ? "0" : (*configuraciones)["tema"].c_str())].c_str());
+    {
+        std::string tm = (*configuraciones)["tema"];
+        std::cout << "Tema: " << tm << std::endl;
+        if (tm.empty()) {
+            this->setStyleSheet(temas[0].c_str());
+        } else {
+            //this->setStyleSheet(temas[stoi(tm)]);
+            int nTema = stoi(tm);
+            this->setStyleSheet(temas[nTema].c_str());
+        }
+    }
     // creamos el frame principal
     framePrincipal = new QFrame(this);
     //framePrincipal->setStyleSheet("background-color: #000000;"); // estilo para el frame
@@ -97,11 +199,19 @@ MainWindow::MainWindow(QWidget *parent)
         // en este punto se deberia cargar un estilo para el frame inicio de sesión
         //frameInicioSesion->setStyleSheet("background-color: #000000;"); // estilo para el frame
 
+        // Label foto de perfil
+        inSeFotoPerfil = new QLabel(frameInicioSesion);
+        inSeFotoPerfil->setMaximumSize(300, 300);
+        // lo centramos
+        //inSeFotoPerfil->setAlignment(Qt::AlignCenter);
+        // hacemos que la imagen se ajuste al tamaño del label
+        inSeFotoPerfil->setScaledContents(true);
+
         // SELECTOR DE USUARIO
         // creamos un selector de usuario
         inSeSelectorUsuario = new QComboBox(frameInicioSesion);
         // establecemos la posición del selector
-        inSeSelectorUsuario->setGeometry(100, 100, 200, 50);
+        //inSeSelectorUsuario->setGeometry(100, 100, 200, 50);
         // establecemos un tamaño minimo
         inSeSelectorUsuario->setMinimumSize(200, 50);
 
@@ -109,15 +219,18 @@ MainWindow::MainWindow(QWidget *parent)
         // creamos un campo de contraseña
         inSeCampoContra = new QLineEdit(frameInicioSesion);
         // establecemos la posición del campo de contraseña
-        inSeCampoContra->setGeometry(100, 200, 200, 50);
+        //inSeCampoContra->setGeometry(100, 200, 200, 50);
         // establecemos el texto del campo de contraseña
         inSeCampoContra->setPlaceholderText("Contraseña");
+        // establecemos que el campo sea de tipo contraseña
+        inSeCampoContra->setEchoMode(QLineEdit::Password);
+        inSeCampoContra->setMinimumSize(100, 50);
 
         // BOTÓN DE INICIAR SESIÓN
         // creamos un botón para iniciar sesión
         inSeBotonIniciarSesion = new QPushButton(frameInicioSesion);
         // establecemos la posición del botón de iniciar sesión
-        inSeBotonIniciarSesion->setGeometry(100, 300, 200, 50);
+        //inSeBotonIniciarSesion->setGeometry(100, 300, 200, 50);
         // establecemos el texto del botón de iniciar sesión
         inSeBotonIniciarSesion->setText("Iniciar Sesión");
 
@@ -125,7 +238,7 @@ MainWindow::MainWindow(QWidget *parent)
         // creamos un botón para registrarse
         inSeBotonRegistrarse = new QPushButton(frameInicioSesion);
         // establecemos la posición del botón de registrarse
-        inSeBotonRegistrarse->setGeometry(100, 400, 200, 50);
+        //inSeBotonRegistrarse->setGeometry(100, 400, 200, 50);
         // establecemos el texto del botón de registrarse
         inSeBotonRegistrarse->setText("Registrarse");
 
@@ -133,9 +246,31 @@ MainWindow::MainWindow(QWidget *parent)
         // creamos un botón para recuperar contraseña
         inSeBotonRecuperarContra = new QPushButton(frameInicioSesion);
         // establecemos la posición del botón de recuperar contraseña
-        inSeBotonRecuperarContra->setGeometry(100, 500, 200, 50);
+        //inSeBotonRecuperarContra->setGeometry(100, 500, 200, 50);
         // establecemos el texto del botón de recuperar contraseña
         inSeBotonRecuperarContra->setText("Recuperar Contraseña");
+
+        // // Layout img
+        // inSeImgLayout = new QHBoxLayout(frameInicioSesion);
+        // inSeImgLayout->addWidget(inSeFotoPerfil);
+        // inSeImgLayout->addWidget(inSeSelectorUsuario);
+
+        // Layout
+        inSeLayout = new QVBoxLayout(frameInicioSesion);
+        //inSeLayout->addLayout(inSeImgLayout);
+        inSeLayout->addWidget(inSeFotoPerfil);
+        inSeLayout->addWidget(inSeSelectorUsuario);
+        inSeLayout->addWidget(inSeCampoContra);
+        inSeLayout->addWidget(inSeBotonIniciarSesion);
+        inSeLayout->addWidget(inSeBotonRegistrarse);
+        inSeLayout->addWidget(inSeBotonRecuperarContra);
+
+        // // Layout Principal
+        // inSePrincipal = new QVBoxLayout(frameInicioSesion);
+        // inSePrincipal->addLayout(inSeImgLayout);
+        // inSePrincipal->addLayout(inSeLayout);
+
+
     }
 
     // -----------------------------------------------------------------------------
@@ -1274,14 +1409,15 @@ MainWindow::MainWindow(QWidget *parent)
         // Elementos de la interfaz (graficos)
         ajusTitulo = new QLabel(ajusWidget); // titulo
         ajusTitulo->setText("Ajustes");
+        ajusTitulo->setMaximumHeight(100);
         ajusTitulo->setAlignment(Qt::AlignCenter); // centrado
         ajusSelectorTema = new QComboBox(ajusWidget); // selector de tema
-        ajusSelectorTema->addItem("Tema: Claro");
+        ajusSelectorTema->addItem("Tema: Sistema");
         ajusSelectorTema->addItem("Tema: Oscuro");
         ajusCambiarSonidoAlarma = new QPushButton(ajusWidget); // boton para cambiar sonido de alarma
         ajusCambiarSonidoAlarma->setText("Cambiar Sonido de Alarma");
-        ajusCambiarSonidoNotificacion = new QPushButton(ajusWidget); // boton para cambiar sonido de notificacion
-        ajusCambiarSonidoNotificacion->setText("Cambiar Sonido de Notificación");
+        //ajusCambiarSonidoNotificacion = new QPushButton(ajusWidget); // boton para cambiar sonido de notificacion
+        //ajusCambiarSonidoNotificacion->setText("Cambiar Sonido de Notificación");
         ajusCambiarFuente = new QPushButton(ajusWidget); // boton para cambiar fuente
         ajusCambiarFuente->setText("Cambiar Fuente");
         // ajusCambiarTamFuente = new QPushButton(ajusWidget); // boton para cambiar tamaño de fuente
@@ -1302,7 +1438,7 @@ MainWindow::MainWindow(QWidget *parent)
         ajusLayout->addWidget(ajusTitulo); // titulo
         ajusLayout->addWidget(ajusSelectorTema); // selector de tema
         ajusLayout->addWidget(ajusCambiarSonidoAlarma); // boton para cambiar sonido de alarma
-        ajusLayout->addWidget(ajusCambiarSonidoNotificacion); // boton para cambiar sonido de notificacion
+        //ajusLayout->addWidget(ajusCambiarSonidoNotificacion); // boton para cambiar sonido de notificacion
         ajusLayout->addWidget(ajusCambiarFuente); // boton para cambiar fuente
         //ajusLayout->addWidget(ajusCambiarTamFuente); // boton para cambiar tamaño de fuente
         ajusLayout->addWidget(ajusCambiarContra); // boton para cambiar contraseña
@@ -1382,6 +1518,8 @@ MainWindow::MainWindow(QWidget *parent)
         connect(inSeBotonIniciarSesion, SIGNAL(clicked()), this, SLOT(inSeIniciarSesion()));
         // conectamos la señal de recuperar contraseña
         connect(inSeBotonRecuperarContra, SIGNAL(clicked()), this, SLOT(inSeRecuperarContra()));
+        // conectamos la señal de seleccionar usuario con inSeCargarFotoPerfil
+        connect(inSeSelectorUsuario, SIGNAL(currentIndexChanged(int)), this, SLOT(inSeCargarImagenPerfil(int)));
 
         // SEÑALES RELACIONADAS CON EL RECUPERAR CONTRASEÑA
         // conectamos la señal de qcombobox con el metodo reCoCargarDatosUsuario
@@ -1431,6 +1569,10 @@ MainWindow::MainWindow(QWidget *parent)
         connect(ajusCambiarFotoPerfil, SIGNAL(clicked()), this, SLOT(ajusClickCambiarFotoPerfil()));
         // conectamos la señal de eliminar cuenta
         connect(ajusEliminarCuenta, SIGNAL(clicked()), this, SLOT(ajusClickEliminarCuenta()));
+        // conectamos la señal de cambio de sonido de alarma
+        connect(ajusCambiarSonidoAlarma, SIGNAL(clicked()), this, SLOT(ajusClickCambiarSonidoAlarma()));
+        // conectamos la señal de cambio seleccion de item en el selector de tema
+        connect(ajusSelectorTema, SIGNAL(currentIndexChanged(int)), this, SLOT(ajusCambiarTema(int)));
     }
 
 
@@ -1481,7 +1623,7 @@ void MainWindow::verificacionInicial()
         //std::string fuente = "fuente";
         //configuraciones->operator[]("tema") = "claro";
         auto& conf = *configuraciones;// soy dios y si quiero usar el operador [] de esta forma, lo hago
-        conf["tema"] = "claro";
+        conf["tema"] = "0";
         conf["fuente"] = "Arial";
         conf["tamFuente"] = "20";
         conf["sonidoAlarma"] = "alarma.mp3";
@@ -1608,6 +1750,7 @@ void MainWindow::inSeCargarUsuarios()
     {
         inSeSelectorUsuario->addItem(QString::fromStdString(usuario));
     }
+    inSeCargarImagenPerfil(0);
 
 }
 
@@ -1685,6 +1828,27 @@ void MainWindow::inSeRecuperarContra()
 
     // ? se activa el frame de recuperar contraseña
     activarInterfazRecuperarContra();
+}
+
+// ! Método para cargar la foto de perfil del usuario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::inSeCargarImagenPerfil(int index)
+{
+    std::string usuario = inSeSelectorUsuario->itemText(index).toStdString();
+    std::cout << "Cargando imagen de perfil: " << usuario << std::endl;
+    // ? se carga la foto de perfil del usuario
+    // ? se obtiene el nombre del usuario
+    //std::string usuario = inSeSelectorUsuario->itemText(index).toStdString();
+    // ? se obtiene la ruta de la foto de perfil del usuario
+    std::string rutaFotoPerfil = RUTA_USUARIOS + usuario;
+    mJson::ManejadorJson confUs(RUTA_USUARIOS + usuario + "/config.json");
+    rutaFotoPerfil += "/" + encriptado->desencriptar(confUs["fotoPerfil"]);
+    std::cout << "Ruta foto perfil: " << rutaFotoPerfil << std::endl;
+    // ? se carga la foto de perfil en el label
+    QPixmap fotoPerfil(rutaFotoPerfil.c_str());
+    inSeFotoPerfil->setPixmap(fotoPerfil.scaled(1000, 1000, Qt::KeepAspectRatio));
 }
 
 // ////////////////////////////////////////////////////////////////////////////////////////////
@@ -3913,6 +4077,9 @@ void MainWindow::calGuardarEvento()
     (*calDiaJsonEventos)["descripcion"] = encriptado->encriptar(descripcion);
     // ? guardamos el json de eventos
     calDiaJsonEventos->guardar();
+    // ? regresamos a la interfaz de dia seleccionado
+    editandoEvento = false;
+    calMostrarDiaSeleccionado(calDia);
 
 
 }
@@ -4678,6 +4845,55 @@ void MainWindow::ajusClickEliminarCuenta()
     }
 }
 
+// ! Método para cambiar el sonido de alarma
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::ajusClickCambiarSonidoAlarma()
+{
+    // mostramos un dialogo para seleccionar el sonido de alarma
+    QString rutaSonido = QFileDialog::getOpenFileName(this, "Seleccionar Sonido", QDir::homePath(), "Sonidos (*.mp3 *.wav)");
+    // verificamos si se seleccionó un sonido
+    if (rutaSonido.isEmpty())
+    {
+        return;
+    }
+    // verificamos si existe el archivo
+    if (!manejadorArchivos.verificarExistenciaDeArchivo(rutaSonido.toStdString()))
+    {
+        QMessageBox::critical(this, "Error", "No se pudo cargar el sonido");
+        return;
+    }
+    // extraemos la extensión del sonido
+    std::string extension = rutaSonido.toStdString().substr(rutaSonido.toStdString().find_last_of("."));
+    std::cout << "Extensión: " << extension << std::endl;
+    // verificamos si ya existe un sonido de alarma
+    std::string rutaSonidoAlarma = (*configuraciones)["sonidoAlarma"];
+    if (manejadorArchivos.verificarExistenciaDeArchivo(rutaSonidoAlarma))
+    {
+        // si existe, lo eliminamos
+        manejadorArchivos.eliminarArchivo(rutaSonidoAlarma);
+    }
+    // copiamos el sonido seleccionado a la carpeta de sonidos
+    std::string ruta = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]);
+    //manejadorArchivos.copiarArchivo(RUTA_SONIDOS + "/sonidoAlarma" + extension, rutaSonido.toStdString());
+    manejadorArchivos.copiarArchivo(ruta + "/sonidoAlarma" + extension, rutaSonido.toStdString());
+}
+
+// ! Método para cambiar tema
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::ajusCambiarTema(int nItem)
+{
+    std::cout << "Cambiando tema a : " << nItem << std::endl;
+    // aplicamos el tema seleccionado
+    this->setStyleSheet(temas[nItem].c_str());
+    // guardamos el tema en el json de configuraciones
+    (*configuraciones)["tema"] = std::to_string(nItem);
+    // guardamos el json
+    configuraciones->guardar();
+}
 
 // ////////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------------------------

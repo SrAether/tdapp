@@ -50,6 +50,8 @@ class MainWindow : public QWidget
     // ! para encriptar
     EncriptadoV2::Encriptado *encriptado; // ! objeto de la clase encriptado que permite encriptar y desencriptar se define como variable global en el cpp
 
+    // vector de temas
+    std::vector<std::string> temas; // ! vector que contiene los temas de la aplicación
 
 
     //! FRAMES Y WIDGETS DE LA VENTANA
@@ -77,6 +79,8 @@ class MainWindow : public QWidget
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME INICIO SESION (inSe)
+    // Label con la foto de perfil
+    QLabel *inSeFotoPerfil; // label con la foto de perfil
     // Selector de usuario
     QComboBox *inSeSelectorUsuario; // selector de usuario
     // campo de texto para la contraseña
@@ -87,6 +91,10 @@ class MainWindow : public QWidget
     QPushButton *inSeBotonRegistrarse; // boton para registrar usuario
     // Botón para recuperar contraseña
     QPushButton *inSeBotonRecuperarContra; // boton para recuperar contraseña
+    // Layout para el inicio de sesión
+    QVBoxLayout *inSeLayout; // layout para el inicio de sesión
+    //QHBoxLayout *inSeImgLayout; // layout para la imagen de perfil
+    //QVBoxLayout *inSePrincipal; // layout principal
 
 
     // -----------------------------------------
@@ -320,7 +328,7 @@ class MainWindow : public QWidget
     QLabel *ajusTitulo; // etiqueta para el título de la pantalla de ajustes
     QComboBox *ajusSelectorTema; // selector de tema
     QPushButton *ajusCambiarSonidoAlarma; // boton para cambiar sonido de alarma
-    QPushButton *ajusCambiarSonidoNotificacion; // boton para cambiar sonido de notificacion
+    //QPushButton *ajusCambiarSonidoNotificacion; // boton para cambiar sonido de notificacion
     QPushButton *ajusCambiarFuente; // boton para cambiar fuente
     //QPushButton *ajusCambiarTamFuente; // boton para cambiar tamaño de fuente
     QPushButton *ajusCambiarContra; // boton para cambiar contraseña
@@ -333,6 +341,7 @@ class MainWindow : public QWidget
     QVBoxLayout *ajusLayout; // layout para la pantalla de ajustes
     QScrollArea *ajusScroll; // area de scroll para la pantalla de ajustes
     QVBoxLayout *ajusPrincipal; // layout principal
+
 
 
 
@@ -374,6 +383,7 @@ private slots:
     void inSeCargarUsuarios(); // ! carga los usuarios en el selector de usuarios
     void inSeIniciarSesion(); // ! inicia sesión en la aplicación
     void inSeRecuperarContra(); // ! muestra la interfaz de recuperación de contraseña
+    void inSeCargarImagenPerfil(int nP); // ! carga la imagen de perfil del usuario
 
     // //////////////////////////////////////////////////////////////////////////////////
     // --------------------------- SLOTS Recuperar Contra ----------------------------------
@@ -567,6 +577,9 @@ private slots:
     void ajusClickCambiarPreguntaContra(); // ! cambia la pregunta de recuperación de contraseña
     void ajusClickCambiarFotoPerfil(); // ! cambia la foto de perfil del usuario
     void ajusClickEliminarCuenta(); // ! elimina la cuenta del usuario
+    void ajusClickCambiarSonidoAlarma(); // ! cambia el sonido de la alarma
+    void ajusCambiarTema(int); // ! cambia el tema de la aplicación
+
 
 
     // // DEPENDENCIAS DE LA INTERFAZ HIPERFOCO
