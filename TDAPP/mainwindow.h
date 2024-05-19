@@ -65,7 +65,7 @@ class MainWindow : public QWidget
     // Frame para el hiperfoco
     QFrame *frameHiperfoco; // frame para el hiperfoco
     // Frame para la configuración
-    QFrame *frameConfiguracion; // frame para la configuración
+    QFrame *frameAjustes; // frame para los ajustes de la configuración
     // Frame para journaling (diario)
     QFrame *frameJournaling; // frame para journaling
     // Frame para barra de navegación
@@ -163,6 +163,7 @@ class MainWindow : public QWidget
     // Botón para configuración
     QSize barNaTamBotones; // ! tamaño de los botones de la barra de navegación
     QPushButton *barNaBotonConfiguracion; // boton para configuración
+    QPushButton *barNaBotonCerrarSesion; // boton para cerrar sesión
     // Botón para calendario
     QPushButton *barNaBotonCalendario; // boton para calendario
     // Botón para registro de emociones
@@ -183,6 +184,7 @@ class MainWindow : public QWidget
     void barNaEjecutorFunciones(const int& nFuncion); // ! ejecuta las funciones de la barra de navegación
     // iconos de la barra de navegación
     QIcon *barNaIconoConfiguracion; // icono para configuración
+    QIcon *barNaIconoCerrarSesion; // icono para cerrar sesión
     QIcon *barNaIconoCalendario; // icono para calendario
     QIcon *barNaIconoRegistroEmociones; // icono para registro de emociones
     QIcon *barNaIconoJournaling; // icono para journaling
@@ -286,10 +288,8 @@ class MainWindow : public QWidget
     QIcon *reEmIconoEmoSorpresa; // icono para sorpresa
     QIcon *reEmIconoEmoDisgusto; // icono para disgusto
     QSize *reEmTamBotones; // tamaño de los botones de emociones
-
     // Label para título de la pantalla de registro de emociones
     QLabel *reEmTitulo; // etiqueta para título de la pantalla de registro de emociones
-
     // Botones para registrar emociones
     QPushButton *reEmBotonMiedo; // boton para miedo
     QPushButton *reEmBotonTristeza; // boton para tristeza
@@ -297,7 +297,6 @@ class MainWindow : public QWidget
     QPushButton *reEmBotonAlegria; // boton para alegria
     QPushButton *reEmBotonSorpresa; // boton para sorpresa
     QPushButton *reEmBotonDisgusto; // boton para disgusto
-
     // Layout para la pantalla de registro de emociones
     QVBoxLayout *reEmLayout; // layout para la pantalla de registro de emociones
     QGridLayout *reEmLayoutBotones; // layout para los botones de la pantalla de registro de emociones
@@ -311,6 +310,31 @@ class MainWindow : public QWidget
     QPieSeries *reEmGraficaSeries; // series de la grafica de emociones
     QChart *reEmGrafica; // grafica de emociones
     QChartView *reEmGraficaVista; // vista de la grafica de emociones
+
+
+    // -----------------------------------------
+    // COSAS DENTRO DE FRAME AJUSTES (ajus)
+    // variables
+    //std::string ajusPreguntaContra; // pregunta para recuperar contraseña
+    //std::string ajusRespuestaContra; // respuesta para recuperar contraseña
+    QLabel *ajusTitulo; // etiqueta para el título de la pantalla de ajustes
+    QComboBox *ajusSelectorTema; // selector de tema
+    QPushButton *ajusCambiarSonidoAlarma; // boton para cambiar sonido de alarma
+    QPushButton *ajusCambiarSonidoNotificacion; // boton para cambiar sonido de notificacion
+    QPushButton *ajusCambiarFuente; // boton para cambiar fuente
+    //QPushButton *ajusCambiarTamFuente; // boton para cambiar tamaño de fuente
+    QPushButton *ajusCambiarContra; // boton para cambiar contraseña
+    QPushButton *ajusCambiarPreguntaContra; // boton para cambiar pregunta de recuperación de contraseña
+    //QPushButton *ajusCambiarRespuestaContra; // boton para cambiar respuesta de recuperación de
+    QPushButton *ajusCambiarFotoPerfil; // boton para cambiar foto de perfil
+    QPushButton *ajusEliminarCuenta; // boton para eliminar cuenta
+
+    QWidget *ajusWidget; // widget para meter el layout de ajustes
+    QVBoxLayout *ajusLayout; // layout para la pantalla de ajustes
+    QScrollArea *ajusScroll; // area de scroll para la pantalla de ajustes
+    QVBoxLayout *ajusPrincipal; // layout principal
+
+
 
     // Métodos privados de la ventana
     void verificacionInicial(); // ! verifica la existencia de los archivos y carpetas necesarios para el funcionamiento de la aplicación y trata de crearlos si no existen
@@ -366,6 +390,8 @@ private slots:
     // Relacionados con la barra de navegación
     void activarBarraNavegacion(); // ! muestra la barra de navegación
     void desactivarBarraNavegacion(); // ! oculta la barra de navegación
+    void barNaMostrarAjustes(); // ! muestra la interfaz de configuración
+    void barNaCerrarSesion(); // ! cierra la sesión del usuario
     void barNaMostrarCalendario(); // ! muestra la interfaz del calendario
     void barNaMostrarJournaling(); // ! muestra la interfaz de journaling
     void barNaMostrarRegistroEmociones(); // ! muestra la interfaz de registro de emociones
@@ -531,6 +557,17 @@ private slots:
     void reEmActivarGraficaEmociones(); // ! activa la gráfica de emociones
     void reEmDesactivarGraficaEmociones(); // ! desactiva la gráfica de emociones
 
+    // //////////////////////////////////////////////////////////////////////////////////
+    // --------------------------- SLOTS Ajustes ----------------------------------
+    // Relacionados con la interfaz de ajustes
+    void activarInterfazAjustes(); // ! muestra la interfaz de ajustes
+    void desactivarInterfazAjustes(); // ! oculta la interfaz de ajustes
+    void ajusClickCambiarFuente(); // ! cambia la fuente de la aplicación
+    void ajusClickCambiarContra(); // ! cambia la contraseña del usuario
+    void ajusClickCambiarPreguntaContra(); // ! cambia la pregunta de recuperación de contraseña
+    void ajusClickCambiarFotoPerfil(); // ! cambia la foto de perfil del usuario
+    void ajusClickEliminarCuenta(); // ! elimina la cuenta del usuario
+
 
     // // DEPENDENCIAS DE LA INTERFAZ HIPERFOCO
     // void mostrarAreaHiperfoco(); // ! muestra la interfaz de hiperfoco
@@ -549,24 +586,6 @@ private slots:
     // void mostrarListaMetodosHiperfoco(); // ! muestra la lista de métodos de hiperfoco
     // // ? seleccionar método de gestión de mostrarInterfazListaMetodosHiperfoco
     // void seleccionarMetodoHiperfoco(); // ! selecciona el método de gestión de tiempo (hiperfoco)
-
-    // // DEPENDENCIAS DE LA INTERFAZ CONFIGURACIÓN
-    // // ? boton modificar tema de mostrarAreaConfiguracion
-    // void modificarTema(); // ! modifica el tema de la aplicación
-    // // ? boton modificar fuente de mostrarAreaConfiguracion
-    // void modificarFuente(); // ! modifica la fuente de la aplicación
-    // // ? boton modificar sonido de alarma de mostrarAreaConfiguracion
-    // void modificarSonidoAlarma(); // ! modifica el sonido de alarma de la aplicación
-    // // ? boton modificar volumen de alarma de mostrarAreaConfiguracion
-    // void modificarVolumenAlarma(); // ! modifica el volumen de la alarma de la aplicación
-    // // ? boton modificar sonido de notificación de mostrarAreaConfiguracion
-    // void modificarSonidoNotificacion(); // ! modifica el sonido de notificación de la aplicación
-    // // ? boton modificar volumen de notificación de mostrarAreaConfiguracion
-    // void modificarVolumenNotificacion(); // ! modifica el volumen de la notificación de la aplicación
-    // // ? boton modificar credenciales de mostrarAreaConfiguracion
-    // void modificarCredencialesRespaldo(); // ! modifica las credenciales de la aplicación (usuario y contraseña de google drive)
-    // // ? boton modificar información de usuario de mostrarAreaConfiguracion
-    // void modificarInformacionUsuario(); // ! modifica la información del usuario de la aplicación
 
 
 signals:

@@ -22,6 +22,7 @@
 #include <QVBoxLayout> // ? para acomodar los elementos de la interfaz VERTICALMENTE
 #include <QHBoxLayout> // ? para acomodar los elementos de la interfaz HORIZONTALMENTE
 #include <QtWidgets> // ? para usar las clases de widgets de qt
+#include <QFormLayout> // ? para crear un layout de formulario
 
 // para manejar archivos
 #include "manejadorArchivos.h"
@@ -64,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent)
     verificacionInicial();
     // cargamos la fuente
     this->setFont(fuente);
+    // hacemos que la ventana sea de 720 redimensionable
+    this->setMinimumSize(1240, 800);
 
     // creamos el frame principal
     framePrincipal = new QFrame(this);
@@ -332,6 +335,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
+
     }
 
     // ----------------------------------------------------------------------------
@@ -488,6 +492,8 @@ MainWindow::MainWindow(QWidget *parent)
         barNaTamBotones = QSize(50, 50);
         // Icono de configuración
         barNaIconoConfiguracion = new QIcon(QString(RUTA_ICONOS.c_str()) + "configuraciones.svg");
+        // Icono de Cerrar Sesión
+        barNaIconoCerrarSesion = new QIcon(QString(RUTA_ICONOS.c_str()) + "cerrar_sesion.png");
         // Icono de calendario
         barNaIconoCalendario = new QIcon(QString(RUTA_ICONOS.c_str()) + "calendario.svg");
         // Icono de registro de emociones
@@ -501,6 +507,11 @@ MainWindow::MainWindow(QWidget *parent)
         barNaBotonConfiguracion->setIcon(*barNaIconoConfiguracion);
         barNaBotonConfiguracion->setIconSize(barNaTamBotones);
         barNaBotonConfiguracion->setToolTip("Configuración");
+        // Botón de cerrar sesión
+        barNaBotonCerrarSesion = new QPushButton(frameBarraNavegacion);
+        barNaBotonCerrarSesion->setIcon(*barNaIconoCerrarSesion);
+        barNaBotonCerrarSesion->setIconSize(barNaTamBotones);
+        barNaBotonCerrarSesion->setToolTip("Cerrar Sesión");
         // Botón de calendario
         barNaBotonCalendario = new QPushButton(frameBarraNavegacion);
         barNaBotonCalendario->setToolTip("Calendario");
@@ -540,6 +551,7 @@ MainWindow::MainWindow(QWidget *parent)
         // Sección izquierda
         QHBoxLayout* disposicionIzquierda = new QHBoxLayout();
         disposicionIzquierda->addWidget(barNaBotonConfiguracion);
+        disposicionIzquierda->addWidget(barNaBotonCerrarSesion);
         // Sección centro
         QHBoxLayout* disposicionCentro = new QHBoxLayout();
         disposicionCentro->addWidget(barNaBotonCalendario);
@@ -1239,6 +1251,78 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // -----------------------------------------------------------------------------
+    // AREA DE AJUSTES
+    /* Debe contener:
+     * Título
+     * Selector de Tema
+     * Botón Para Cambiar Sonido de Alarma
+     * Botón Para Cambiar Sonido de Notificación
+     * Botón Para Cambiar fuente
+     * Botón Para Cambiar tamaño de fuente
+     * Botón Para Cambiar contraseña
+     * Botón Para Cambiar pregunta de seguridad
+     * Botón Para Cambiar respuesta de seguridad
+     * Botón Para Cambiar foto de perfil
+     * Botón Para Eliminar Cuenta
+     */
+    {
+        frameAjustes = new QFrame(framePrincipal); // creamos un frame para los ajustes
+        frameAjustes->hide(); // lo ocultamos por defecto
+
+        ajusWidget = new QWidget(frameAjustes); // creamos un widget para los ajustes
+
+        // Elementos de la interfaz (graficos)
+        ajusTitulo = new QLabel(ajusWidget); // titulo
+        ajusTitulo->setText("Ajustes");
+        ajusTitulo->setAlignment(Qt::AlignCenter); // centrado
+        ajusSelectorTema = new QComboBox(ajusWidget); // selector de tema
+        ajusSelectorTema->addItem("Tema: Claro");
+        ajusSelectorTema->addItem("Tema: Oscuro");
+        ajusCambiarSonidoAlarma = new QPushButton(ajusWidget); // boton para cambiar sonido de alarma
+        ajusCambiarSonidoAlarma->setText("Cambiar Sonido de Alarma");
+        ajusCambiarSonidoNotificacion = new QPushButton(ajusWidget); // boton para cambiar sonido de notificacion
+        ajusCambiarSonidoNotificacion->setText("Cambiar Sonido de Notificación");
+        ajusCambiarFuente = new QPushButton(ajusWidget); // boton para cambiar fuente
+        ajusCambiarFuente->setText("Cambiar Fuente");
+        // ajusCambiarTamFuente = new QPushButton(ajusWidget); // boton para cambiar tamaño de fuente
+        // ajusCambiarTamFuente->setText("Cambiar Tamaño de Fuente");
+        ajusCambiarContra = new QPushButton(ajusWidget); // boton para cambiar contraseña
+        ajusCambiarContra->setText("Cambiar Contraseña");
+        ajusCambiarPreguntaContra = new QPushButton(ajusWidget); // boton para cambiar pregunta de seguridad
+        ajusCambiarPreguntaContra->setText("Cambiar Pregunta de Seguridad");
+        //ajusCambiarRespuestaContra = new QPushButton(ajusWidget); // boton para cambiar respuesta de seguridad
+        //ajusCambiarRespuestaContra->setText("Cambiar Respuesta de Seguridad");
+        ajusCambiarFotoPerfil = new QPushButton(ajusWidget); // boton para cambiar foto de perfil
+        ajusCambiarFotoPerfil->setText("Cambiar Foto de Perfil");
+        ajusEliminarCuenta = new QPushButton(ajusWidget); // boton para eliminar cuenta
+        ajusEliminarCuenta->setText("Eliminar Cuenta");
+
+        // Layout
+        ajusLayout = new QVBoxLayout(ajusWidget); // layout principal
+        ajusLayout->addWidget(ajusTitulo); // titulo
+        ajusLayout->addWidget(ajusSelectorTema); // selector de tema
+        ajusLayout->addWidget(ajusCambiarSonidoAlarma); // boton para cambiar sonido de alarma
+        ajusLayout->addWidget(ajusCambiarSonidoNotificacion); // boton para cambiar sonido de notificacion
+        ajusLayout->addWidget(ajusCambiarFuente); // boton para cambiar fuente
+        //ajusLayout->addWidget(ajusCambiarTamFuente); // boton para cambiar tamaño de fuente
+        ajusLayout->addWidget(ajusCambiarContra); // boton para cambiar contraseña
+        ajusLayout->addWidget(ajusCambiarPreguntaContra); // boton para cambiar pregunta de seguridad
+        //ajusLayout->addWidget(ajusCambiarRespuestaContra); // boton para cambiar respuesta de seguridad
+        ajusLayout->addWidget(ajusCambiarFotoPerfil); // boton para cambiar foto de perfil
+        ajusLayout->addWidget(ajusEliminarCuenta); // boton para eliminar cuenta
+
+        // Scroll Area
+        ajusScroll = new QScrollArea(frameAjustes); // creamos un scroll area para los ajustes
+        ajusScroll->setWidget(ajusWidget); // le asignamos el widget de los ajustes
+        ajusScroll->setWidgetResizable(true); // hacemos que el widget sea redimensionable
+
+        // Layout principal
+        ajusPrincipal = new QVBoxLayout(frameAjustes); // layout principal
+        ajusPrincipal->addWidget(ajusScroll); // agregamos el scroll area al layout principal
+
+    }
+
+    // -----------------------------------------------------------------------------
     // AREA DE ACOMODO DE FRAMES
 
     QVBoxLayout* disposicionPrincipal = new QVBoxLayout(this);
@@ -1253,6 +1337,7 @@ MainWindow::MainWindow(QWidget *parent)
     disposicionPrincipal->addWidget(frameCalendario);
     disposicionPrincipal->addWidget(calDiaFrame);
     disposicionPrincipal->addWidget(frameRegistroEmociones);
+    disposicionPrincipal->addWidget(frameAjustes);
     //disposicionPrincipal->addWidget(scrollRegistroUsuario); // modificacion para agregar scroll al frame de registro de usuario
 
 
@@ -1307,6 +1392,10 @@ MainWindow::MainWindow(QWidget *parent)
         connect(reCoBotonCancelar, SIGNAL(clicked()), this, SLOT(reCoCancelarRecuperarContra()));
 
         // SEÑALES RELACIONADAS CON LA BARRA DE NAVEGACIÓN
+        // conectamos la señal para cerrar sesión
+        connect(barNaBotonCerrarSesion, SIGNAL(clicked()), this, SLOT(barNaCerrarSesion()));
+        // conectamos la señal para abrir el frame de ajustes
+        connect(barNaBotonConfiguracion, SIGNAL(clicked()), this, SLOT(barNaMostrarAjustes()));
         // conectamos la señal para activar el frame de calendario
         connect(barNaBotonCalendario, SIGNAL(clicked()), this, SLOT(barNaMostrarCalendario()));
         // conectamos la señal para activar el frame de journaling
@@ -1330,6 +1419,18 @@ MainWindow::MainWindow(QWidget *parent)
         // SEÑALES RELACIONADAS CON EL CALENDARIO
         // conectamos la señal de itemClicked de la lista de eventos del día
         connect(calDiaEventos, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(calInterfazEvento()));
+
+        // SEÑALES RELACIONADAS CON LA INTERFAZ DE AJUSTES
+        // conectamos la señal de cambio de fuente
+        connect(ajusCambiarFuente, SIGNAL(clicked()), this, SLOT(ajusClickCambiarFuente()));
+        // conectamos la señal de cambio de contraseña
+        connect(ajusCambiarContra, SIGNAL(clicked()), this, SLOT(ajusClickCambiarContra()));
+        // conectamos la señal de cambio de pregunta de seguridad
+        connect(ajusCambiarPreguntaContra, SIGNAL(clicked()), this, SLOT(ajusClickCambiarPreguntaContra()));
+        // conectamos la señal de cambio de foto de perfil
+        connect(ajusCambiarFotoPerfil, SIGNAL(clicked()), this, SLOT(ajusClickCambiarFotoPerfil()));
+        // conectamos la señal de eliminar cuenta
+        connect(ajusEliminarCuenta, SIGNAL(clicked()), this, SLOT(ajusClickEliminarCuenta()));
     }
 
 
@@ -1370,6 +1471,7 @@ void MainWindow::verificacionInicial()
         // {
         //     "tema": "claro",
         //     "fuente": "Arial",
+        //     "tamFuente": "20",
         //     "sonidoAlarma": "alarma.mp3",
         //     "volumenAlarma": "100",
         //     "sonidoNotificacion": "notificacion.mp3",
@@ -1381,6 +1483,7 @@ void MainWindow::verificacionInicial()
         auto& conf = *configuraciones;// soy dios y si quiero usar el operador [] de esta forma, lo hago
         conf["tema"] = "claro";
         conf["fuente"] = "Arial";
+        conf["tamFuente"] = "20";
         conf["sonidoAlarma"] = "alarma.mp3";
         conf["volumenAlarma"] = "100";
         conf["sonidoNotificacion"] = "notificacion.mp3";
@@ -1397,11 +1500,14 @@ void MainWindow::verificacionInicial()
 
         std::cout << "Cargando configuraciones" << std::endl;
         configuraciones = new mJson::ManejadorJson(RUTA_CONFIGURACIONES);
-        // se carga la fuente con tamaño 20
-        fuente.setFamily(QString::fromStdString((*configuraciones)["fuente"]));
-        fuente.setPointSize(20);
-    }
 
+    }
+    // se carga la fuente con tamaño 20
+    fuente.setFamily(QString::fromStdString((*configuraciones)["fuente"]));
+    //fuente.setPointSize(20);
+    //fuente.setPointSize((*configuraciones)["tamFuente"]);
+    int tamFuente = std::stoi((*configuraciones)["tamFuente"]);
+    fuente.setPointSize(tamFuente);
 
     // ? en el siguiente bloque se verificará la existencia del archivo de usuarios
 
@@ -2499,6 +2605,48 @@ void MainWindow::desactivarBarraNavegacion()
     frameBarraNavegacion->hide();
 }
 
+// ! Método para mostrar la interfaz de ajustes
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaMostrarAjustes()
+{
+    // ? se desactivan todas las interfaces (frames)
+    barNaDesactivarTodosLosFrames();
+    // ? se activa el frame de ajustes
+    activarInterfazAjustes();
+}
+
+// ! método para cerrar sesión
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::barNaCerrarSesion()
+{
+    // creamos un mensaje emergente para confirmar si se desea cerrar sesión
+    QMessageBox msgBox;
+    msgBox.setText("¿Estás seguro de que deseas cerrar sesión?");
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::No);
+    int respuesta = msgBox.exec();
+    // verificamos la respuesta
+    if (respuesta == QMessageBox::No)
+    {
+        return;
+    }
+    if (configuracionesUsuario != nullptr)
+    {
+        // ? se eliminan las configuraciones del usuario
+        delete configuracionesUsuario;
+        configuracionesUsuario = nullptr;
+    }
+    // ? se desactivan todas las interfaces (frames)
+    barNaDesactivarTodosLosFrames();
+    desactivarBarraNavegacion();
+    // ? se activa el frame de inicio de sesión
+    activarInterfazInicioSesion();
+}
+
 // ! método para mostrar la interfaz de calendario
 // ! versión 1.0
 // ! modificado por Aether
@@ -2548,6 +2696,7 @@ void MainWindow::barNaDesactivarTodosLosFrames()
     desactivarInterfazJournaling();
     desactivarInterfazCalendario();
     desactivarInterfazRegistroEmociones();
+    desactivarInterfazAjustes();
 }
 
 // ! método para activar o desactivar los botones de la barra de navegación
@@ -4200,15 +4349,15 @@ void MainWindow::reEmCargarGraficaEmociones(const int& dia, const int& mes, cons
     std::cout << "Cargando gráfica de emociones" << std::endl;
     // ? ahora debemos extraer el contenido de cada archivo de emocion para poder cargar la gráfica
     std::vector<std::string> emociones = manejadorArchivos.obtenerContenidoCarpeta(rutaEmociones, 0);
-    int contador = 0;
+    //int contador = 0;
     for (const auto& emocion: emociones)
     {
         std::string contenido = manejadorArchivos.leerArchivo(rutaEmociones + "/" + emocion);
-        std::cout << "Emoción: " << emocion << " Contenido: " << contenido << std::endl;
+        //std::cout << "Emoción: " << emocion << " Contenido: " << contenido << std::endl;
         contenido = contenido.empty() ? "0" : contenido;
         // convertimos el contenido a entero
         int cantidad = std::stoi(contenido);
-        contador += cantidad;
+        //contador += cantidad;
         // agregamos la cantidad a la gráfica
         reEmGraficaSeries->append(QString::fromStdString(emocion), cantidad);
 
@@ -4253,7 +4402,7 @@ void MainWindow::reEmCargarGraficaEmociones(const int& dia, const int& mes, cons
         serie->setLabelVisible();
 
     }
-    std::cout << "Total de emociones: " << contador << std::endl;
+    //std::cout << "Total de emociones: " << contador << std::endl;
     // mostramos la gráfica
     reEmGraficaVista->show();
     reEmActivarGraficaEmociones();
@@ -4290,6 +4439,229 @@ void MainWindow::reEmDesactivarGraficaEmociones()
     //activarInterfazRegistroEmociones();
 }
 
+
+// ////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------------
+// ! RELACIONADOS CON LA INTERFAZ DE AJUSTES
+
+// ! Método para mostrar la interfaz de ajustes
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::activarInterfazAjustes()
+{
+    frameAjustes->show();
+    //ajustesRedimencionarCosas();
+}
+
+// ! Método para ocultar la interfaz de ajustes
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::desactivarInterfazAjustes()
+{
+    frameAjustes->hide();
+}
+
+// ! Método para cambiar fuente de la interfaz
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::ajusClickCambiarFuente()
+{
+    std::cout << "Cambiando fuente" << std::endl;
+    // mostramos un dialogo para seleccionar la fuente
+    QFontDialog dialogo;
+    dialogo.setOption(QFontDialog::DontUseNativeDialog);
+    dialogo.show();
+    // si se acepta la fuente
+    if (dialogo.exec())
+    {
+        // extraemos la fuente seleccionada
+        QFont fuente = dialogo.selectedFont();
+        // cambiamos la fuente de la aplicación
+        this->setFont(fuente);
+        // extraemos el nombre de la fuente
+        std::string nombreFuente = fuente.family().toStdString();
+        // guardamos la fuente en el json de configuraciones
+        (*configuraciones)["fuente"] = nombreFuente;
+        (*configuraciones)["tamanoFuente"] = std::to_string(fuente.pointSize());
+        // guardamos el json
+        configuraciones->guardar();
+    }
+}
+
+// ! Método para cambiar la contraseña de la interfaz
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::ajusClickCambiarContra()
+{
+    //std::cout << "Cambiando contraseña" << std::endl;
+    // mostramos un dialogo para cambiar la contraseña
+    QDialog dialogo;
+    QFormLayout formDialogo(&dialogo);
+    dialogo.setWindowTitle("Cambiar Contraseña");
+    QLabel label;
+    label.setText("Contraseña:");
+    QLineEdit input;
+    input.setEchoMode(QLineEdit::Password);
+    formDialogo.addRow(&label, &input);
+    QLabel label2("De nuevo");
+    QLineEdit input2;
+    input2.setEchoMode(QLineEdit::Password);
+    formDialogo.addRow(&label2, &input2);
+    QDialogButtonBox botones(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialogo);
+    formDialogo.addRow(&botones);
+    QObject::connect(&botones, &QDialogButtonBox::accepted, &dialogo, &QDialog::accept);
+    if (dialogo.exec() == QDialog::Accepted)
+    {
+        // extraemos la contraseña
+        std::string contra = input.text().toStdString();
+        std::string contra2 = input2.text().toStdString();
+        // verificamos que las contraseñas sean iguales
+        if (contra != contra2)
+        {
+            QMessageBox::critical(this, "Error", "Las contraseñas no coinciden");
+            return;
+        }
+        std::cout << "Contraseña: " << contra << std::endl;
+
+        // guardamos la contraseña en el json de configuraciones
+        (*configuracionesUsuario)["contraseña"] = encriptado->encriptar(contra);
+        // guardamos el json
+        configuraciones->guardar();
+    }
+
+}
+
+// ! Método para cambiar la pregunta de recuperación de contraseña
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::ajusClickCambiarPreguntaContra()
+{
+    // mostramos un dialogo para cambiar la pregunta de recuperación de contraseña
+    QDialog dialogo;
+    QFormLayout formDialogo(&dialogo);
+    dialogo.setWindowTitle("Cambiar Pregunta de Recuperación de Contraseña");
+    QLabel label;
+    label.setText("Pregunta:");
+    QLineEdit input;
+    formDialogo.addRow(&label, &input);
+    QLabel label2("Respuesta");
+    QLineEdit input2;
+    formDialogo.addRow(&label2, &input2);
+    QDialogButtonBox botones(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialogo);
+    formDialogo.addRow(&botones);
+    QObject::connect(&botones, &QDialogButtonBox::accepted, &dialogo, &QDialog::accept);
+    if (dialogo.exec() == QDialog::Accepted)
+    {
+        // extraemos la pregunta
+        std::string pregunta = input.text().toStdString();
+        std::string respuesta = input2.text().toStdString();
+        std::cout << "Pregunta: " << pregunta << std::endl;
+        std::cout << "Respuesta: " << respuesta << std::endl;
+        // verificamos que no estén vacías
+        if (pregunta.empty() || respuesta.empty())
+        {
+            QMessageBox::critical(this, "Error", "La pregunta y respuesta no pueden estar vacías");
+            return;
+        }
+        // guardamos la pregunta y respuesta en el json de configuraciones
+        (*configuracionesUsuario)["preguntaRecuperacion"] = encriptado->encriptar(pregunta);
+        (*configuracionesUsuario)["respuestaRecuperacion"] = encriptado->encriptar(respuesta);
+        // guardamos el json
+        configuracionesUsuario->guardar();
+    }
+
+}
+
+// ! Método para cambiar la imagen de perfil
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::ajusClickCambiarFotoPerfil()
+{
+    // mostramos un dialogo para seleccionar la imagen de perfil
+    QString rutaImagen = QFileDialog::getOpenFileName(this, "Seleccionar Imagen", QDir::homePath(), "Imágenes (*.png *.jpg *.jpeg)");
+    // verificamos si se seleccionó una imagen
+    if (rutaImagen.isEmpty())
+    {
+        return;
+    }
+    // verificamos si existe el archiv
+    if (!manejadorArchivos.verificarExistenciaDeArchivo(rutaImagen.toStdString()))
+    {
+        QMessageBox::critical(this, "Error", "No se pudo cargar la imagen");
+        return;
+    }
+    // verificamos si ya existe una imagen de perfil
+    std::string rutaImagenPerfil = (*configuracionesUsuario)["fotoPerfil"];
+    // la desencriptamos
+    rutaImagenPerfil = encriptado->desencriptar(rutaImagenPerfil);
+    std::cout << "Ruta imagen perfil: " << rutaImagenPerfil << std::endl;
+    std::string rutaUsuario = RUTA_USUARIOS + encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]);
+    std::cout << "Ruta usuario: " << rutaUsuario << std::endl;
+    // si existe la imagen de perfil, la renombramos temporalmente
+    if (manejadorArchivos.verificarExistenciaDeArchivo(rutaUsuario + "/" + rutaImagenPerfil))
+    {
+        manejadorArchivos.moverArchivo(rutaUsuario + "/a" + rutaImagenPerfil, rutaUsuario + "/" + rutaImagenPerfil);
+    }
+    try{
+        // extraemos la extensión de la imagen
+        std::string extension = rutaImagen.toStdString().substr(rutaImagen.toStdString().find_last_of("."));
+        std::cout << "Extensión: " << extension << std::endl;
+        // copiamos la imagen seleccionada a la carpeta del usuario
+        manejadorArchivos.copiarArchivo(rutaUsuario + "/fotoPerfil" + extension, rutaImagen.toStdString());
+        // guardamos la ruta de la imagen en el json de configuraciones
+        (*configuracionesUsuario)["fotoPerfil"] = encriptado->encriptar("fotoPerfil" + extension);
+        // guardamos el json
+        configuracionesUsuario->guardar();
+        // eliminamos la imagen anterior
+        if (manejadorArchivos.verificarExistenciaDeArchivo(rutaUsuario + "/a" + rutaImagenPerfil))
+        {
+            manejadorArchivos.eliminarArchivo(rutaUsuario + "/a" + rutaImagenPerfil);
+        }
+    } catch (std::exception& e)
+    {
+        std::cout << "Error: " << e.what() << std::endl;
+        // restauramos la imagen
+        manejadorArchivos.moverArchivo(rutaUsuario + "/" + rutaImagenPerfil, rutaUsuario + "/a" + rutaImagenPerfil);
+    }
+}
+
+// ! Método para cambiar el nombre de usuario
+// ! versión 1.0
+// ! modificado por Aether
+// ? Sin cambios primera versión
+void MainWindow::ajusClickEliminarCuenta()
+{
+    // mostramos un dialogo de confirmación
+    QMessageBox dialogo;
+    dialogo.setWindowTitle("Eliminar Cuenta");
+    dialogo.setText("¿Estás seguro de que deseas eliminar tu cuenta?");
+    dialogo.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    dialogo.setDefaultButton(QMessageBox::No);
+    if (dialogo.exec() == QMessageBox::Yes)
+    {
+        // extraemos el nombre de usuario
+        std::string nombreUsuario = encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]);
+        // eliminamos la carpeta del usuario
+        manejadorArchivos.eliminarCarpeta(RUTA_USUARIOS + nombreUsuario);
+        // eliminamos el json de configuraciones
+        //manejadorArchivos.eliminarArchivo(RUTA_USUARIOS + nombreUsuario + "/configuraciones.json");
+        // mostramos un mensaje de éxito
+        QMessageBox::information(this, "Éxito", "Cuenta eliminada con éxito");
+        // activamos la interfaz de inicio de sesión
+        barNaDesactivarTodosLosFrames();
+        activarInterfazInicioSesion();
+        // cerramos la aplicación
+        //this->close();
+    }
+}
+
+
 // ////////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------------------------
 // ! RELACIONADOS CON LA INTERFAZ GRÁFICA
@@ -4302,5 +4674,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     reEmRedimencionarCosas();
     //calDiaFrame->setFixedSize(this->size());
     //std::cout << "calDiaFrame: " << calDiaFrame->size().width() << " " << calDiaFrame->size().height() << std::endl;
+    // mostramos el tamaño de la ventana
+    //std::cout << "Tamaño de la ventana: " << this->size().width() << " " << this->size().height() << std::endl;
 
 }
