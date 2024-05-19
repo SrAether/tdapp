@@ -498,21 +498,22 @@ MainWindow::MainWindow(QWidget *parent)
         // creamos un selector de usuario
         reCoSelectorUsuario = new QComboBox(frameRecuperarContra);
         // establecemos la posición del selector
-        reCoSelectorUsuario->setGeometry(100, 100, 200, 50);
+        //reCoSelectorUsuario->setGeometry(100, 100, 200, 50);
 
         // PREGUNTA DE RECUPERACIÓN
         // creamos una etiqueta para la pregunta de recuperación
         reCoPreguntaRecuperacion = new QLabel{QString::fromStdString(reCoPreguntaContra), frameRecuperarContra};
         // establecemos la posición de la etiqueta de la pregunta de recuperación
-        reCoPreguntaRecuperacion->setGeometry(400, 150, 1200, 300);
+        //reCoPreguntaRecuperacion->setGeometry(400, 150, 1200, 300);
         // colocamos salto de linea automatico
         reCoPreguntaRecuperacion->setWordWrap(true);
+        //reCoPreguntaRecuperacion->setMaximumHeight(100);
 
         // CAMPO PARA RESPONDER PREGUNTA DE RECUPERACIÓN
         // creamos un campo para responder la pregunta de recuperación
         reCoCampoRespuesta = new QLineEdit(frameRecuperarContra);
         // establecemos la posición del campo para responder la pregunta de recuperación
-        reCoCampoRespuesta->setGeometry(100, 200, 200, 50);
+        //reCoCampoRespuesta->setGeometry(100, 200, 200, 50);
         // establecemos el texto del campo para responder la pregunta de recuperación
         reCoCampoRespuesta->setPlaceholderText("Respuesta de Recuperación");
 
@@ -521,7 +522,7 @@ MainWindow::MainWindow(QWidget *parent)
         // creamos un botón para recuperar la contraseña
         reCoBotonConfirmar = new QPushButton(frameRecuperarContra);
         // establecemos la posición del botón para recuperar la contraseña
-        reCoBotonConfirmar->setGeometry(100, 250, 200, 50);
+        //reCoBotonConfirmar->setGeometry(100, 250, 200, 50);
         // establecemos el texto del botón para recuperar la contraseña
         reCoBotonConfirmar->setText("Recuperar Contraseña");
 
@@ -529,10 +530,18 @@ MainWindow::MainWindow(QWidget *parent)
         // creamos un botón para cancelar
         reCoBotonCancelar = new QPushButton(frameRecuperarContra);
         // establecemos la posición del botón para cancelar
-        reCoBotonCancelar->setGeometry(100, 300, 200, 50);
+        //reCoBotonCancelar->setGeometry(100, 300, 200, 50);
         // establecemos el texto del botón para cancelar
         reCoBotonCancelar->setText("Cancelar");
 
+        // Layout
+        reCoLayout = new QVBoxLayout(frameRecuperarContra);
+        reCoLayout->addWidget(reCoSelectorUsuario);
+        reCoLayout->addWidget(reCoPreguntaRecuperacion);
+        reCoLayout->addWidget(reCoCampoRespuesta);
+        reCoLayout->addWidget(reCoBotonConfirmar);
+        reCoLayout->addWidget(reCoBotonCancelar);
+        reCoLayout->addStretch();
 
     }
 

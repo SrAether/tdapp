@@ -161,6 +161,8 @@ class MainWindow : public QWidget
     QPushButton *reCoBotonConfirmar; // boton para recuperar contraseña
     // boton para cancelar recuperar contraseña
     QPushButton *reCoBotonCancelar; // boton para cancelar recuperar contraseña
+    // Layout para recuperar contraseña
+    QVBoxLayout *reCoLayout; // layout para recuperar contraseña
 
 
     // -----------------------------------------
