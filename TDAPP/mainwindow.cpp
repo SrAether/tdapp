@@ -1727,9 +1727,9 @@ void MainWindow::cancelarRegistroUsuario()
 }
 
 // ! método para registrar un usuario
-// ! versión 1.0
+// ! versión 2.0
 // ! modificado por Aether
-// ? Sin cambios primera versión
+// ? Se modifico el método para que si no puede copiar la imagen capture el throw y muestre un mensaje emergente
 void MainWindow::registrarUsuario()
 {
     // ? se registrará un usuario
@@ -1854,7 +1854,13 @@ void MainWindow::registrarUsuario()
     }
     // ? se guardará la foto de perfil en la carpeta del usuario
     //manejadorArchivos.copiarArchivo(rutaRegistroFotoPerfil, rutaUsuario + "/fotoPerfil.png"); // ? es al reves xd
-    manejadorArchivos.copiarArchivo(rutaUsuario + "/fotoPerfil.png", rutaRegistroFotoPerfil);
+    //manejadorArchivos.copiarArchivo(rutaUsuario + "/fotoPerfil.png", rutaRegistroFotoPerfil);
+    try {
+        manejadorArchivos.copiarArchivo(rutaRegistroFotoPerfil, rutaUsuario + "/fotoPerfil.png");
+    } catch (const std::exception& e) {
+        //std::cerr << e.what() << '\n';
+        std::cout << "Error al copiar la foto de perfil, si se encuentra usando windows actualmente no podemos extraer fotos que se encuentren en carpetas de one drive, le recomendamos cambiar la imagen a una ubicación que no sea conflictiva" << std::endl;
+    }
     //usuario["fotoPerfil"] = "fotoPerfil.png";
     usuario["fotoPerfil"] = encriptado->encriptar("fotoPerfil.png");
     // ? se guardará la configuración
@@ -2165,6 +2171,7 @@ void MainWindow::mostrarPantallaBienvenidaJournaling()
     std::cout << "Ruta de la imagen de bienvenida: " << rutaImagenBienvenida << std::endl;
     //std::cout << "Ruta de la imagen de bienvenida: " << rutaImagenBienvenida << std::endl;
     // verificamos que exista la imagen de bienvenida
+    jourBotonCambiarImagenBienvenida->setText("");
     if (manejadorArchivos.verificarExistenciaDeArchivo(rutaImagenBienvenida))
     {
         // si existe la imagen de bienvenida, la asignamos al boton de bienvenida
@@ -2175,7 +2182,8 @@ void MainWindow::mostrarPantallaBienvenidaJournaling()
     else
     {
         // si no existe la imagen de bienvenida, se llama al metodo para seleccionar la imagen de bienvenida
-        jourCambiarImagenBienvenida();
+        //jourCambiarImagenBienvenida();
+        jourBotonCambiarImagenBienvenida->setText("Seleccionar Imagen de Bienvenida");
     }
     jourBotonCambiarImagenBienvenida->show();
     // activamos el primer boton de la barra de navegacion
@@ -2204,58 +2212,63 @@ void MainWindow::jourOcultarPantallaBienvenida()
 // ? Sin cambios primera versión
 void MainWindow::jourCambiarImagenBienvenida()
 {
-    // mostramos en consola el mensaje
-    std::cout << "Seleccionando Imagen de Bienvenida" << std::endl;
-    //std::string rutaImagenBienvenida = RUTA_USUARIOS + (*configuracionesUsuario)["nombreUsuario"] + "/imagenBienvenida.png";
-    // usuario descifrado
-    std::string usuario = encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]);
-    std::string rutaImagenBienvenida = RUTA_USUARIOS + usuario + "/imagenBienvenida";
-    std::string rutaTemp = "";
-
-    //std::cout << "Ruta de la imagen de bienvenida: " << rutaImagenBienvenida << std::endl;
-    // ? se seleccionará la imagen de bienvenida
-    // ? se obtendrá la ruta de la imagen de bienvenida
-    // ? se mostrará un mensaje emergente que indica que la imagen de bienvenida se ha seleccionado
-    // ? se obtendrá la ruta de la imagen de bienvenida
-    seleccionarArchivo(rutaTemp, "Imagen (*.png *.jpg *.jpeg)", "Seleccionar Imagen de Bienvenida");
-    // si la ruta está vacía, se cancela la operación
-    if (rutaTemp.empty())
-    {
-        return;
-    }
-    std::cout << "Ruta Temporal: " << rutaTemp << std::endl;
-    // extraemos la extension del archivo
-    std::string extension = manejadorArchivos.obtenerExtension(rutaTemp);
-    std::cout << "Extension: " << extension << std::endl;
-    // Bloque de verificación de existencia de la imagen de bienvenida
-    // ? obtenemos la extension de la imagen de bienvenida
-    std::string extensionImEx = manejadorArchivos.buscarExtensionArchivo(RUTA_USUARIOS + usuario + "/", "imagenBienvenida");
-    std::cout << "Extension ImEx: " << extensionImEx << std::endl;
-    // si la imagen de bienvenida ya existe la extension no será vacía
-    bool Existe = false;
-    if (!extensionImEx.empty())
-    {
-        // si ya existe una imagen de bienvenida, la renombramos a imagenBienvenidaAnterior
-        manejadorArchivos.moverArchivo(RUTA_USUARIOS + usuario + "/imagenBienvenidaAnterior" + extensionImEx, rutaImagenBienvenida + extensionImEx);
-        Existe = true;
-    }
-    // copiamos la imagen a la carpeta del usuario
     try {
-         manejadorArchivos.copiarArchivo(rutaImagenBienvenida + extension, rutaTemp);
+        // mostramos en consola el mensaje
+        std::cout << "Seleccionando Imagen de Bienvenida" << std::endl;
+        //std::string rutaImagenBienvenida = RUTA_USUARIOS + (*configuracionesUsuario)["nombreUsuario"] + "/imagenBienvenida.png";
+        // usuario descifrado
+        std::string usuario = encriptado->desencriptar((*configuracionesUsuario)["nombreUsuario"]);
+        std::string rutaImagenBienvenida = RUTA_USUARIOS + usuario + "/imagenBienvenida";
+        std::string rutaTemp = "";
+
+        //std::cout << "Ruta de la imagen de bienvenida: " << rutaImagenBienvenida << std::endl;
+        // ? se seleccionará la imagen de bienvenida
+        // ? se obtendrá la ruta de la imagen de bienvenida
+        // ? se mostrará un mensaje emergente que indica que la imagen de bienvenida se ha seleccionado
+        // ? se obtendrá la ruta de la imagen de bienvenida
+        seleccionarArchivo(rutaTemp, "Imagen (*.png *.jpg *.jpeg)", "Seleccionar Imagen de Bienvenida");
+        // si la ruta está vacía, se cancela la operación
+        if (rutaTemp.empty())
+        {
+            return;
+        }
+        std::cout << "Ruta Temporal: " << rutaTemp << std::endl;
+        // extraemos la extension del archivo
+        std::string extension = manejadorArchivos.obtenerExtension(rutaTemp);
+        std::cout << "Extension: " << extension << std::endl;
+        // Bloque de verificación de existencia de la imagen de bienvenida
+        // ? obtenemos la extension de la imagen de bienvenida
+        std::string extensionImEx = manejadorArchivos.buscarExtensionArchivo(RUTA_USUARIOS + usuario + "/", "imagenBienvenida");
+        std::cout << "Extension ImEx: " << extensionImEx << std::endl;
+        // si la imagen de bienvenida ya existe la extension no será vacía
+        bool Existe = false;
+        if (!extensionImEx.empty())
+        {
+            // si ya existe una imagen de bienvenida, la renombramos a imagenBienvenidaAnterior
+            manejadorArchivos.moverArchivo(RUTA_USUARIOS + usuario + "/imagenBienvenidaAnterior" + extensionImEx, rutaImagenBienvenida + extensionImEx);
+            Existe = true;
+        }
+        // copiamos la imagen a la carpeta del usuario
+        try {
+             manejadorArchivos.copiarArchivo(rutaImagenBienvenida + extension, rutaTemp);
+        }
+        catch (const std::exception& e)
+        {
+            // si hay un error, restauramos la imagen anterior
+            manejadorArchivos.moverArchivo(rutaImagenBienvenida + extensionImEx, rutaImagenBienvenida + "Anterior" + extensionImEx);
+        }
+        // mostramos la imagen en el boton
+        jourBotonCambiarImagenBienvenida->setIcon(QIcon(QPixmap(QString::fromStdString(rutaImagenBienvenida + extension))));
+        // eliminamos la imagen anterior
+        if (Existe)
+        {
+            manejadorArchivos.eliminarArchivo(rutaImagenBienvenida + "Anterior" + extensionImEx);
+        }
+        //
+    } catch (const std::exception& e) {
+        // si hay un error, se mostrará un mensaje emergente
+        QMessageBox::critical(this, "Error", "No se pudo seleccionar la imagen de bienvenida, si usas windows no selecciones imagenes que se encuentren dentro de rutas protegidas por one drive");
     }
-    catch (const std::exception& e)
-    {
-        // si hay un error, restauramos la imagen anterior
-        manejadorArchivos.moverArchivo(rutaImagenBienvenida + extensionImEx, rutaImagenBienvenida + "Anterior" + extensionImEx);
-    }
-    // mostramos la imagen en el boton
-    jourBotonCambiarImagenBienvenida->setIcon(QIcon(QPixmap(QString::fromStdString(rutaImagenBienvenida + extension))));
-    // eliminamos la imagen anterior
-    if (Existe)
-    {
-        manejadorArchivos.eliminarArchivo(rutaImagenBienvenida + "Anterior" + extensionImEx);
-    }
-    //
 }
 
 // ! método para activar la lista de entradas de journaling
@@ -2440,7 +2453,8 @@ void MainWindow::jourLiNoCargarEntrada(const int& tipoCarga, const std::string& 
             // ? Cargar el titulo y el texto de la entrada en la interfaz de la entrada del journaling
             jourReEnCampoTitulo->setText(QString::fromStdString(encriptado->desencriptar((*entradaSeleccionada)["titulo"])));
             //jourReEnCampoTitulo->setReadOnly(true);
-            jourReEnCampoTexto->setHtml(QString::fromStdString(encriptado->desencriptar((*entradaSeleccionada)["texto"])));
+            //jourReEnCampoTexto->setHtml(QString::fromStdString(encriptado->desencriptar((*entradaSeleccionada)["texto"])));
+            jourReEnCampoTexto->setPlainText(QString::fromStdString(encriptado->desencriptar((*entradaSeleccionada)["texto"])));
             //jourReEnCampoTexto->setReadOnly(true);
             break;
         }
@@ -2464,12 +2478,13 @@ void MainWindow::jourGuardarEntrada()
 
     // obtenemos el titulo y el texto de la entrada
     std::string titulo = jourReEnCampoTitulo->text().toStdString();
-    std::string texto = jourReEnCampoTexto->toHtml().toStdString();
+    //std::string texto = jourReEnCampoTexto->toHtml().toStdString();
+    std::string texto = jourReEnCampoTexto->toPlainText().toStdString();
     // Guardamos el titulo y el texto de la entrada
     (*entradaSeleccionada)["titulo"] = encriptado->encriptar(titulo);
-    (*entradaSeleccionada)["titulo"] = encriptado->encriptar(titulo);
+    //(*entradaSeleccionada)["titulo"] = encriptado->encriptar(titulo);
     (*entradaSeleccionada)["texto"] = encriptado->encriptar(texto);
-    (*entradaSeleccionada)["texto"] = encriptado->encriptar(texto);
+    //(*entradaSeleccionada)["texto"] = encriptado->encriptar(texto);
     // Guardamos la entrada
     entradaSeleccionada->guardar();
 
@@ -3836,7 +3851,8 @@ void MainWindow::calInterfazEventoCargarDatos()
         std::string descripcion = (*calDiaJsonEventos)["descripcion"];
         descripcion = encriptado->desencriptar(descripcion);
         // ? cargamos la descripción como HTML
-        calAgregarEventoDescripcion->setHtml(QString::fromStdString(descripcion));
+        //calAgregarEventoDescripcion->setHtml(QString::fromStdString(descripcion));
+        calAgregarEventoDescripcion->setText(QString::fromStdString(descripcion));
     }
 }
 
@@ -3892,7 +3908,8 @@ void MainWindow::calGuardarEvento()
     std::string duracion = calAgregarEventoDuracion->time().toString().toStdString();
     (*calDiaJsonEventos)["duracion"] = encriptado->encriptar(duracion);
     //(*calDiaJsonEventos)["descripcion"] = calAgregarEventoDescripcion->toHtml().toStdString();
-    std::string descripcion = calAgregarEventoDescripcion->toHtml().toStdString();
+    //std::string descripcion = calAgregarEventoDescripcion->toHtml().toStdString();
+    std::string descripcion = calAgregarEventoDescripcion->toPlainText().toStdString();
     (*calDiaJsonEventos)["descripcion"] = encriptado->encriptar(descripcion);
     // ? guardamos el json de eventos
     calDiaJsonEventos->guardar();
