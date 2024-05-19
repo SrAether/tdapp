@@ -1459,6 +1459,185 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // -----------------------------------------------------------------------------
+    // AREA DE HIPERFOCO
+    /* Debe contener:
+    *
+    */
+    {
+        frameHiperfoco = new QFrame(framePrincipal);    //creamos el Frame de la interfaz de hiperfoco
+        frameHiperfoco->hide();                         //lo escondemos por defecto
+
+        //Iconos
+        {
+            hipeIconoHiperfocoActivado = new QIcon(QString(RUTA_ICONOS.c_str()) + "hiperfocoActivado.png");
+            hipeIconoHiperfocoDesactivado = new QIcon(QString(RUTA_ICONOS.c_str()) + "hiperfoco.png");
+            hipeIconoBotonVerMetodos = new QIcon(QString(RUTA_ICONOS.c_str()) + "editar_entrada.png");
+        }
+
+        hipeLayoutPrincipal = new QVBoxLayout(frameHiperfoco); //creamos el layout principal
+        hipeLayoutH1 = new QHBoxLayout(frameHiperfoco);        //creamos el layout para el titulo
+        hipeLayoutH2 = new QHBoxLayout(frameHiperfoco);        //creamos el layout para la duracion
+        hipeLayoutH3 = new QHBoxLayout(frameHiperfoco);        //creamos el layout para el boton de hiperfoco
+
+        //items de H1
+        {
+        hipeTituloPrincipal = new QLabel(frameHiperfoco); //creamos un qlabel principal para el titulo de la interfaz
+        hipeTituloPrincipal->setText("Botón de Hiperfoco"); //Texto del titulo
+        hipeTituloPrincipal->setAlignment(Qt::AlignCenter);  //Alineacion centrada del titulo
+        }
+        //items de H2
+        {
+            hipeTextoDuracion = new QLabel(frameHiperfoco); //creamos el texto duracion
+            hipeTextoDuracion->setText("Duracion");
+
+            hipeTextoHoras = new QLabel(frameHiperfoco);    //creamos el texto horas
+            hipeTextoHoras->setText("Horas:");
+
+            hipeTextoMinutos = new QLabel(frameHiperfoco); //creamos el texto minutos
+            hipeTextoMinutos->setText("Minutos:");
+
+            hipeHorasSpinBox = new QSpinBox(frameHiperfoco); //creamos el spinbox para seleccionar horas
+            hipeHorasSpinBox->setRange(0,23);                //establecemos el rango
+
+            hipeMinutosSpinBox = new QSpinBox(frameHiperfoco); //creamos el spoinbos para seleccionar minutos
+            hipeMinutosSpinBox->setRange(0,59);              //establecemos el rango
+
+            hipeTextoTiempoEstablecido = new QLabel(frameHiperfoco); //creamos el texto que aparecera cuando establescan el tiempo
+            hipeTextoTiempoEstablecido->hide();             //lo escondemos por defecto
+
+            timer = new QTimer(frameHiperfoco);         //creamos el temporizador
+            timer->setSingleShot(true);                 //solo se activa una vez el temporizador
+        }
+        //items dd H3
+        {
+            hipeBotonDeHiperfoco = new QPushButton(frameHiperfoco); //creamos el boton de hiperfoco
+            hipeBotonDeHiperfoco->setMinimumSize(420,420);
+            hipeBotonDeHiperfoco->setMaximumSize(420,420);
+            hipeBotonDeHiperfoco->setCheckable(true);
+            hipeBotonDeHiperfoco->setIcon(*hipeIconoHiperfocoDesactivado);
+            hipeBotonDeHiperfoco->setIconSize(QSize(400,400));
+        }
+
+        //Interfaz de Metodos
+        {
+            hipeTituloListaMetodos = new QLabel(frameHiperfoco);
+            hipeTituloListaMetodos->setText("Metodos que pueden mejorar tu vida");
+            hipeTituloListaMetodos->setAlignment(Qt::AlignCenter);
+            hipeTituloListaMetodos->hide();
+
+            hipeListaDeMetodos = new QListWidget(frameHiperfoco);
+
+            hipeItemPomodoro = new QListWidgetItem("Tecnica Pomodoro", hipeListaDeMetodos);
+            hipeItem5Segundos = new QListWidgetItem("Regla de los 5 segundos", hipeListaDeMetodos);
+            hipeItemMindfulness = new QListWidgetItem("Mindfulness", hipeListaDeMetodos);
+
+            hipeItemPomodoro->setTextAlignment(Qt::AlignCenter);
+            hipeItem5Segundos->setTextAlignment(Qt::AlignCenter);
+            hipeItemMindfulness->setTextAlignment(Qt::AlignCenter);
+
+            hipeListaDeMetodos->addItem(hipeItemPomodoro);
+            hipeListaDeMetodos->addItem(hipeItem5Segundos);
+            hipeListaDeMetodos->addItem(hipeItemMindfulness);
+
+            hipeListaDeMetodos->hide();
+        }
+
+        //Interfaz Tecnica Pomodoro
+        {
+            hipeTituloPomodoro = new QLabel(frameHiperfoco);
+            hipeTituloPomodoro->setText("Pomodoro");
+            hipeTituloPomodoro->setAlignment(Qt::AlignCenter);
+            hipeTituloPomodoro->hide();
+
+            hipeTextoPomodoro = new QLabel(frameHiperfoco);
+            hipeTextoPomodoro->setText( "Es una técnica de gestión del tiempo desarrollada por Francesco Cirillo a\n"
+                                    "finales de los años 80. Toma su nombre de un temporizador con forma\n"
+                                    "de tomate de cocina, utilizado para medir intervalos de tiempo\n"
+                                    "predefinidos. La técnica consiste en dividir el trabajo en intervalos de\n"
+                                    "tiempo generalmente de 25 minutos, llamados \"pomodoros\", separados\n"
+                                    "por breves pausas.");
+            hipeTextoPomodoro->setAlignment(Qt::AlignCenter);
+            hipeTextoPomodoro->hide();
+
+        }
+        //Interfaz Tecnica 5 Segundos
+        {
+            hipeTituloTitulo5Segundos = new QLabel(frameHiperfoco);
+            hipeTituloTitulo5Segundos->setText("Regla de los 5 segundos");
+            hipeTituloTitulo5Segundos->setAlignment(Qt::AlignCenter);
+            hipeTituloTitulo5Segundos->hide();
+
+            hipeTextoTitulo5Segundos = new QLabel(frameHiperfoco);
+            hipeTextoTitulo5Segundos->setText( "Popularizada por la autora y entrenadora Mel Robbins, \n"
+                                               "es una técnica simple pero poderosa que puede ayudarte a superar la \n"
+                                               "procrastinación, el miedo y la duda, y a tomar medidas más rápidamente.\n"
+                                               "Identifica un momento en el que te sientas indeciso o procrastinando,\n"
+                                               "toma aire y comienza a contar en voz alta de 5 a 1,\n"
+                                               "en el momento en que llegues a 1, toma una decisión o realiza una acción.\n"
+                                               "No te detengas a pensar o analizar la situación. Actúa de inmediato.\n"
+                                               "Observa cómo te sientes después de aplicar la regla.\n"
+                                               "¿Te sientes más empoderado, seguro y motivado?");
+            hipeTextoTitulo5Segundos->setAlignment(Qt::AlignCenter);
+            hipeTextoTitulo5Segundos->hide();
+        }
+        //Interfaz Tecnicas Mindfulness
+        {
+            hipeTituloMindfulness = new QLabel(frameHiperfoco);
+            hipeTituloMindfulness->setText("Minfulness");
+            hipeTituloMindfulness->setAlignment(Qt::AlignCenter);
+            hipeTituloMindfulness->hide();
+
+            hipeTextoMindfulness = new QLabel(frameHiperfoco);
+            hipeTextoMindfulness->setText( "El mindfulness, también conocido como atención plena, es la práctica de prestar\n"
+                                               "atención a la experiencia presente sin juzgar. Implica enfocarse en las sensaciones,\n"
+                                               "pensamientos y emociones que surgen en el momento, sin aferrarse a ellos ni\n"
+                                               "dejarse llevar por ellos.\n"
+                                               "Meditación: La meditación es una práctica formal de mindfulness que implica\n"
+                                               "sentarse en silencio y enfocar la atención en la respiración o en un mantra. \n"
+                                               "Yoga: El yoga combina posturas físicas, respiración y meditación para promover el\n"
+                                               "mindfulness y el bienestar general.");
+            hipeTextoMindfulness->setAlignment(Qt::AlignCenter);
+            hipeTextoMindfulness->hide();
+        }
+        //conexiones
+        QObject::connect(hipeBotonDeHiperfoco, SIGNAL( clicked() ), this, SLOT( hipeBotonHiperfocoActivado() ) );
+        QObject::connect(hipeListaDeMetodos, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT( hipeManejadorDeListadeItems(QListWidgetItem*)) );
+        //hipeBotonDeHiperfoco
+
+        //Estructura del frame
+        {
+        hipeLayoutH1->addWidget(hipeTituloPrincipal);  //añadimos el titulo a su espacio horizontal
+
+        hipeLayoutH2->addWidget(hipeTextoDuracion);   //añadimos el texto de duracion a su espacio horizontal H2
+        hipeLayoutH2->addWidget(hipeTextoTiempoEstablecido); //añadimos el texto de tiempo establecido que aparecera cuando se active el boton
+        hipeLayoutH2->addWidget(hipeTextoHoras);      //añadimos el texto de duracion a su espacio horizontal H2
+        hipeLayoutH2->addWidget(hipeHorasSpinBox);    //añadimos el espacio de seleccion
+        hipeLayoutH2->addWidget(hipeTextoMinutos);    //añadimos el texto minutos
+        hipeLayoutH2->addWidget(hipeMinutosSpinBox);  //añadimos el espacio de seleccion
+
+        hipeLayoutH3->addWidget(hipeBotonDeHiperfoco); //añadimos el boton al espacio H3
+
+        hipeLayoutPrincipal->addLayout(hipeLayoutH1);  //añadimos el espacio al layout principal
+        hipeLayoutPrincipal->addLayout(hipeLayoutH2);  //añadimos el espacio H2 al layout principal
+        hipeLayoutPrincipal->addLayout(hipeLayoutH3);  //añadimos el espacio H3 al layout principal
+
+        //Interfaz de Lista de Metodos
+        hipeLayoutPrincipal->addWidget(hipeTituloListaMetodos);
+        hipeLayoutPrincipal->addWidget(hipeListaDeMetodos);
+
+        //Interfaz Tecnicas
+        hipeLayoutPrincipal->addWidget(hipeTituloPomodoro);
+        hipeLayoutPrincipal->addWidget(hipeTextoPomodoro);
+        hipeLayoutPrincipal->addWidget(hipeTituloTitulo5Segundos);
+        hipeLayoutPrincipal->addWidget(hipeTextoTitulo5Segundos);
+        hipeLayoutPrincipal->addWidget(hipeTituloMindfulness);
+        hipeLayoutPrincipal->addWidget(hipeTextoMindfulness);
+
+        hipeLayoutPrincipal->addStretch();            //añadimos espacio para que este mas arriba
+        }
+    }
+
+    // -----------------------------------------------------------------------------
     // AREA DE ACOMODO DE FRAMES
 
     QVBoxLayout* disposicionPrincipal = new QVBoxLayout(this);
@@ -1474,6 +1653,7 @@ MainWindow::MainWindow(QWidget *parent)
     disposicionPrincipal->addWidget(calDiaFrame);
     disposicionPrincipal->addWidget(frameRegistroEmociones);
     disposicionPrincipal->addWidget(frameAjustes);
+    disposicionPrincipal->addWidget(frameHiperfoco);
     //disposicionPrincipal->addWidget(scrollRegistroUsuario); // modificacion para agregar scroll al frame de registro de usuario
 
 
@@ -1538,6 +1718,8 @@ MainWindow::MainWindow(QWidget *parent)
         connect(barNaBotonCalendario, SIGNAL(clicked()), this, SLOT(barNaMostrarCalendario()));
         // conectamos la señal para activar el frame de journaling
         connect(barNaBotonJournaling, SIGNAL(clicked()), this, SLOT(barNaMostrarJournaling()));
+        // conectamos la señal para activar el framde de hiperfoco
+        connect(barNaBotonHiperfoco, SIGNAL(clicked()), this, SLOT(barNaMostrarHiperfoco()));
         // conectamos la señal para activar el frame de registro de emociones
         connect(barNaBotonRegistroEmociones, SIGNAL(clicked()), this, SLOT(barNaMostrarRegistroEmociones()));
         // conectamos la señal del boton 1 de la barra de navegación
@@ -2850,6 +3032,18 @@ void MainWindow::barNaMostrarJournaling()
     activarInterfazJournaling();
 }
 
+// ! método para activar la interfaz de hiperfoco
+// ! versión 1.0
+// ! modificado por mbraulio
+// ? Sin cambios primera versión
+void MainWindow::barNaMostrarHiperfoco()
+{
+    // ? se desactivan todas las interfaces (frames)
+    barNaDesactivarTodosLosFrames();
+    // ? se activa el frame de hiperfoco
+    activarInterfazHiperfoco();
+}
+
 // ! método para activar la interfaz de registro de emociones
 // ! versión 1.0
 // ! modificado por Aether
@@ -2876,6 +3070,7 @@ void MainWindow::barNaDesactivarTodosLosFrames()
     desactivarInterfazCalendario();
     desactivarInterfazRegistroEmociones();
     desactivarInterfazAjustes();
+    desactivarInterfazHiperfoco();
 }
 
 // ! método para activar o desactivar los botones de la barra de navegación
@@ -2976,6 +3171,10 @@ void MainWindow::barNaConfigurarBotones(const int& nBoton, const bool& activar, 
         //boton->setText("Eliminar Evento");
         boton->setIcon(*jourIconoEliminarEntrada);
         break;
+    // ? Para mostrar la interfaz de hiperfoco
+    case 11:
+            boton->setIcon(*hipeIconoBotonVerMetodos);
+            break;
     // ? En el caso default no se asigna ningun icono
     default:
         boton->setIcon(QIcon());
@@ -3065,6 +3264,11 @@ void MainWindow::barNaEjecutorFunciones(const int& nFuncion)
         std::cout << "CalEliminarEvento" << std::endl;
         calEliminarEvento();
         break;
+    // ? Para mostrar la interfaz de hiperfoco
+    case 11:
+            std::cout << "hipeIconoBotonVerMetodos" << std::endl;
+            hipeBotonVerMetodos();
+            break;
     default:
         break;
 
@@ -4894,6 +5098,197 @@ void MainWindow::ajusCambiarTema(int nItem)
     // guardamos el json
     configuraciones->guardar();
 }
+
+
+// ////////////////////////////////////////////////////////////////////////////////////////////
+// -------------------------------------------------------------------------------------------
+// RELACIONADO CON LA INTERFAZ HIPERFOCO
+
+// ! Metodo para activar la interfaz de hiperfoco.
+// ! versión 1.0
+// ! modificado por mbraulio
+// ? Sin cambios primera versión
+void MainWindow::activarInterfazHiperfoco()
+{
+    frameHiperfoco->show();
+    barNaConfigurarBotones(0, true, 11, "Ver lista de Metodos");
+    hipeMostrarComponentesPorDefecto();
+}
+
+// ! Metodo para desactivar la interfaz de hiperfoco.
+// ! versión 1.0
+// ! modificado por mbraulio
+// ? Sin cambios primera versión
+void MainWindow::desactivarInterfazHiperfoco()
+{
+    frameHiperfoco->hide();
+}
+
+// ! Metodo que establece el cambio en H2 para colocar el tiempo establecido por el usuario y activar el temporizador.
+// ! versión 1.0
+// ! modificado por mbraulio
+// ? Sin cambios primera versión
+void MainWindow::hipeBotonHiperfocoActivado()
+{
+    int horaValor = hipeHorasSpinBox->value(); //obtenemos las horas que establecio el usuario
+    int minutosValor = hipeMinutosSpinBox->value(); //obtenemos los minutos que establecio el usuario
+    hipeTextoHoras->hide();                     //escondemos
+    hipeHorasSpinBox->hide();
+    hipeTextoMinutos->hide();
+    hipeMinutosSpinBox->hide();
+    hipeTextoTiempoEstablecido->show();
+
+    QMessageBox mensajeDeConfirmacion;
+    mensajeDeConfirmacion.setWindowTitle("Establecer");
+    mensajeDeConfirmacion.setText(QString("Hora: %1\tMinutos: %2").arg(horaValor).arg(minutosValor));
+    mensajeDeConfirmacion.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+
+    QPushButton *okButton = qobject_cast<QPushButton*>(mensajeDeConfirmacion.button(QMessageBox::Ok));
+    if (okButton) {
+        okButton->setText("Aceptar");
+        okButton->setStyleSheet("background-color: green; color: white;");
+    }
+
+    QPushButton *cancelButton = qobject_cast<QPushButton*>(mensajeDeConfirmacion.button(QMessageBox::Cancel));
+    if (cancelButton) {
+        cancelButton->setText("Cancelar");
+        cancelButton->setStyleSheet("background-color: red; color: white;");
+    }
+
+    int reply = mensajeDeConfirmacion.exec();
+    if (reply == QMessageBox::Ok) {
+        //QMessageBox::information(this, "Confirmado", "Has aceptado.");
+        hipeBotonDeHiperfoco->setIcon(*hipeIconoHiperfocoActivado);
+        // Calcular el tiempo en milisegundos
+        int tiempoTotal = (horaValor * 3600 + minutosValor * 60) * 1000;
+        timer->start(tiempoTotal);
+        hipeTextoTiempoEstablecido->setText(QString("Tiempo Restante: %1:%2 hrs").arg(horaValor, 2, 10, QChar('0')).arg(minutosValor, 2, 10, QChar('0')));
+
+        connect(timer, SIGNAL(timeout()), this, SLOT( hipeBotonHiperfocoDesactivado() ) );
+    } else {
+        //QMessageBox::information(this, "Cancelado", "Has cancelado.");
+        hipeMostrarComponentesPorDefecto();
+    }
+
+}
+
+// ! Metodo para regresar los items cuando se termina el temporizador.
+// ! versión 1.0
+// ! modificado por mbraulio
+// ? Sin cambios primera versión
+void MainWindow::hipeBotonHiperfocoDesactivado()
+{
+    QMessageBox::information(hipeBotonDeHiperfoco->parentWidget(), "Tiempo de Hiperfoco terminado", "Toma un descanso :) ");
+    hipeBotonDeHiperfoco->setIcon(*hipeIconoHiperfocoDesactivado);
+    hipeHorasSpinBox->show();
+    hipeMinutosSpinBox->show();
+    hipeTextoHoras->show();
+    hipeTextoMinutos->show();
+    hipeTextoTiempoEstablecido->hide();
+}
+
+// ! Metodo para ver la lista de metodos para mindfulness.
+// ! versión 1.0
+// ! modificado por mbraulio
+// ? Sin cambios primera versión
+void MainWindow::hipeBotonVerMetodos()
+{
+    hipeTituloPrincipal->hide();
+    hipeTextoDuracion->hide();
+    hipeTextoHoras->hide();
+    hipeTextoMinutos->hide();
+    hipeHorasSpinBox->hide();
+    hipeMinutosSpinBox->hide();
+    hipeBotonDeHiperfoco->hide();
+
+    hipeTituloListaMetodos->show();
+    hipeListaDeMetodos->show();
+
+    hipeTituloPomodoro->hide();
+    hipeTextoPomodoro->hide();
+    hipeTituloTitulo5Segundos->hide();
+    hipeTextoTitulo5Segundos->hide();
+    hipeTituloMindfulness->hide();
+    hipeTextoMindfulness->hide();
+}
+
+// ! Metodo para tener los componentes que por defecto pertenecen a la interfaz de hiperfoco.
+// ! versión 1.0
+// ! modificado por mbraulio
+// ? Sin cambios primera versión
+void MainWindow::hipeMostrarComponentesPorDefecto()
+{
+    hipeTituloPrincipal->show();
+    hipeTextoDuracion->show();
+    hipeTextoHoras->show();
+    hipeTextoMinutos->show();
+    hipeHorasSpinBox->show();
+    hipeMinutosSpinBox->show();
+    hipeBotonDeHiperfoco->show();
+
+    hipeTituloListaMetodos->hide();
+    hipeListaDeMetodos->hide();
+
+    hipeTituloPomodoro->hide();
+    hipeTextoPomodoro->hide();
+    hipeTituloTitulo5Segundos->hide();
+    hipeTextoTitulo5Segundos->hide();
+    hipeTituloMindfulness->hide();
+    hipeTextoMindfulness->hide();
+}
+
+// ! Metodo para manejar los items de la lista de metodos.
+// ! versión 1.0
+// ! modificado por mbraulio
+// ? Sin cambios primera versión
+void MainWindow::hipeManejadorDeListadeItems(QListWidgetItem *item)
+{
+    if (item == hipeItemPomodoro) {
+        hipeInfoTecnicaPomodoro();
+    } else if (item == hipeItem5Segundos) {
+        hipeInfoTecnica5segundos();
+    } else if (item == hipeItemMindfulness) {
+        hipeInfoMindfulness();
+    }
+
+}
+
+// ! Metodo para mostrar los items del metodo de Tecnica Pomodoro.
+// ! versión 1.0
+// ! modificado por mbraulio
+// ? Sin cambios primera versión
+void MainWindow::hipeInfoTecnicaPomodoro()
+{
+    hipeTituloListaMetodos->hide();
+    hipeListaDeMetodos->hide();
+    hipeTituloPomodoro->show();
+    hipeTextoPomodoro->show();
+}
+
+// ! Metodo para mostrar los items del metodo de Tecnica dede 5 segundos.
+// ! versión 1.0
+// ! modificado por mbraulio
+// ? Sin cambios primera versión
+void MainWindow::hipeInfoTecnica5segundos()
+{
+    hipeTituloListaMetodos->hide();
+    hipeListaDeMetodos->hide();
+    hipeTituloTitulo5Segundos->show();
+    hipeTextoTitulo5Segundos->show();
+}
+
+// ! Metodo para mostrar los items del metodo de Tecnica de Mindfulness.
+// ! versión 1.0
+// ! modificado por mbraulio
+// ? Sin cambios primera versión
+void MainWindow::hipeInfoMindfulness()
+{
+    hipeTituloListaMetodos->hide();
+    hipeListaDeMetodos->hide();
+    hipeTituloMindfulness->show();
+    hipeTextoMindfulness->show();
+}
+
 
 // ////////////////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------------------------

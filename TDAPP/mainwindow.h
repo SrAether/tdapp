@@ -342,8 +342,42 @@ class MainWindow : public QWidget
     QScrollArea *ajusScroll; // area de scroll para la pantalla de ajustes
     QVBoxLayout *ajusPrincipal; // layout principal
 
-
-
+    // -----------------------------------------
+    // COSAS DENTRO DE FRAME HIPERFOCO (hipe)
+    //Iconos
+    QIcon *hipeIconoHiperfocoActivado;
+    QIcon *hipeIconoHiperfocoDesactivado;
+    QIcon *hipeIconoBotonVerMetodos;
+    // variables
+    QVBoxLayout *hipeLayoutPrincipal;
+    QHBoxLayout *hipeLayoutH1; //para el titulo
+    QHBoxLayout *hipeLayoutH2; //para establecer el tiempo de duracion
+    QHBoxLayout *hipeLayoutH3; //para el boton
+    //H1
+    QLabel *hipeTituloPrincipal;
+    //H2
+    QLabel *hipeTextoDuracion;
+    QLabel *hipeTextoHoras;
+    QLabel *hipeTextoMinutos;
+    QLabel *hipeTextoTiempoEstablecido;
+    QSpinBox *hipeHorasSpinBox;
+    QSpinBox *hipeMinutosSpinBox;
+    QTimer *timer;
+    //H3
+    QPushButton *hipeBotonDeHiperfoco;
+    //Interfaz de Metodos
+    QLabel *hipeTituloListaMetodos;
+    QListWidget *hipeListaDeMetodos;
+    QListWidgetItem *hipeItemPomodoro;
+    QListWidgetItem *hipeItem5Segundos;
+    QListWidgetItem *hipeItemMindfulness;
+    //Interfaces individuales de cada metodo
+    QLabel *hipeTituloPomodoro;
+    QLabel *hipeTextoPomodoro;
+    QLabel *hipeTituloTitulo5Segundos;
+    QLabel *hipeTextoTitulo5Segundos;
+    QLabel *hipeTituloMindfulness;
+    QLabel *hipeTextoMindfulness;
 
     // Métodos privados de la ventana
     void verificacionInicial(); // ! verifica la existencia de los archivos y carpetas necesarios para el funcionamiento de la aplicación y trata de crearlos si no existen
@@ -404,6 +438,7 @@ private slots:
     void barNaCerrarSesion(); // ! cierra la sesión del usuario
     void barNaMostrarCalendario(); // ! muestra la interfaz del calendario
     void barNaMostrarJournaling(); // ! muestra la interfaz de journaling
+    void barNaMostrarHiperfoco(); // ! muestra la interfaz de hiperfoco
     void barNaMostrarRegistroEmociones(); // ! muestra la interfaz de registro de emociones
     void barNaDesactivarTodosLosFrames(); // ! oculta todos los frames de la ventana
     void barNaBotonSeccionActual0Click(); // ! metodo para el boton de la seccion actual 0
@@ -580,7 +615,18 @@ private slots:
     void ajusClickCambiarSonidoAlarma(); // ! cambia el sonido de la alarma
     void ajusCambiarTema(int); // ! cambia el tema de la aplicación
 
-
+    // //////////////////////////////////////////////////////////////////////////////////
+    //--------------------------- SLOTS HIPERFOCO ---------------------------------
+    void activarInterfazHiperfoco();  //activamos la interfaz
+    void desactivarInterfazHiperfoco(); //desactivamos la interfaz
+    void hipeBotonHiperfocoActivado();  //que sucede cuando se activa el boton
+    void hipeBotonHiperfocoDesactivado();         //que sucede cuando se desactiva el boton
+    void hipeBotonVerMetodos();
+    void hipeMostrarComponentesPorDefecto();
+    void hipeManejadorDeListadeItems(QListWidgetItem *item);
+    void hipeInfoTecnicaPomodoro();
+    void hipeInfoTecnica5segundos();
+    void hipeInfoMindfulness();
 
     // // DEPENDENCIAS DE LA INTERFAZ HIPERFOCO
     // void mostrarAreaHiperfoco(); // ! muestra la interfaz de hiperfoco
