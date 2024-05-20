@@ -1522,7 +1522,7 @@ MainWindow::MainWindow(QWidget *parent)
             hipeBotonDeHiperfoco = new QPushButton(frameHiperfoco); //creamos el boton de hiperfoco
             hipeBotonDeHiperfoco->setMinimumSize(420,420);
             hipeBotonDeHiperfoco->setMaximumSize(420,420);
-            hipeBotonDeHiperfoco->setCheckable(true);
+            //hipeBotonDeHiperfoco->setCheckable(true);
             hipeBotonDeHiperfoco->setIcon(*hipeIconoHiperfocoDesactivado);
             hipeBotonDeHiperfoco->setIconSize(QSize(400,400));
         }
@@ -1610,6 +1610,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
         //conexiones
         QObject::connect(hipeBotonDeHiperfoco, SIGNAL( clicked() ), this, SLOT( hipeBotonHiperfocoActivado() ) );
+        QObject::connect(timer, SIGNAL(timeout()), this, SLOT( hipeBotonHiperfocoDesactivado() ) );
         QObject::connect(hipeListaDeMetodos, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT( hipeManejadorDeListadeItems(QListWidgetItem*)) );
         //hipeBotonDeHiperfoco
 
@@ -5150,6 +5151,13 @@ void MainWindow::hipeBotonHiperfocoActivado()
     hipeTextoMinutos->hide();
     hipeMinutosSpinBox->hide();
     hipeTextoTiempoEstablecido->show();
+    if (timer->isActive())
+    {
+        hipeMostrarComponentesPorDefecto();
+        timer->stop();
+        QMessageBox::information(frameHiperfoco,"Información", "Temporizador interrumpido");
+        return;
+    }
 
     QMessageBox mensajeDeConfirmacion;
     mensajeDeConfirmacion.setWindowTitle("Establecer");
@@ -5169,20 +5177,22 @@ void MainWindow::hipeBotonHiperfocoActivado()
     }
 
     int reply = mensajeDeConfirmacion.exec();
-    if (reply == QMessageBox::Ok) {
+    if (reply == QMessageBox::Ok)
+    {
+        int tiempoTotal = 0;
         //QMessageBox::information(this, "Confirmado", "Has aceptado.");
         hipeBotonDeHiperfoco->setIcon(*hipeIconoHiperfocoActivado);
         // Calcular el tiempo en milisegundos
-        int tiempoTotal = (horaValor * 3600 + minutosValor * 60) * 1000;
+        tiempoTotal = (horaValor * 3600 + minutosValor * 60) * 1000;
         timer->start(tiempoTotal);
         hipeTextoTiempoEstablecido->setText(QString("Tiempo Restante: %1:%2 hrs").arg(horaValor, 2, 10, QChar('0')).arg(minutosValor, 2, 10, QChar('0')));
-
-        connect(timer, SIGNAL(timeout()), this, SLOT( hipeBotonHiperfocoDesactivado() ) );
-    } else {
+    }
+    else
+    {
         //QMessageBox::information(this, "Cancelado", "Has cancelado.");
         hipeMostrarComponentesPorDefecto();
+        timer->stop();
     }
-
 }
 
 // ! Metodo para regresar los items cuando se termina el temporizador.
@@ -5238,6 +5248,8 @@ void MainWindow::hipeMostrarComponentesPorDefecto()
     hipeHorasSpinBox->show();
     hipeMinutosSpinBox->show();
     hipeBotonDeHiperfoco->show();
+    hipeBotonDeHiperfoco->setIcon(*hipeIconoHiperfocoDesactivado);
+    hipeTextoTiempoEstablecido->hide();
 
     hipeTituloListaMetodos->hide();
     hipeListaDeMetodos->hide();

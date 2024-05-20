@@ -27,7 +27,9 @@ CONFIG += lrelease
 CONFIG += embed_translations
 
 # Incluir la biblioteca OpenSSL para encriptar y desencriptar
-LIBS += -lssl -lcrypto
+LIBS += -LC:\OpenSSL-Win64\lib\VC\x64\MD -lssl -lcrypto
+
+INCLUDEPATH += C:\OpenSSL-Win64\include
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
