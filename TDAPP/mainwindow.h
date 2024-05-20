@@ -351,6 +351,7 @@ class MainWindow : public QWidget
     QIcon *hipeIconoHiperfocoDesactivado;
     QIcon *hipeIconoBotonVerMetodos;
     // variables
+    bool banderaHiperfocoActivo; // ! bandera que indica si el hiperfoco esta activo
     QVBoxLayout *hipeLayoutPrincipal;
     QHBoxLayout *hipeLayoutH1; //para el titulo
     QHBoxLayout *hipeLayoutH2; //para establecer el tiempo de duracion

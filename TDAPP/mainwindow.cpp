@@ -1476,11 +1476,13 @@ MainWindow::MainWindow(QWidget *parent)
         frameHiperfoco = new QFrame(framePrincipal);    //creamos el Frame de la interfaz de hiperfoco
         frameHiperfoco->hide();                         //lo escondemos por defecto
 
+        banderaHiperfocoActivo = false;                  //bandera para saber si el hiperfoco esta activo o no
+
         //Iconos
         {
             hipeIconoHiperfocoActivado = new QIcon(QString(RUTA_ICONOS.c_str()) + "hiperfocoActivado.png");
             hipeIconoHiperfocoDesactivado = new QIcon(QString(RUTA_ICONOS.c_str()) + "hiperfoco.png");
-            hipeIconoBotonVerMetodos = new QIcon(QString(RUTA_ICONOS.c_str()) + "editar_entrada.png");
+            hipeIconoBotonVerMetodos = new QIcon(QString(RUTA_ICONOS.c_str()) + "icono_de_metodos.png");
         }
 
         hipeLayoutPrincipal = new QVBoxLayout(frameHiperfoco); //creamos el layout principal
@@ -5127,6 +5129,15 @@ void MainWindow::activarInterfazHiperfoco()
     frameHiperfoco->show();
     barNaConfigurarBotones(0, true, 11, "Ver lista de Metodos");
     hipeMostrarComponentesPorDefecto();
+    if (banderaHiperfocoActivo)
+    {
+        hipeTextoHoras->hide();                     //escondemos
+        hipeHorasSpinBox->hide();
+        hipeTextoMinutos->hide();
+        hipeMinutosSpinBox->hide();
+        hipeTextoTiempoEstablecido->show();
+    }
+
 }
 
 // ! Metodo para desactivar la interfaz de hiperfoco.
@@ -5144,6 +5155,7 @@ void MainWindow::desactivarInterfazHiperfoco()
 // ? Sin cambios primera versión
 void MainWindow::hipeBotonHiperfocoActivado()
 {
+    banderaHiperfocoActivo = true; //activamos la bandera para saber que el hiperfoco esta activo
     int horaValor = hipeHorasSpinBox->value(); //obtenemos las horas que establecio el usuario
     int minutosValor = hipeMinutosSpinBox->value(); //obtenemos los minutos que establecio el usuario
     hipeTextoHoras->hide();                     //escondemos
@@ -5156,6 +5168,7 @@ void MainWindow::hipeBotonHiperfocoActivado()
         hipeMostrarComponentesPorDefecto();
         timer->stop();
         QMessageBox::information(frameHiperfoco,"Información", "Temporizador interrumpido");
+        banderaHiperfocoActivo = false;
         return;
     }
 
@@ -5201,6 +5214,7 @@ void MainWindow::hipeBotonHiperfocoActivado()
 // ? Sin cambios primera versión
 void MainWindow::hipeBotonHiperfocoDesactivado()
 {
+    banderaHiperfocoActivo = false;
     QMessageBox::information(hipeBotonDeHiperfoco->parentWidget(), "Tiempo de Hiperfoco terminado", "Toma un descanso :) ");
     hipeBotonDeHiperfoco->setIcon(*hipeIconoHiperfocoDesactivado);
     hipeHorasSpinBox->show();
