@@ -156,9 +156,6 @@ MainWindow::MainWindow(QWidget *parent)
     // hacemos que la ventana sea de 720 redimensionable
     this->setMinimumSize(1240, 800);
     // establecemos el estilo de la aplicación
-
-    //this->setStyleSheet(temas[0].c_str());
-    //this->setStyleSheet(temas[stoi((*configuraciones)["tema"].empty() ? "0" : (*configuraciones)["tema"].c_str())].c_str());
     {
         std::string tm = (*configuraciones)["tema"];
         std::cout << "Tema: " << tm << std::endl;
@@ -172,9 +169,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     // creamos el frame principal
     framePrincipal = new QFrame(this);
-    //framePrincipal->setStyleSheet("background-color: #000000;"); // estilo para el frame
-    // establecemos el tamaño del frame principal
-    //framePrincipal->setGeometry(0, 0, 1920, 1080);
+
 
     // -----------------------------------------------------------------------------
     // INICIO DE SESIÓN NO COMPLETADO
@@ -202,58 +197,34 @@ MainWindow::MainWindow(QWidget *parent)
         // Label foto de perfil
         inSeFotoPerfil = new QLabel(frameInicioSesion);
         inSeFotoPerfil->setMaximumSize(300, 300);
-        // lo centramos
-        //inSeFotoPerfil->setAlignment(Qt::AlignCenter);
-        // hacemos que la imagen se ajuste al tamaño del label
         inSeFotoPerfil->setScaledContents(true);
 
         // SELECTOR DE USUARIO
         // creamos un selector de usuario
         inSeSelectorUsuario = new QComboBox(frameInicioSesion);
-        // establecemos la posición del selector
-        //inSeSelectorUsuario->setGeometry(100, 100, 200, 50);
-        // establecemos un tamaño minimo
         inSeSelectorUsuario->setMinimumSize(200, 50);
 
         // CAMPO DE CONTRASEÑA
         // creamos un campo de contraseña
         inSeCampoContra = new QLineEdit(frameInicioSesion);
-        // establecemos la posición del campo de contraseña
-        //inSeCampoContra->setGeometry(100, 200, 200, 50);
-        // establecemos el texto del campo de contraseña
         inSeCampoContra->setPlaceholderText("Contraseña");
-        // establecemos que el campo sea de tipo contraseña
         inSeCampoContra->setEchoMode(QLineEdit::Password);
         inSeCampoContra->setMinimumSize(100, 50);
 
         // BOTÓN DE INICIAR SESIÓN
         // creamos un botón para iniciar sesión
         inSeBotonIniciarSesion = new QPushButton(frameInicioSesion);
-        // establecemos la posición del botón de iniciar sesión
-        //inSeBotonIniciarSesion->setGeometry(100, 300, 200, 50);
-        // establecemos el texto del botón de iniciar sesión
         inSeBotonIniciarSesion->setText("Iniciar Sesión");
 
         // BOTÓN DE REGISTRARSE
         // creamos un botón para registrarse
         inSeBotonRegistrarse = new QPushButton(frameInicioSesion);
-        // establecemos la posición del botón de registrarse
-        //inSeBotonRegistrarse->setGeometry(100, 400, 200, 50);
-        // establecemos el texto del botón de registrarse
         inSeBotonRegistrarse->setText("Registrarse");
 
         // BOTÓN DE RECUPERAR CONTRASEÑA
         // creamos un botón para recuperar contraseña
         inSeBotonRecuperarContra = new QPushButton(frameInicioSesion);
-        // establecemos la posición del botón de recuperar contraseña
-        //inSeBotonRecuperarContra->setGeometry(100, 500, 200, 50);
-        // establecemos el texto del botón de recuperar contraseña
         inSeBotonRecuperarContra->setText("Recuperar Contraseña");
-
-        // // Layout img
-        // inSeImgLayout = new QHBoxLayout(frameInicioSesion);
-        // inSeImgLayout->addWidget(inSeFotoPerfil);
-        // inSeImgLayout->addWidget(inSeSelectorUsuario);
 
         // Layout
         inSeLayout = new QVBoxLayout(frameInicioSesion);
@@ -264,12 +235,6 @@ MainWindow::MainWindow(QWidget *parent)
         inSeLayout->addWidget(inSeBotonIniciarSesion);
         inSeLayout->addWidget(inSeBotonRegistrarse);
         inSeLayout->addWidget(inSeBotonRecuperarContra);
-
-        // // Layout Principal
-        // inSePrincipal = new QVBoxLayout(frameInicioSesion);
-        // inSePrincipal->addLayout(inSeImgLayout);
-        // inSePrincipal->addLayout(inSeLayout);
-
 
     }
 
@@ -295,7 +260,6 @@ MainWindow::MainWindow(QWidget *parent)
 
         // creamos un frame para el registro de usuarios
         frameRegistroUsuario = new QFrame(framePrincipal);
-        // ocultamos por defecto
         frameRegistroUsuario->hide();
         frameRegistroUsuario->setMinimumWidth(500);
         frameRegistroUsuario->setMinimumHeight(500);
@@ -309,38 +273,26 @@ MainWindow::MainWindow(QWidget *parent)
         // creamos una etiqueta para el registro de usuarios
         etiquetaRegistroUsuario = new QLabel{QString::fromStdString(contenidoEtiquetaRegistroUsuario), rUWidget};
         etiquetaRegistroUsuario->setMaximumHeight(30);
-        // establecemos la posición de la etiqueta de registro de usuarios
-        //etiquetaRegistroUsuario->setGeometry(100, 50, 200, 50);
 
         // CAMPO PARA INGRESAR NOMBRE
         // creamos un campo para ingresar el nombre
         campoRegistroNombre = new QLineEdit(rUWidget);
-        // establecemos el texto del campo para ingresar el nombre
         campoRegistroNombre->setPlaceholderText("Nombre");
-        // mensaje al pasar el cursor sobre el campo
-        campoRegistroNombre->setToolTip("COLOCA TU NOMBRE PEQUEÑO INSECTO");
+        campoRegistroNombre->setToolTip("Coloca tu nombre");
         campoRegistroNombre->setToolTipDuration(3000); // duración de cosito emergente
 
         // CAMPO PARA INGRESAR APODO (USERNAME)
-        // creamos un campo para ingresar el apodo
         campoRegistroNombreUs = new QLineEdit(rUWidget);
-        // establecemos el texto del campo para ingresar el apodo
         campoRegistroNombreUs->setPlaceholderText("Como le gustaria que lo llamemos?");
 
         // CAMPO PARA INGRESAR CONTRASEÑA
-        // creamos un campo para ingresar la contraseña
         campoRegistroContra = new QLineEdit(rUWidget);
-        // establecemos el texto del campo para ingresar la contraseña
         campoRegistroContra->setPlaceholderText("Contra");
-        // establecemos que el campo sea de tipo contraseña
         campoRegistroContra->setEchoMode(QLineEdit::Password);
 
         // CAMPO PARA CONFIRMAR CONTRASEÑA
-        // creamos un campo para confirmar la contraseña
         campoRegistroContraConf = new QLineEdit(rUWidget);
-        // establecemos el texto del campo para confirmar la contraseña
         campoRegistroContraConf->setPlaceholderText("Confirmar Contra");
-        // establecemos que el campo sea de tipo contraseña y que muestre la opción de mostrar la contraseña
         campoRegistroContraConf->setEchoMode(QLineEdit::Password);
 
 
@@ -349,9 +301,7 @@ MainWindow::MainWindow(QWidget *parent)
         // BOTÓN PARA SELECCIONAR SI DESEA REALIZAR COPIA DE SEGURIDAD
         // creamos un botón para seleccionar si desea realizar copia de seguridad
         botonRegistroCopiaSeguridad = new QPushButton(rUWidget);
-        // establecemos el texto del botón para seleccionar si desea realizar copia de seguridad
         botonRegistroCopiaSeguridad->setText("Da click para activar copia de seguridad");
-        // Mensaje cuando pasamos el cursor sobre el boton
 
 
         // SELECTOR FRECUENCIA COPIA DE SEGURIDAD
@@ -497,41 +447,23 @@ MainWindow::MainWindow(QWidget *parent)
         // SELECTOR DE USUARIO
         // creamos un selector de usuario
         reCoSelectorUsuario = new QComboBox(frameRecuperarContra);
-        // establecemos la posición del selector
-        //reCoSelectorUsuario->setGeometry(100, 100, 200, 50);
+
 
         // PREGUNTA DE RECUPERACIÓN
-        // creamos una etiqueta para la pregunta de recuperación
         reCoPreguntaRecuperacion = new QLabel{QString::fromStdString(reCoPreguntaContra), frameRecuperarContra};
-        // establecemos la posición de la etiqueta de la pregunta de recuperación
-        //reCoPreguntaRecuperacion->setGeometry(400, 150, 1200, 300);
-        // colocamos salto de linea automatico
         reCoPreguntaRecuperacion->setWordWrap(true);
-        //reCoPreguntaRecuperacion->setMaximumHeight(100);
 
         // CAMPO PARA RESPONDER PREGUNTA DE RECUPERACIÓN
-        // creamos un campo para responder la pregunta de recuperación
         reCoCampoRespuesta = new QLineEdit(frameRecuperarContra);
-        // establecemos la posición del campo para responder la pregunta de recuperación
-        //reCoCampoRespuesta->setGeometry(100, 200, 200, 50);
-        // establecemos el texto del campo para responder la pregunta de recuperación
         reCoCampoRespuesta->setPlaceholderText("Respuesta de Recuperación");
 
 
         // BOTÓN PARA RECUPERAR CONTRASEÑA
-        // creamos un botón para recuperar la contraseña
         reCoBotonConfirmar = new QPushButton(frameRecuperarContra);
-        // establecemos la posición del botón para recuperar la contraseña
-        //reCoBotonConfirmar->setGeometry(100, 250, 200, 50);
-        // establecemos el texto del botón para recuperar la contraseña
         reCoBotonConfirmar->setText("Recuperar Contraseña");
 
         // BOTÓN PARA CANCELAR
-        // creamos un botón para cancelar
         reCoBotonCancelar = new QPushButton(frameRecuperarContra);
-        // establecemos la posición del botón para cancelar
-        //reCoBotonCancelar->setGeometry(100, 300, 200, 50);
-        // establecemos el texto del botón para cancelar
         reCoBotonCancelar->setText("Cancelar");
 
         // Layout
@@ -599,15 +531,12 @@ MainWindow::MainWindow(QWidget *parent)
         jourReEnCampoTitulo = new QLineEdit(frameJournaling);
         jourReEnCampoTitulo->hide();
         jourReEnCampoTitulo->setPlaceholderText("Título de la entrada");
-        //jourReEnCampoTitulo->setMinimumSize(600, 100);
+
         // campo para el texto de la entrada
         jourReEnCampoTexto = new QTextEdit(frameJournaling);
         jourReEnCampoTexto->hide();
-        //jourReEnCampoTexto->setMinimumSize(600, 400);
+
         // layout para la entrada
-        // jourReEnLayout = new QVBoxLayout(frameJournaling);
-        // jourReEnLayout->addWidget(jourReEnCampoTexto, 1);
-        // jourReEnLayout->addWidget(jourReEnCampoTitulo);
         jourLiNoLayout->addWidget(jourReEnCampoTitulo);
         jourLiNoLayout->addWidget(jourReEnCampoTexto, 1);
     }
@@ -783,22 +712,13 @@ MainWindow::MainWindow(QWidget *parent)
         {
             for (int ncolumna = 0; ncolumna < 7; ncolumna++)
             {
-
-                // creamos un frame para el cuadro del calendario
-                //QFrame* calCuadro = new QFrame(frameCalendario);
                 // agregamos el cuadro a un boton
                 QPushButton* calCuadro = new QPushButton(frameCalendario);
                 calCuadro->setMinimumSize(150, 100);
                 QPushButton* calEmocionDia = new QPushButton(calCuadro);
                 // creamos un grid layout para el cuadro del calendario
                 QGridLayout* calCuadroLayout = new QGridLayout(calCuadro);
-                // Label para Emocion del dia
-                //QLabel* calEmocionDia = new QLabel(calCuadro);
 
-                // le damos una emocion de prueba
-                //calEmocionDia->setText("Feliz");
-                // le damos una emoción con un icono
-                //calEmocionDia->setPixmap(QPixmap(QString(RUTA_ICONOS.c_str()) + "sorpresa-icono.svg"));
                 calEmocionDia->setIcon(QIcon(QString(RUTA_ICONOS.c_str()) + "sorpresa-icono.svg"));
                 calEmocionDia->setIconSize(QSize(12, 12));
                 // establecemos el tamaño del icono a 20x20
@@ -822,8 +742,6 @@ MainWindow::MainWindow(QWidget *parent)
                 QLabel* calCantidadEventos = new QLabel(calCuadro);
                 // le damos una cantidad de eventos de prueba
                 calCantidadEventos->setText("* * *");
-                //calCantidadEventos->setMinimumSize(50,50);
-                //calCantidadEventos->setMinimumWidth(200);
                 // lo agregamos al layout del cuadro
                 calCuadroLayout->addWidget(calCantidadEventos, 1, 0);
 
@@ -1265,18 +1183,7 @@ MainWindow::MainWindow(QWidget *parent)
         reEmTitulo->setText("¿Como te sientes?");
         reEmTitulo->setMaximumHeight(100);
         reEmTitulo->setAlignment(Qt::AlignCenter); // centrado
-        //reEmTitulo->setStyleSheet("background-color: rgba(255,0,255,255");
-        // reEmTitulo->setAlignment(Qt::AlignCenter);
-        // reEmTitulo->setStyleSheet(
-        //     "QLabel {"
-        //     "color: white;"
-        //     "font-size: 30px;"
-        //     "font-weight: bold;"
-        //     //"background-color: rgba(0,0,255,255);"
-        //     // hacemos que sea redimensionable
-        //     // "QSizePolicy: QSizePolicy::Expanding, QSizePolicy::Expanding;"
-        //     "}"
-        // );
+
         // // tamaño de los botones
         reEmTamBotones = new QSize(100, 100);
 
@@ -1477,7 +1384,7 @@ MainWindow::MainWindow(QWidget *parent)
         frameHiperfoco->hide();                         //lo escondemos por defecto
 
         banderaHiperfocoActivo = false;                  //bandera para saber si el hiperfoco esta activo o no
-
+        banderaInterfazHiperfoco = false;                //bandera para saber si la interfaz de hiperfoco esta activa o no
         //Iconos
         {
             hipeIconoHiperfocoActivado = new QIcon(QString(RUTA_ICONOS.c_str()) + "hiperfocoActivado.png");
@@ -2111,24 +2018,6 @@ void MainWindow::registrarUsuario()
     std::string preguntaRecuperacion = campoRegistroPreguntaRecuperacion->text().toStdString();
     std::string respuestaRecuperacion = campoRegistroRespuestaRecuperacion->text().toStdString();
 
-    // mostramos en terminal los datos
-    std::cout << "Nombre: " << nombre << std::endl;
-    std::cout << "Nombre de Usuario: " << nombreUs << std::endl;
-    std::cout << "Contra: " << contraseña << std::endl;
-    std::cout << "Confirmación de Contra: " << contraseñaConf << std::endl;
-    std::cout << "Realizar Copia de Seguridad: " << banderaRegistroCopiaSeg << std::endl;
-    std::cout << "Ruta foto de perfil:" << rutaRegistroFotoPerfil << std::endl;
-    std::cout << "Edad: " << selectorRegistroEdad->currentText().toStdString() << std::endl;
-    std::cout << "Pregunta de Recuperación: " << preguntaRecuperacion << std::endl;
-    std::cout << "Respuesta de Recuperación: " << respuestaRecuperacion << std::endl;
-
-    // estos datos son opcionales
-    std::cout << "Correo Electrónico: " << correo << std::endl;
-    std::cout << "Contra de Correo Electrónico: " << contraseñaCorreo << std::endl;
-    std::cout << "Confirmación de Contra de Correo Electrónico: " << contraseñaCorreoConf << std::endl;
-    std::cout << "Frecuencia de Copia de Seguridad: " << selectorRegistroFrecuenciaCopiaSeguridad->currentText().toStdString() << std::endl;
-
-
 
     // ? se verificará que los datos sean correctos
     // ? se verificará que los campos no estén vacíos
@@ -2191,39 +2080,29 @@ void MainWindow::registrarUsuario()
     // ? se creará un archivo de configuraciones
     mJson::ManejadorJson usuario(rutaUsuario + "/config.json", true);
     // ? se guardarán los datos del usuario en el archivo de configuraciones
-    //usuario["nombre"] = nombre;
     usuario["nombre"] = encriptado->encriptar(nombre);
-    //usuario["nombreUsuario"] = nombreUs;
     usuario["nombreUsuario"] = encriptado->encriptar(nombreUs);
-    //usuario["contraseña"] = contraseña;
     usuario["contraseña"] = encriptado->encriptar(contraseña);
-    //usuario["edad"] = selectorRegistroEdad->currentText().toStdString();
     usuario["edad"] = encriptado->encriptar(selectorRegistroEdad->currentText().toStdString());
-    //usuario["preguntaRecuperacion"] = preguntaRecuperacion;
     usuario["preguntaRecuperacion"] = encriptado->encriptar(preguntaRecuperacion);
-    //usuario["respuestaRecuperacion"] = respuestaRecuperacion;
     usuario["respuestaRecuperacion"] = encriptado->encriptar(respuestaRecuperacion);
     // ? si el usuario desea realizar copia de seguridad
     if (banderaRegistroCopiaSeg)
     {
-        //usuario["correoElectronico"] = correo;
-        //usuario["contraseñaCorreoElectronico"] = contraseñaCorreo;
-        //usuario["frecuenciaCopiaSeguridad"] = selectorRegistroFrecuenciaCopiaSeguridad->currentText().toStdString();
         usuario["correoElectronico"] = encriptado->encriptar(correo);
         usuario["contraseñaCorreoElectronico"] = encriptado->encriptar(contraseñaCorreo);
         usuario["frecuenciaCopiaSeguridad"] = encriptado->encriptar(selectorRegistroFrecuenciaCopiaSeguridad->currentText().toStdString());
 
     }
     // ? se guardará la foto de perfil en la carpeta del usuario
-    //manejadorArchivos.copiarArchivo(rutaRegistroFotoPerfil, rutaUsuario + "/fotoPerfil.png"); // ? es al reves xd
-    //manejadorArchivos.copiarArchivo(rutaUsuario + "/fotoPerfil.png", rutaRegistroFotoPerfil);
     try {
         manejadorArchivos.copiarArchivo(rutaRegistroFotoPerfil, rutaUsuario + "/fotoPerfil.png");
     } catch (const std::exception& e) {
         //std::cerr << e.what() << '\n';
-        std::cout << "Error al copiar la foto de perfil, si se encuentra usando windows actualmente no podemos extraer fotos que se encuentren en carpetas de one drive, le recomendamos cambiar la imagen a una ubicación que no sea conflictiva" << std::endl;
+        QMessageBox::critical(this, "Error", "Error al copiar la foto de perfil, "
+                            "si se encuentra usando windows actualmente no podemos extraer"
+                            " fotos que se encuentren en carpetas de one drive, le recomendamos cambiar la imagen a una ubicación que no sea conflictiva");
     }
-    //usuario["fotoPerfil"] = "fotoPerfil.png";
     usuario["fotoPerfil"] = encriptado->encriptar("fotoPerfil.png");
     // ? se guardará la configuración
     usuario.guardar();
@@ -2233,9 +2112,6 @@ void MainWindow::registrarUsuario()
     desactivarInterfazRegistroUsuario();
     // ? se activa el frame de inicio de sesión
     activarInterfazInicioSesion();
-
-
-
 }
 
 // ! método para seleccionar si desea realizar copia de seguridad
@@ -3343,8 +3219,6 @@ void MainWindow::activarInterfazCalendario()
 
     frameCalendarioP->show();
     std::cout << "Activando interfaz de calendario" << std::endl;
-    // ? se desactiva todo lo relacionado con el calendario
-    // aun no se ha implementado
     // ? se activa el frame de calendario
     calActivarCalendario();
 }
@@ -3370,7 +3244,6 @@ void MainWindow::calActivarCalendario()
 {
     // ? se Desactiva la interfaz de calendario antes de activarla para asegurar su correcto funcionamiento
     calDesactivarCalendario();
-    //calCalendario->show();
     frameCalendario->show();
     calCargarDatosCalendario();
     // ? se activa el boton 0 y 1 de la barra de navegación
@@ -5137,6 +5010,7 @@ void MainWindow::activarInterfazHiperfoco()
         hipeMinutosSpinBox->hide();
         hipeTextoTiempoEstablecido->show();
     }
+    banderaInterfazHiperfoco = true; //activamos la bandera para saber que la interfaz de hiperfoco esta activa
 
 }
 
@@ -5147,6 +5021,7 @@ void MainWindow::activarInterfazHiperfoco()
 void MainWindow::desactivarInterfazHiperfoco()
 {
     frameHiperfoco->hide();
+    banderaInterfazHiperfoco = false; //desactivamos la bandera para saber que la interfaz de hiperfoco esta desactiva
 }
 
 // ! Metodo que establece el cambio en H2 para colocar el tiempo establecido por el usuario y activar el temporizador.
@@ -5155,14 +5030,11 @@ void MainWindow::desactivarInterfazHiperfoco()
 // ? Sin cambios primera versión
 void MainWindow::hipeBotonHiperfocoActivado()
 {
+    banderaInterfazHiperfoco = true; //activamos la bandera para saber que la interfaz de hiperfoco esta activa
     banderaHiperfocoActivo = true; //activamos la bandera para saber que el hiperfoco esta activo
     int horaValor = hipeHorasSpinBox->value(); //obtenemos las horas que establecio el usuario
     int minutosValor = hipeMinutosSpinBox->value(); //obtenemos los minutos que establecio el usuario
-    hipeTextoHoras->hide();                     //escondemos
-    hipeHorasSpinBox->hide();
-    hipeTextoMinutos->hide();
-    hipeMinutosSpinBox->hide();
-    hipeTextoTiempoEstablecido->show();
+
     if (timer->isActive())
     {
         hipeMostrarComponentesPorDefecto();
@@ -5192,6 +5064,11 @@ void MainWindow::hipeBotonHiperfocoActivado()
     int reply = mensajeDeConfirmacion.exec();
     if (reply == QMessageBox::Ok)
     {
+        hipeTextoHoras->hide();                     //escondemos
+        hipeHorasSpinBox->hide();
+        hipeTextoMinutos->hide();
+        hipeMinutosSpinBox->hide();
+        hipeTextoTiempoEstablecido->show();
         int tiempoTotal = 0;
         //QMessageBox::information(this, "Confirmado", "Has aceptado.");
         hipeBotonDeHiperfoco->setIcon(*hipeIconoHiperfocoActivado);
@@ -5217,10 +5094,13 @@ void MainWindow::hipeBotonHiperfocoDesactivado()
     banderaHiperfocoActivo = false;
     QMessageBox::information(hipeBotonDeHiperfoco->parentWidget(), "Tiempo de Hiperfoco terminado", "Toma un descanso :) ");
     hipeBotonDeHiperfoco->setIcon(*hipeIconoHiperfocoDesactivado);
-    hipeHorasSpinBox->show();
-    hipeMinutosSpinBox->show();
-    hipeTextoHoras->show();
-    hipeTextoMinutos->show();
+    if (banderaInterfazHiperfoco)
+    {
+        hipeHorasSpinBox->show();
+        hipeMinutosSpinBox->show();
+        hipeTextoHoras->show();
+        hipeTextoMinutos->show();
+    }
     hipeTextoTiempoEstablecido->hide();
 }
 
@@ -5230,6 +5110,7 @@ void MainWindow::hipeBotonHiperfocoDesactivado()
 // ? Sin cambios primera versión
 void MainWindow::hipeBotonVerMetodos()
 {
+    banderaInterfazHiperfoco = false; //desactivamos la bandera para saber que la interfaz de hiperfoco esta desactiva
     hipeTituloPrincipal->hide();
     hipeTextoDuracion->hide();
     hipeTextoHoras->hide();
@@ -5237,6 +5118,7 @@ void MainWindow::hipeBotonVerMetodos()
     hipeHorasSpinBox->hide();
     hipeMinutosSpinBox->hide();
     hipeBotonDeHiperfoco->hide();
+    hipeTextoTiempoEstablecido->hide();
 
     hipeTituloListaMetodos->show();
     hipeListaDeMetodos->show();
@@ -5255,6 +5137,7 @@ void MainWindow::hipeBotonVerMetodos()
 // ? Sin cambios primera versión
 void MainWindow::hipeMostrarComponentesPorDefecto()
 {
+    banderaInterfazHiperfoco = true; //activamos la bandera para saber que la interfaz de hiperfoco esta activa
     hipeTituloPrincipal->show();
     hipeTextoDuracion->show();
     hipeTextoHoras->show();
@@ -5302,6 +5185,7 @@ void MainWindow::hipeInfoTecnicaPomodoro()
     hipeListaDeMetodos->hide();
     hipeTituloPomodoro->show();
     hipeTextoPomodoro->show();
+    banderaInterfazHiperfoco = false; //desactivamos la bandera para saber que la interfaz de hiperfoco esta desactiva
 }
 
 // ! Metodo para mostrar los items del metodo de Tecnica dede 5 segundos.
@@ -5314,6 +5198,7 @@ void MainWindow::hipeInfoTecnica5segundos()
     hipeListaDeMetodos->hide();
     hipeTituloTitulo5Segundos->show();
     hipeTextoTitulo5Segundos->show();
+    banderaInterfazHiperfoco = false; //desactivamos la bandera para saber que la interfaz de hiperfoco esta desactiva
 }
 
 // ! Metodo para mostrar los items del metodo de Tecnica de Mindfulness.
@@ -5326,6 +5211,7 @@ void MainWindow::hipeInfoMindfulness()
     hipeListaDeMetodos->hide();
     hipeTituloMindfulness->show();
     hipeTextoMindfulness->show();
+    banderaInterfazHiperfoco = false; //desactivamos la bandera para saber que la interfaz de hiperfoco esta desactiva
 }
 
 
