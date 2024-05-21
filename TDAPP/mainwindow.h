@@ -22,6 +22,7 @@
 #include <QTimeEdit> // ? para crear campos de tiempo
 #include <QtCharts> // ? para crear graficas
 #include <QPieSlice> // ? para crear rebanadas de la grafica
+//#include <QSoundEffect> // ? para reproducir sonidos
 
 // ! experimental
 #include <QCalendarWidget> // incluimos el calendario
@@ -382,6 +383,8 @@ class MainWindow : public QWidget
     QLabel *hipeTextoTitulo5Segundos;
     QLabel *hipeTituloMindfulness;
     QLabel *hipeTextoMindfulness;
+    // para reproducir sonidos
+    //QSoundEffect *hipeSonido;
 
     // Métodos privados de la ventana
     void verificacionInicial(); // ! verifica la existencia de los archivos y carpetas necesarios para el funcionamiento de la aplicación y trata de crearlos si no existen

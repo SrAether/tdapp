@@ -23,6 +23,7 @@
 #include <QHBoxLayout> // ? para acomodar los elementos de la interfaz HORIZONTALMENTE
 #include <QtWidgets> // ? para usar las clases de widgets de qt
 #include <QFormLayout> // ? para crear un layout de formulario
+//#include <QSoundEffect> // ? para reproducir archivos de audio y video
 
 // para manejar archivos
 #include "manejadorArchivos.h"
@@ -70,15 +71,13 @@ MainWindow::MainWindow(QWidget *parent)
                     "QWidget {"
                             "background-color: #222222;" /* Fondo gris oscuro */
                             "color: #ffffff;" /* Texto blanco */
-                            "font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
-                            "font-size: 12pt;"
                         "}"
 
                         "/* Botones */"
                         "QPushButton {"
                             "background-color: #0056b3;" /* Azul oscuro */
                             "color: white;"
-                            "border: none;"
+                            //"border: none;"
                             "padding: 8px 16px;"
                             "border-radius: 4px;"
                         "}"
@@ -149,13 +148,11 @@ MainWindow::MainWindow(QWidget *parent)
                                 "background-color: #DEDEE2;"
                                 "border: 2px solid #000000;"
                                 "border-radius: 10px;"
-                                "font-family: 'Schadow BT';"
                                 "margin: 0px;"
                                 "padding: 0px;"
-                                "font-size: 20pt;"
                             "}"
                             "QListWidget::item {"
-                                "padding: 10px;"
+                                "padding: 1px;"
                                 "border-bottom: 1px solid #dcdcdc;"
                                 "color: black;"
                             "}"
@@ -178,15 +175,13 @@ MainWindow::MainWindow(QWidget *parent)
                 "QWidget {"
                         "background-color: #F1AEAA;" /* Fondo gris oscuro */
                         "color: #ffffff;" /* Texto blanco */
-                        "font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
-                        "font-size: 12pt;"
                     "}"
 
                     "/* Botones */"
                     "QPushButton {"
-                        "background-color: #ABDDB5;" /* Azul oscuro */
+                        "background-color: #ABDDB5;"
                         "color: white;"
-                        "border: none;"
+                        //"border: none;"
                         "padding: 8px 16px;"
                         "border-radius: 10px;"
                     "}"
@@ -250,15 +245,13 @@ MainWindow::MainWindow(QWidget *parent)
 
                         "QListWidget {"
                             "background-color: white;"
-                            "border: 2px solid #000000;"
-                            "border-radius: 10px;"
-                            "font-family: 'Schadow BT';"
+                            "border: 1px solid #000000;"
+                            "border-radius: 1px;"
                             "margin: 0px;"
                             "padding: 0px;"
-                            "font-size: 20pt;"
                         "}"
                         "QListWidget::item {"
-                            "padding: 10px;"
+                            "padding: 1px;"
                             "border-bottom: 1px solid #dcdcdc;"
                             "color: black;"
                         "}"
@@ -281,8 +274,6 @@ MainWindow::MainWindow(QWidget *parent)
                 "QWidget {"
                         "background-color: #F9FBB2;" /* Fondo amarillo */
                         "color: #ffffff;" /* Texto blanco */
-                        "font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
-                        "font-size: 12pt;"
                     "}"
 
                     "/* Botones */"
@@ -357,15 +348,13 @@ MainWindow::MainWindow(QWidget *parent)
 
                         "QListWidget {"
                             "background-color: white;"
-                            "border: 2px solid #000000;"
-                            "border-radius: 10px;"
-                            "font-family: 'Schadow BT';"
+                            "border: 1px solid #000000;"
+                            "border-radius: 1px;"
                             "margin: 0px;"
                             "padding: 0px;"
-                            "font-size: 20pt;"
                         "}"
                         "QListWidget::item {"
-                            "padding: 10px;"
+                            "padding: 1px;"
                             "border-bottom: 1px solid #dcdcdc;"
                             "color: black;"
                         "}"
@@ -390,6 +379,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // cargamos la fuente
     this->setFont(fuente);
+    // establecemos el tamaño de la fuente
+    //this->setF
+    std::cout << fuente.family().toStdString() << std::endl;
     // hacemos que la ventana sea de 720 redimensionable
     this->setMinimumSize(1240, 800);
     // establecemos el estilo de la aplicación
@@ -1622,6 +1614,22 @@ MainWindow::MainWindow(QWidget *parent)
     *
     */
     {
+        // cargamos el sonido de alarma
+        //hipeReproductor = new QMediaPlayer(framePrincipal);
+        // hipeReproductor->setSource(QUrl::fromLocalFile(QString((*configuraciones)["sonidoAlarma"].c_str())));
+        // //hipeReproductor->
+        // hipeReproductor->set
+        // hipeReproductor->play();
+        //hipeSonido = new QSound(QString((*configuraciones)["sonidoAlarma"].c_str()));
+        // hipeSonido = new QSoundEffect(framePrincipal);
+        // std::string rutaSonido = (*configuraciones)["sonidoAlarma"];
+        // std::cout << "Ruta del sonido: " << rutaSonido << std::endl;
+        // hipeSonido->setSource(QUrl::fromLocalFile(QString(rutaSonido.c_str())));
+        // //hipeSonido->setSource(QUrl::fromLocalFile(QString((*configuraciones)["sonidoAlarma"].c_str())));
+        // hipeSonido->setVolume(1.0f);
+        // // ponemos el volumen al maximo
+
+        // hipeSonido->play();
         frameHiperfoco = new QFrame(framePrincipal);    //creamos el Frame de la interfaz de hiperfoco
         frameHiperfoco->hide();                         //lo escondemos por defecto
 
@@ -2338,7 +2346,7 @@ void MainWindow::registrarUsuario()
     }
     // ? se guardará la foto de perfil en la carpeta del usuario
     try {
-        manejadorArchivos.copiarArchivo(rutaRegistroFotoPerfil, rutaUsuario + "/fotoPerfil.png");
+        manejadorArchivos.copiarArchivo(rutaUsuario + "/fotoPerfil.png", rutaRegistroFotoPerfil);
     } catch (const std::exception& e) {
         //std::cerr << e.what() << '\n';
         QMessageBox::critical(this, "Error", "Error al copiar la foto de perfil, "
@@ -2828,6 +2836,12 @@ void MainWindow::jourActualizarListaEntradas()
 void MainWindow::jourLiNoNuevaEntrada()
 {
     bool ok;
+    // extraemos la fecha y hora actual
+    QDateTime fechaHoraActual = QDateTime::currentDateTime();
+    // guardamos en un string con el formato dd.MM.yyyy-hh:mm:ss
+    QString fechaHora = fechaHoraActual.toString("dd.MM.yyyy-hh.mm.ss");
+    //std::cout << "Fecha y Hora: " << fechaHora.toStdString() << std::endl;
+
     // creamos un cuadro de dialogo para ingresar el nombre de la nueva entrada
     //QInputDialog dialogo (this, "Nueva Entrada", "Nombre De la entrada:", QLineEdit::Normal, "", &ok);
     QString estilo = "QLineEdit {"
@@ -2842,7 +2856,7 @@ void MainWindow::jourLiNoNuevaEntrada()
     QInputDialog dialogo;
     dialogo.setInputMode(QInputDialog::TextInput);
     dialogo.setLabelText("Nombre de la Entrada:");
-    dialogo.setTextValue("");
+    dialogo.setTextValue(fechaHora);
     dialogo.setOkButtonText("Aceptar");
     dialogo.setCancelButtonText("Cancelar");
     dialogo.setStyleSheet(estilo);
@@ -2967,6 +2981,8 @@ void MainWindow::jourGuardarEntrada()
     //(*entradaSeleccionada)["texto"] = encriptado->encriptar(texto);
     // Guardamos la entrada
     entradaSeleccionada->guardar();
+    // redireccionamos a la lista de entradas
+    jourActivarListaEntradas();
 
 }
 
@@ -3164,6 +3180,7 @@ void MainWindow::barNaMostrarJournaling()
     barNaDesactivarTodosLosFrames();
     // ? se activa el frame de journaling
     activarInterfazJournaling();
+    //hipeSonido->play();
 }
 
 // ! método para activar la interfaz de hiperfoco
@@ -5011,6 +5028,12 @@ void MainWindow::ajusClickCambiarFuente()
         (*configuraciones)["tamanoFuente"] = std::to_string(fuente.pointSize());
         // guardamos el json
         configuraciones->guardar();
+        // aplicamos la fuente nueva
+        this->setFont(fuente);
+        //this->setStyleSheet("");
+        // metemos la fuente en la hora de estilos para todo
+        //QString estilo = "font-family: " + QString::fromStdString(nombreFuente) + ";";
+        //this->setStyleSheet(estilo);
     }
 }
 
@@ -5178,6 +5201,7 @@ void MainWindow::ajusClickEliminarCuenta()
         QMessageBox::information(this, "Éxito", "Cuenta eliminada con éxito");
         // activamos la interfaz de inicio de sesión
         barNaDesactivarTodosLosFrames();
+        desactivarBarraNavegacion();
         activarInterfazInicioSesion();
         // cerramos la aplicación
         //this->close();
@@ -5227,9 +5251,17 @@ void MainWindow::ajusCambiarTema(int nItem)
 {
     std::cout << "Cambiando tema a : " << nItem << std::endl;
     // aplicamos el tema seleccionado
-    this->setStyleSheet(temas[nItem].c_str());
+    this->setStyleSheet("");
     // guardamos el tema en el json de configuraciones
     (*configuraciones)["tema"] = std::to_string(nItem);
+    // colocamos la fuente
+    std::string fuente = (*configuraciones)["fuente"];
+    fuente = fuente.empty() ? "Arial" : fuente;
+    int tamanoFuente = std::stoi((*configuraciones)["tamanoFuente"]);
+    tamanoFuente = tamanoFuente == 0 ? 20 : tamanoFuente;
+    QFont fuenteQ(fuente.c_str(), tamanoFuente);
+    this->setFont(fuenteQ);
+    this->setStyleSheet(temas[nItem].c_str());
     // guardamos el json
     configuraciones->guardar();
 }
