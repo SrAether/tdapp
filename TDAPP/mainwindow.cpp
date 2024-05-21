@@ -88,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent)
 
                         "/* Etiquetas */"
                         "QLabel {"
-                            "color: #e0e0e0;" /* Gris claro para legibilidad */
+                            "color: black;" /* Gris claro para legibilidad */
                         "}"
 
                         "/* Campos de texto */"
@@ -144,7 +144,244 @@ MainWindow::MainWindow(QWidget *parent)
                             "background: none;"
                             "height: 0px;"
                         "}"
+
+                            "QListWidget {"
+                                "background-color: #DEDEE2;"
+                                "border: 2px solid #000000;"
+                                "border-radius: 10px;"
+                                "font-family: 'Schadow BT';"
+                                "margin: 0px;"
+                                "padding: 0px;"
+                                "font-size: 20pt;"
+                            "}"
+                            "QListWidget::item {"
+                                "padding: 10px;"
+                                "border-bottom: 1px solid #dcdcdc;"
+                                "color: black;"
+                            "}"
+                            "QListWidget::item:selected {"
+                                "background-color: #0078d7;"
+                                "color: white;"
+                            "}"
+                            "QListWidget::item:hover {"
+                                "background-color: #e0e0e0;"
+                                "color: black;"
+                            "}"
+                            "QListWidget::item:disabled {"
+                                "color: #808080;"
+                            "}"
+
                     );
+
+    temas.push_back(
+                "/* Estilos generales */"
+                "QWidget {"
+                        "background-color: #F1AEAA;" /* Fondo gris oscuro */
+                        "color: #ffffff;" /* Texto blanco */
+                        "font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
+                        "font-size: 12pt;"
+                    "}"
+
+                    "/* Botones */"
+                    "QPushButton {"
+                        "background-color: #ABDDB5;" /* Azul oscuro */
+                        "color: white;"
+                        "border: none;"
+                        "padding: 8px 16px;"
+                        "border-radius: 10px;"
+                    "}"
+                    "QPushButton:hover {"
+                        "background-color: #007bff;" /* Azul más claro al pasar el ratón */
+                    "}"
+
+                    "/* Etiquetas */"
+                    "QLabel {"
+                        "color: black;" /* Gris claro para legibilidad */
+                    "}"
+
+                    "/* Campos de texto */"
+                    "QLineEdit, QTextEdit {"
+                        "background-color: white;" /* Fondo gris oscuro */
+                        "color: black;"
+                        "border: 1px solid #ABDDB5;" /* Borde gris más oscuro */
+                        "border-radius: 10px;"
+                        "padding: 6px;"
+                    "}"
+
+                    "QHeaderView::section {"
+                        "background-color: #333333;" /* Encabezados gris oscuro */
+                        "color: #ffffff;"
+                        "padding: 4px;"
+                        "border: 1px solid #555555;"
+                    "}"
+
+                    "/* Otros widgets */"
+                    "QComboBox, QSpinBox, QDoubleSpinBox {"
+                        "background-color: white;"
+                        "color: black;"
+                        "border: 1px solid #555555;"
+                        "border-radius: 10px;"
+                        "padding: 5px;"
+                    "}"
+
+                    "QProgressBar {"
+                        "border: 1px solid #555555;"
+                        "text-align: center;"
+                        "color: #ffffff;"
+                    "}"
+                    "QProgressBar::chunk {"
+                        "background-color: #007bff;" /* Mantiene el azul para la barra */
+                    "}"
+
+                    "/* Scrollbars */"
+                    "QScrollBar:vertical {"
+                        "background: #282828;" /* Fondo oscuro */
+                        "width: 15px;"
+                        "margin: 0px 0px 0px 0px;"
+                    "}"
+                    "QScrollBar::handle:vertical {"
+                        "background: #555555;" /* Gris oscuro para el deslizador */
+                        "min-height: 20px;"
+                    "}"
+                    "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
+                        "background: none;"
+                        "height: 0px;"
+                    "}"
+
+                        "QListWidget {"
+                            "background-color: white;"
+                            "border: 2px solid #000000;"
+                            "border-radius: 10px;"
+                            "font-family: 'Schadow BT';"
+                            "margin: 0px;"
+                            "padding: 0px;"
+                            "font-size: 20pt;"
+                        "}"
+                        "QListWidget::item {"
+                            "padding: 10px;"
+                            "border-bottom: 1px solid #dcdcdc;"
+                            "color: black;"
+                        "}"
+                        "QListWidget::item:selected {"
+                            "background-color: #0078d7;"
+                            "color: white;"
+                        "}"
+                        "QListWidget::item:hover {"
+                            "background-color: #e0e0e0;"
+                            "color: black;"
+                        "}"
+                        "QListWidget::item:disabled {"
+                            "color: #808080;"
+                        "}"
+
+                );
+
+    temas.push_back(
+                "/* Estilos generales */"
+                "QWidget {"
+                        "background-color: #F9FBB2;" /* Fondo amarillo */
+                        "color: #ffffff;" /* Texto blanco */
+                        "font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
+                        "font-size: 12pt;"
+                    "}"
+
+                    "/* Botones */"
+                    "QPushButton {"
+                        "background-color: #befeff;" /* Azul oscuro */
+                        "color: black;"
+                        "border: none;"
+                        "padding: 8px 16px;"
+                        "border-radius: 10px;"
+                    "}"
+                    "QPushButton:hover {"
+                        "background-color: #007bff;" /* Azul más claro al pasar el ratón */
+                    "}"
+
+                    "/* Etiquetas */"
+                    "QLabel {"
+                        "color: black;" /* Gris claro para legibilidad */
+                    "}"
+
+                    "/* Campos de texto */"
+                    "QLineEdit, QTextEdit {"
+                        "background-color: white;" /* Fondo gris oscuro */
+                        "color: black;"
+                        "border: 1px solid #ABDDB5;" /* Borde gris más oscuro */
+                        "border-radius: 10px;"
+                        "padding: 6px;"
+                    "}"
+
+                    "QHeaderView::section {"
+                        "background-color: #333333;" /* Encabezados gris oscuro */
+                        "color: #ffffff;"
+                        "padding: 4px;"
+                        "border: 1px solid #555555;"
+                    "}"
+
+                    "/* Otros widgets */"
+                    "QComboBox, QSpinBox, QDoubleSpinBox {"
+                        "background-color: white;"
+                        "color: black;"
+                        "border: 1px solid #555555;"
+                        "border-radius: 10px;"
+                        "padding: 5px;"
+                    "}"
+                    "QComboBox QAbstractItemView {"
+                            "background-color: lightGray;"
+                            "color: darkBlue;"
+                            "selection-background-color: cyan;"
+                        "}"
+                    "QProgressBar {"
+                        "border: 1px solid #555555;"
+                        "text-align: center;"
+                        "color: #ffffff;"
+                    "}"
+                    "QProgressBar::chunk {"
+                        "background-color: #007bff;" /* Mantiene el azul para la barra */
+                    "}"
+
+                    "/* Scrollbars */"
+                    "QScrollBar:vertical {"
+                        "background: #282828;" /* Fondo oscuro */
+                        "width: 15px;"
+                        "margin: 0px 0px 0px 0px;"
+                    "}"
+                    "QScrollBar::handle:vertical {"
+                        "background: #555555;" /* Gris oscuro para el deslizador */
+                        "min-height: 20px;"
+                    "}"
+                    "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
+                        "background: none;"
+                        "height: 0px;"
+                    "}"
+
+                        "QListWidget {"
+                            "background-color: white;"
+                            "border: 2px solid #000000;"
+                            "border-radius: 10px;"
+                            "font-family: 'Schadow BT';"
+                            "margin: 0px;"
+                            "padding: 0px;"
+                            "font-size: 20pt;"
+                        "}"
+                        "QListWidget::item {"
+                            "padding: 10px;"
+                            "border-bottom: 1px solid #dcdcdc;"
+                            "color: black;"
+                        "}"
+                        "QListWidget::item:selected {"
+                            "background-color: #0078d7;"
+                            "color: white;"
+                        "}"
+                        "QListWidget::item:hover {"
+                            "background-color: #e0e0e0;"
+                            "color: black;"
+                        "}"
+                        "QListWidget::item:disabled {"
+                            "color: #808080;"
+                        "}"
+
+                );
 
     // verificamos la existencia de los archivos y carpetas necesarios
     verificacionInicial();
@@ -714,8 +951,10 @@ MainWindow::MainWindow(QWidget *parent)
             {
                 // agregamos el cuadro a un boton
                 QPushButton* calCuadro = new QPushButton(frameCalendario);
+                calCuadro->setStyleSheet("background-color:white");
                 calCuadro->setMinimumSize(150, 100);
                 QPushButton* calEmocionDia = new QPushButton(calCuadro);
+                //calEmocionDia->setStyleSheet("background-color: white");
                 // creamos un grid layout para el cuadro del calendario
                 QGridLayout* calCuadroLayout = new QGridLayout(calCuadro);
 
@@ -734,6 +973,7 @@ MainWindow::MainWindow(QWidget *parent)
                 calCuadroLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 1);
                 // Label para el numero del dia
                 QLabel* calNumeroDia = new QLabel(calCuadro);
+                calNumeroDia->setStyleSheet("color: black");
                 // le damos un dia de prueba
                 calNumeroDia->setText("");
                 // lo agregamos al layout del cuadro
@@ -1330,6 +1570,8 @@ MainWindow::MainWindow(QWidget *parent)
         ajusSelectorTema = new QComboBox(ajusWidget); // selector de tema
         ajusSelectorTema->addItem("Tema: Sistema");
         ajusSelectorTema->addItem("Tema: Oscuro");
+        ajusSelectorTema->addItem("Tema: Clasico");
+        ajusSelectorTema->addItem("Tema: Claro");
         ajusCambiarSonidoAlarma = new QPushButton(ajusWidget); // boton para cambiar sonido de alarma
         ajusCambiarSonidoAlarma->setText("Cambiar Sonido de Alarma");
         //ajusCambiarSonidoNotificacion = new QPushButton(ajusWidget); // boton para cambiar sonido de notificacion
@@ -4728,6 +4970,10 @@ void MainWindow::reEmDesactivarGraficaEmociones()
 void MainWindow::activarInterfazAjustes()
 {
     frameAjustes->show();
+    // colocamos el tema actual en el comboBox
+    std::string temaActual = (*configuraciones)["tema"];
+    temaActual = temaActual.empty() ? "0" : temaActual;
+    ajusSelectorTema->setCurrentIndex(std::stoi(temaActual));
     //ajustesRedimencionarCosas();
 }
 
