@@ -714,6 +714,8 @@ MainWindow::MainWindow(QWidget *parent)
      * ... (continuar)
      */
     {
+        // editando = false; // ? bandera para saber si se está editando una entrada
+        jourEditandoEntrada = false; // ? bandera para saber si se está editando una entrada
         // creamos un frame para el journaling
         frameJournaling = new QFrame();
         // ocultamos por defecto
@@ -982,7 +984,7 @@ MainWindow::MainWindow(QWidget *parent)
                 //calCuadro->setFrameShape(QFrame::Box);
                 // Asignamos un identificador unico a cada cuadro
                 QString idCuadro = QString::number(nfila) + QString::number(ncolumna);
-                calCuadro->setObjectName(idCuadro);
+                calCuadro->setObjectName("boton" + idCuadro);
                 calEmocionDia->setObjectName("emocion" + idCuadro);
                 calNumeroDia->setObjectName("numero" + idCuadro);
                 calCantidadEventos->setObjectName("eventos" + idCuadro);
@@ -2045,7 +2047,6 @@ void MainWindow::verificarExistenciaArchivoUsuario()
 
 // ! método para activar el frame de inicio de sesión (interfaz de inicio de sesión)
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::activarInterfazInicioSesion()
 {
@@ -2057,7 +2058,6 @@ void MainWindow::activarInterfazInicioSesion()
 
 // ! método para desactivar el frame de inicio de sesión (interfaz de inicio de sesión)
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::desactivarInterfazInicioSesion()
 {
@@ -2086,7 +2086,6 @@ void MainWindow::inSeRegistrarUsuarioNuevo()
 
 // ! método para cargar los usuarios en el selector de usuarios
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::inSeCargarUsuarios()
 {
@@ -2107,7 +2106,6 @@ void MainWindow::inSeCargarUsuarios()
 
 // ! método para iniciar sesión
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::inSeIniciarSesion()
 {
@@ -2170,7 +2168,6 @@ void MainWindow::inSeIniciarSesion()
 
 // ! método para recuperar la contraseña
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::inSeRecuperarContra()
 {
@@ -2183,7 +2180,6 @@ void MainWindow::inSeRecuperarContra()
 
 // ! Método para cargar la foto de perfil del usuario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::inSeCargarImagenPerfil(int index)
 {
@@ -2212,7 +2208,6 @@ void MainWindow::inSeCargarImagenPerfil(int index)
 
 // ! método para activar el frame de registro de usuarios (interfaz de registro de usuarios)
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::activarInterfazRegistroUsuario()
 {
@@ -2223,7 +2218,6 @@ void MainWindow::activarInterfazRegistroUsuario()
 
 // ! método para desactivar el frame de registro de usuarios (interfaz de registro de usuarios)
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::desactivarInterfazRegistroUsuario()
 {
@@ -2234,7 +2228,6 @@ void MainWindow::desactivarInterfazRegistroUsuario()
 
 // ! método para cancelar el registro de usuario (interfaz de registro de usuarios)
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::cancelarRegistroUsuario()
 {
@@ -2247,7 +2240,6 @@ void MainWindow::cancelarRegistroUsuario()
 
 // ! método para registrar un usuario
 // ! versión 2.0
-// ! modificado por Aether
 // ? Se modifico el método para que si no puede copiar la imagen capture el throw y muestre un mensaje emergente
 void MainWindow::registrarUsuario()
 {
@@ -2366,7 +2358,6 @@ void MainWindow::registrarUsuario()
 
 // ! método para seleccionar si desea realizar copia de seguridad
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::seleccionarCopiaSeguridad()
 {
@@ -2396,7 +2387,6 @@ void MainWindow::seleccionarCopiaSeguridad()
 
 // ! método para seleccionar la foto de perfil
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::seleccionarFotoPerfil()
 {
@@ -2417,7 +2407,6 @@ void MainWindow::seleccionarFotoPerfil()
 
 // ! método para activar el frame de recuperar contraseña
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::activarInterfazRecuperarContra()
 {
@@ -2429,7 +2418,6 @@ void MainWindow::activarInterfazRecuperarContra()
 
 // ! método para desactivar el frame de recuperar contraseña
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::desactivarInterfazRecuperarContra()
 {
@@ -2439,7 +2427,6 @@ void MainWindow::desactivarInterfazRecuperarContra()
 
 // ! método para cargar usuarios en el selector de usuarios de reco
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reCoCargarUsuarios()
 {
@@ -2458,7 +2445,6 @@ void MainWindow::reCoCargarUsuarios()
 
 // ! método para cargar datos de usuario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reCoCargarDatosUsuario()
 {
@@ -2486,7 +2472,6 @@ void MainWindow::reCoCargarDatosUsuario()
 
 // ! método para recuperar la contraseña
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reCoRecuperarContra()
 {
@@ -2527,7 +2512,6 @@ void MainWindow::reCoRecuperarContra()
 
 // ! método para cancelar la recuperación de contraseña
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reCoCancelarRecuperarContra()
 {
@@ -2544,7 +2528,6 @@ void MainWindow::reCoCancelarRecuperarContra()
 
 // ! método para buscar un usuario dentro del vector de usuarios
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 int MainWindow::buscarUsuario(const std::string& nombreUsuario)
 {
@@ -2572,7 +2555,6 @@ int MainWindow::buscarUsuario(const std::string& nombreUsuario)
 
 // ! método para obtener archivos (usando la interfaz gráfica)
 // ! versión 1.0
-// ! modificado por Aether
 // ? El objetivo de este metodo es proporcionar una interfaz gráfica para seleccionar un archivo y obtener su ruta
 void MainWindow::seleccionarArchivo(std::string& dondeGuardar, const std::string& extension, const std::string& titulo)
 {
@@ -2613,7 +2595,6 @@ void MainWindow::seleccionarArchivo(std::string& dondeGuardar, const std::string
 
 // ! método para activar el frame de journaling
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::activarInterfazJournaling()
 {
@@ -2629,7 +2610,6 @@ void MainWindow::activarInterfazJournaling()
 
 // ! método para desactivar el frame de journaling
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::desactivarInterfazJournaling()
 {
@@ -2637,11 +2617,16 @@ void MainWindow::desactivarInterfazJournaling()
     frameJournaling->hide();
     // ? se desactivan los botones de la barra de navegación
     barNaLimpiarBotonesSeccionActual();
+    if (jourEditandoEntrada)
+    {
+        // guardamos la entrada
+        jourGuardarEntrada();
+        jourEditandoEntrada = false;
+    }
 }
 
 // ! método para mostrar la pantalla de bienvenida
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::mostrarPantallaBienvenidaJournaling()
 {
@@ -2680,7 +2665,6 @@ void MainWindow::mostrarPantallaBienvenidaJournaling()
 
 // ! método para ocultar la pantalla de bienvenida
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::jourOcultarPantallaBienvenida()
 {
@@ -2696,7 +2680,6 @@ void MainWindow::jourOcultarPantallaBienvenida()
 
 // ! método para seleccionar la imagen de bienvenida
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::jourCambiarImagenBienvenida()
 {
@@ -2761,7 +2744,6 @@ void MainWindow::jourCambiarImagenBienvenida()
 
 // ! método para activar la lista de entradas de journaling
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::jourActivarListaEntradas()
 {
@@ -2785,7 +2767,6 @@ void MainWindow::jourActivarListaEntradas()
 
 // ! método para desactivar la lista de entradas de journaling
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::jourDesactivarListaEntradas()
 {
@@ -2799,7 +2780,6 @@ void MainWindow::jourDesactivarListaEntradas()
 
 // ! método para actualizar la lista de entradas del journaling
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::jourActualizarListaEntradas()
 {
@@ -2903,7 +2883,6 @@ void MainWindow::jourLiNoNuevaEntrada()
 
 // ! método para cargar una entrada en el journaling
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::jourLiNoCargarEntrada(const int& tipoCarga, const std::string& nombreEntrada)
 {
@@ -2962,10 +2941,10 @@ void MainWindow::jourLiNoCargarEntrada(const int& tipoCarga, const std::string& 
 
 // ! método para guardar una entrada en el journaling
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::jourGuardarEntrada()
 {
+    jourEditandoEntrada = false;
     // ? se obtendrá el titulo y el texto de la entrada
     // ? se guardará el titulo y el texto de la entrada en el archivo de la entrada controlado por el manejadorJson "entradaSeleccionada"
     // ? se mostrará un mensaje emergente que indica que la entrada se ha guardado correctamente
@@ -2988,7 +2967,6 @@ void MainWindow::jourGuardarEntrada()
 
 // ! Método para eliminar una entrada en el journaling
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::jourEliminarEntrada()
 {
@@ -3026,7 +3004,6 @@ void MainWindow::jourEliminarEntrada()
 
 // ! método para activar la interfaz de la entrada del journaling
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::jourActivarEditarEntrada(const bool& soloLectura)
 {
@@ -3050,6 +3027,7 @@ void MainWindow::jourActivarEditarEntrada(const bool& soloLectura)
     }
     else
     {
+        jourEditandoEntrada = true;
         jourReEnCampoTexto->setReadOnly(false);
         jourReEnCampoTitulo->setReadOnly(false);
         barNaConfigurarBotones(0, true, 2, "Guardar");
@@ -3059,7 +3037,6 @@ void MainWindow::jourActivarEditarEntrada(const bool& soloLectura)
 
 // ! método para desactivar la interfaz de la entrada del journaling
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::jourDesactivarEditarEntrada()
 {
@@ -3070,11 +3047,16 @@ void MainWindow::jourDesactivarEditarEntrada()
     jourReEnCampoTexto->clear();
     // ? se limpian los botones de la barra de navegación
     barNaLimpiarBotonesSeccionActual();
+    if (jourEditandoEntrada)
+    {
+        // guardamos la entrada
+        jourGuardarEntrada();
+        jourEditandoEntrada = false;
+    }
 }
 
 // ! método para redimencionar el icono del boton de la pantalla de bienvenida
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::jourPanBiRedimensionarIconoBoton()
 {
@@ -3098,7 +3080,6 @@ void MainWindow::jourPanBiRedimensionarIconoBoton()
 
 // ! método para activar la barra de navegación
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::activarBarraNavegacion()
 {
@@ -3108,7 +3089,6 @@ void MainWindow::activarBarraNavegacion()
 
 // ! método para desactivar la barra de navegación
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::desactivarBarraNavegacion()
 {
@@ -3118,7 +3098,6 @@ void MainWindow::desactivarBarraNavegacion()
 
 // ! Método para mostrar la interfaz de ajustes
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaMostrarAjustes()
 {
@@ -3130,7 +3109,6 @@ void MainWindow::barNaMostrarAjustes()
 
 // ! método para cerrar sesión
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaCerrarSesion()
 {
@@ -3160,7 +3138,6 @@ void MainWindow::barNaCerrarSesion()
 
 // ! método para mostrar la interfaz de calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaMostrarCalendario()
 {
@@ -3172,7 +3149,6 @@ void MainWindow::barNaMostrarCalendario()
 
 // ! método para mostrar la interfaz de journaling
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaMostrarJournaling()
 {
@@ -3185,7 +3161,6 @@ void MainWindow::barNaMostrarJournaling()
 
 // ! método para activar la interfaz de hiperfoco
 // ! versión 1.0
-// ! modificado por mbraulio
 // ? Sin cambios primera versión
 void MainWindow::barNaMostrarHiperfoco()
 {
@@ -3197,7 +3172,6 @@ void MainWindow::barNaMostrarHiperfoco()
 
 // ! método para activar la interfaz de registro de emociones
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaMostrarRegistroEmociones()
 {
@@ -3209,7 +3183,6 @@ void MainWindow::barNaMostrarRegistroEmociones()
 
 // ! método para desactivar todos los frames
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaDesactivarTodosLosFrames()
 {
@@ -3226,7 +3199,6 @@ void MainWindow::barNaDesactivarTodosLosFrames()
 
 // ! método para activar o desactivar los botones de la barra de navegación
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaConfigurarBotones(const int& nBoton, const bool& activar, const int& nFuncion, const std::string& textoBoton)
 {
@@ -3349,7 +3321,6 @@ void MainWindow::barNaConfigurarBotones(const int& nBoton, const bool& activar, 
 
 // ! Método encargado de ejecutar las funciones de los botons de la barra de navegación
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaEjecutorFunciones(const int& nFuncion)
 {
@@ -3428,7 +3399,6 @@ void MainWindow::barNaEjecutorFunciones(const int& nFuncion)
 
 // ! Método para ejecutar bóton 1 de la barra de navegación
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaBotonSeccionActual0Click()
 {
@@ -3437,7 +3407,6 @@ void MainWindow::barNaBotonSeccionActual0Click()
 
 // ! Método para ejecutar bóton 2 de la barra de navegación
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaBotonSeccionActual1Click()
 {
@@ -3446,7 +3415,6 @@ void MainWindow::barNaBotonSeccionActual1Click()
 
 // ! Método para ejecutar bóton 3 de la barra de navegación
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaBotonSeccionActual2Click()
 {
@@ -3455,7 +3423,6 @@ void MainWindow::barNaBotonSeccionActual2Click()
 
 // ! Método para limpiar botones de la seleccion actual
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::barNaLimpiarBotonesSeccionActual()
 {
@@ -3470,7 +3437,6 @@ void MainWindow::barNaLimpiarBotonesSeccionActual()
 
 // ! método para activar el frame del calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::activarInterfazCalendario()
 {
@@ -3484,7 +3450,6 @@ void MainWindow::activarInterfazCalendario()
 
 // ! método para desactivar el frame del calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::desactivarInterfazCalendario()
 {
@@ -3497,7 +3462,6 @@ void MainWindow::desactivarInterfazCalendario()
 
 // ! método para mostrar el calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calActivarCalendario()
 {
@@ -3514,7 +3478,6 @@ void MainWindow::calActivarCalendario()
 
 // ! método para ocultar el calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calDesactivarCalendario()
 {
@@ -3533,7 +3496,6 @@ void MainWindow::calDesactivarCalendario()
 
 // ! método para cargar eventos en el calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 int MainWindow::calObtenerNumeroEventosDia(const int& anio, const int& mes, const int& dia)
 {
@@ -3556,7 +3518,6 @@ int MainWindow::calObtenerNumeroEventosDia(const int& anio, const int& mes, cons
 
 // ! Método para obtener la emocion predominante de un dia
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 int MainWindow::calObtenerEmocionPredominanteDia(const int& anio, const int& mes, const int& dia)
 {
@@ -3628,7 +3589,6 @@ int MainWindow::calObtenerEmocionPredominanteDia(const int& anio, const int& mes
 
 // ! metodo que muestra el mes anterior en el calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calMesAnterior()
 {
@@ -3647,7 +3607,6 @@ void MainWindow::calMesAnterior()
 
 // ! método que muestra el mes siguiente en el calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calMesSiguiente()
 {
@@ -3665,7 +3624,6 @@ void MainWindow::calMesSiguiente()
 
 // ! método para cargar los datos del calendario en el mes y año especificados
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calCargarDatosCalendario(int mes, int anio)
 {
@@ -3709,6 +3667,15 @@ void MainWindow::calCargarDatosCalendario(int mes, int anio)
     //int semIni = calDiaInicio > 6 ? 1 : 0;
     int semIni = 0;
 
+    // obtenemos el dia actual
+    QDate fechaActual = QDate::currentDate();
+    // obtenemos el dia actual
+    int diaActual = fechaActual.day();
+    // obtenemos el mes actual
+    int mesActual = fechaActual.month();
+    // obtenemos el año actual
+    int anioActual = fechaActual.year();
+
     //std::cout << "Dias Sem Fin: " << diasSemFin << std::endl;
     for (int semana = semIni + 1; semana < 7; semana++)
     {
@@ -3724,6 +3691,21 @@ void MainWindow::calCargarDatosCalendario(int mes, int anio)
             }
             else if (diaNum > 0)
             {
+                // si el dia es el dia actual y el mes es el mes actual y el año es el año actual cambiamos el fondo del boton
+                if (diaNum == diaActual && calMes == mesActual && calAnio == anioActual)
+                {
+                    //label->setStyleSheet("background-color: #FFD700;");
+                    QString idBoton = QString::number(semana) + QString::number(dia);
+                    std::cout << idBoton.toStdString();
+                    QPushButton* boton = frameCalendario->findChild<QPushButton*>("boton"+idBoton);
+                    boton->setStyleSheet("QPushButton { border: 4px solid red; background-color: white; }");
+                    std::cout << "Dia actual: " << diaNum << std::endl;
+                    //boton->hide();
+                    std::cout << boton;
+                    label->setStyleSheet("background-color: white; color: black;");
+
+                }
+
                 label->setText(QString::number(diaNum));
                 // obtenemos el numero de eventos del dia
                 int numeroEventos = calObtenerNumeroEventosDia(calAnio, calMes, diaNum);
@@ -3733,6 +3715,10 @@ void MainWindow::calCargarDatosCalendario(int mes, int anio)
                 {
                     // mostramos el label de eventos
                     QLabel* labelEventos = frameCalendario->findChild<QLabel*>("eventos" + QString::number(semana) + QString::number(dia));
+                    if (diaNum == diaActual && calMes == mesActual && calAnio == anioActual)
+                    {
+                        labelEventos->setStyleSheet("background-color: white;");
+                    }
                     std::string textoEventos = "<html><p>";
                     if (numeroEventos >= 1) textoEventos += "🔵 "; // no es a lo wey es un simbolo solo que el editor no lo puede interpretar
                     if (numeroEventos >= 2) textoEventos += "🔵 ";
@@ -3840,7 +3826,6 @@ void MainWindow::calClickEmoDia(const int& nfila, const int& ncolumna)
 
 // ! Metodo para limpiar el calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calLimpiarCalendario()
 {
@@ -3854,7 +3839,8 @@ void MainWindow::calLimpiarCalendario()
             boton->setIcon(QIcon());
             label = frameCalendario->findChild<QLabel*>("eventos" + QString::number(semana) + QString::number(dia));
             label->setText("");
-
+            QPushButton* botonG = frameCalendario->findChild<QPushButton*>("boton" + QString::number(semana) + QString::number(dia));
+            botonG->setStyleSheet("background-color: white;");
         }
     }
 }
@@ -3949,7 +3935,6 @@ void MainWindow::calClickEmoDiaBackend66() { calClickEmoDia(6, 6);}
 
 // ! para mostrar un dia seleccionado en el calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calMostrarDiaSeleccionado(const int& diaSeleccionado)
 {
@@ -3973,7 +3958,6 @@ void MainWindow::calMostrarDiaSeleccionado(const int& diaSeleccionado)
 
 // ! Método para ocultar la interfaz del dia seleccionado
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calOcultarDiaSeleccionado()
 {
@@ -3989,7 +3973,6 @@ void MainWindow::calOcultarDiaSeleccionado()
 
 // ! Método para cargar los eventos del dia seleccionado
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calCargarListaEventosDia()
 {
@@ -4091,7 +4074,6 @@ void MainWindow::calCargarListaEventosDia()
 
 // ! Método para crear un nuevo evento en el calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calInterfazEvento(const int& modoDeApertura)
 {
@@ -4150,7 +4132,6 @@ void MainWindow::calInterfazEvento(const int& modoDeApertura)
 
 // ! Método para crear un nuevo evento e inicializar su json
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calInterfazEventoNuevo()
 {
@@ -4226,7 +4207,6 @@ void MainWindow::calInterfazEventoNuevo()
 
 // ! Método para cargar un evento en la interfaz de evento, para editar o mostrar
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calInterfazEventoCargarDatos()
 {
@@ -4374,7 +4354,6 @@ void MainWindow::calInterfazEventoCargarDatos()
 
 // ! Método para ocultar la interfaz de evento
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calOcultarInterfazEvento()
 {
@@ -4393,7 +4372,6 @@ void MainWindow::calOcultarInterfazEvento()
 
 // ! Método para guardar un evento en el calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calGuardarEvento()
 {
@@ -4438,7 +4416,6 @@ void MainWindow::calGuardarEvento()
 
 // ! Método para eliminar un evento en el calendario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::calEliminarEvento()
 {
@@ -4479,7 +4456,6 @@ void MainWindow::calEliminarEvento()
 
 // ! Método para mostrar la interfaz de registro de emociones
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::activarInterfazRegistroEmociones()
 {
@@ -4490,7 +4466,6 @@ void MainWindow::activarInterfazRegistroEmociones()
 
 // ! Método para ocultar la interfaz de registro de emociones
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::desactivarInterfazRegistroEmociones()
 {
@@ -4501,7 +4476,6 @@ void MainWindow::desactivarInterfazRegistroEmociones()
 
 // ! Método para que gestiona el proceso de registro de emociones
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reEmBotonEmocion(const int& emocion)
 {
@@ -4681,7 +4655,6 @@ void MainWindow::reEmClickDisgusto() { reEmBotonEmocion(5);}
 
 // ! Método para reactivar el registro de emociones
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reEmActivarRegistroEmocion()
 {
@@ -4727,7 +4700,6 @@ void MainWindow::reEmActivarRegistroEmocion()
 
 // ! Método para desactivar el registro de emociones
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reEmDesactivarRegistroEmocion()
 {
@@ -4744,7 +4716,6 @@ void MainWindow::reEmDesactivarRegistroEmocion()
 
 // ! Método para redimencionar redimencionar las cosas de reEm
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reEmRedimencionarCosas()
 {
@@ -4760,7 +4731,6 @@ void MainWindow::reEmRedimencionarCosas()
 
 // ! Método para activar la ventana de espera para añadir una nueva emoción
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reEmActivarEmocionConfirmada()
 {
@@ -4792,7 +4762,6 @@ void MainWindow::reEmActivarEmocionConfirmada()
 
 // ! Método para desactivar la ventana de espera para añadir una nueva emoción
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reEmDesactivarEmocionConfirmada()
 {
@@ -4808,7 +4777,6 @@ void MainWindow::reEmDesactivarEmocionConfirmada()
 
 // ! Método para cargar una frase motivacional
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reEmCargarFraseMotivacional(const int& emocion)
 {
@@ -4868,7 +4836,6 @@ void MainWindow::reEmCargarFraseMotivacional(const int& emocion)
 
 // ! Método para cargar la grafica de emociones
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reEmCargarGraficaEmociones(const int& dia, const int& mes, const int& anio)
 {
@@ -4947,7 +4914,6 @@ void MainWindow::reEmCargarGraficaEmociones(const int& dia, const int& mes, cons
 
 // ! Método para mostrar la grafica de emociones
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reEmActivarGraficaEmociones()
 {
@@ -4965,7 +4931,6 @@ void MainWindow::reEmActivarGraficaEmociones()
 
 // ! Método para ocultar la grafica de emociones
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::reEmDesactivarGraficaEmociones()
 {
@@ -4982,7 +4947,6 @@ void MainWindow::reEmDesactivarGraficaEmociones()
 
 // ! Método para mostrar la interfaz de ajustes
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::activarInterfazAjustes()
 {
@@ -4996,7 +4960,6 @@ void MainWindow::activarInterfazAjustes()
 
 // ! Método para ocultar la interfaz de ajustes
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::desactivarInterfazAjustes()
 {
@@ -5005,7 +4968,6 @@ void MainWindow::desactivarInterfazAjustes()
 
 // ! Método para cambiar fuente de la interfaz
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::ajusClickCambiarFuente()
 {
@@ -5039,7 +5001,6 @@ void MainWindow::ajusClickCambiarFuente()
 
 // ! Método para cambiar la contraseña de la interfaz
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::ajusClickCambiarContra()
 {
@@ -5083,7 +5044,6 @@ void MainWindow::ajusClickCambiarContra()
 
 // ! Método para cambiar la pregunta de recuperación de contraseña
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::ajusClickCambiarPreguntaContra()
 {
@@ -5125,7 +5085,6 @@ void MainWindow::ajusClickCambiarPreguntaContra()
 
 // ! Método para cambiar la imagen de perfil
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::ajusClickCambiarFotoPerfil()
 {
@@ -5179,7 +5138,6 @@ void MainWindow::ajusClickCambiarFotoPerfil()
 
 // ! Método para cambiar el nombre de usuario
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::ajusClickEliminarCuenta()
 {
@@ -5210,7 +5168,6 @@ void MainWindow::ajusClickEliminarCuenta()
 
 // ! Método para cambiar el sonido de alarma
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::ajusClickCambiarSonidoAlarma()
 {
@@ -5245,7 +5202,6 @@ void MainWindow::ajusClickCambiarSonidoAlarma()
 
 // ! Método para cambiar tema
 // ! versión 1.0
-// ! modificado por Aether
 // ? Sin cambios primera versión
 void MainWindow::ajusCambiarTema(int nItem)
 {
@@ -5273,7 +5229,6 @@ void MainWindow::ajusCambiarTema(int nItem)
 
 // ! Metodo para activar la interfaz de hiperfoco.
 // ! versión 1.0
-// ! modificado por mbraulio
 // ? Sin cambios primera versión
 void MainWindow::activarInterfazHiperfoco()
 {
@@ -5294,7 +5249,6 @@ void MainWindow::activarInterfazHiperfoco()
 
 // ! Metodo para desactivar la interfaz de hiperfoco.
 // ! versión 1.0
-// ! modificado por mbraulio
 // ? Sin cambios primera versión
 void MainWindow::desactivarInterfazHiperfoco()
 {
@@ -5304,7 +5258,6 @@ void MainWindow::desactivarInterfazHiperfoco()
 
 // ! Metodo que establece el cambio en H2 para colocar el tiempo establecido por el usuario y activar el temporizador.
 // ! versión 1.0
-// ! modificado por mbraulio
 // ? Sin cambios primera versión
 void MainWindow::hipeBotonHiperfocoActivado()
 {
@@ -5365,7 +5318,6 @@ void MainWindow::hipeBotonHiperfocoActivado()
 
 // ! Metodo para regresar los items cuando se termina el temporizador.
 // ! versión 1.0
-// ! modificado por mbraulio
 // ? Sin cambios primera versión
 void MainWindow::hipeBotonHiperfocoDesactivado()
 {
@@ -5384,7 +5336,6 @@ void MainWindow::hipeBotonHiperfocoDesactivado()
 
 // ! Metodo para ver la lista de metodos para mindfulness.
 // ! versión 1.0
-// ! modificado por mbraulio
 // ? Sin cambios primera versión
 void MainWindow::hipeBotonVerMetodos()
 {
@@ -5411,7 +5362,6 @@ void MainWindow::hipeBotonVerMetodos()
 
 // ! Metodo para tener los componentes que por defecto pertenecen a la interfaz de hiperfoco.
 // ! versión 1.0
-// ! modificado por mbraulio
 // ? Sin cambios primera versión
 void MainWindow::hipeMostrarComponentesPorDefecto()
 {
@@ -5439,7 +5389,6 @@ void MainWindow::hipeMostrarComponentesPorDefecto()
 
 // ! Metodo para manejar los items de la lista de metodos.
 // ! versión 1.0
-// ! modificado por mbraulio
 // ? Sin cambios primera versión
 void MainWindow::hipeManejadorDeListadeItems(QListWidgetItem *item)
 {
@@ -5455,7 +5404,6 @@ void MainWindow::hipeManejadorDeListadeItems(QListWidgetItem *item)
 
 // ! Metodo para mostrar los items del metodo de Tecnica Pomodoro.
 // ! versión 1.0
-// ! modificado por mbraulio
 // ? Sin cambios primera versión
 void MainWindow::hipeInfoTecnicaPomodoro()
 {
@@ -5468,7 +5416,6 @@ void MainWindow::hipeInfoTecnicaPomodoro()
 
 // ! Metodo para mostrar los items del metodo de Tecnica dede 5 segundos.
 // ! versión 1.0
-// ! modificado por mbraulio
 // ? Sin cambios primera versión
 void MainWindow::hipeInfoTecnica5segundos()
 {
@@ -5481,7 +5428,6 @@ void MainWindow::hipeInfoTecnica5segundos()
 
 // ! Metodo para mostrar los items del metodo de Tecnica de Mindfulness.
 // ! versión 1.0
-// ! modificado por mbraulio
 // ? Sin cambios primera versión
 void MainWindow::hipeInfoMindfulness()
 {

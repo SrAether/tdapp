@@ -205,6 +205,8 @@ class MainWindow : public QWidget
 
     // -----------------------------------------
     // COSAS DENTRO DE FRAME JOURNALING (jour)
+    // variables
+    bool jourEditandoEntrada; // ! si se esta editando una entrada
     // Botón para cambiar imagen de bienvenida
     QPushButton *jourBotonCambiarImagenBienvenida; // boton para cambiar imagen de bienvenida
     // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
